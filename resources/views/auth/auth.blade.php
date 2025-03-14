@@ -109,9 +109,12 @@
             </div>
           </div>
           <div>
-            <label for="signup-avatar" class="block text-sm font-medium text-gray-700 mb-1">Avatar URL <span class="text-xs text-gray-500">(optional)</span></label>
-            <input type="url" id="signup-avatar" name="avatar" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" placeholder="https://example.com/avatar.jpg">
-          </div>
+    <label for="currency" class="block text-sm font-medium text-gray-700 mb-1">Preferred Currency</label>
+    <div class="relative">
+      <select id="currency" name="currency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600">
+      </select>
+    </div>
+  </div>
           <div>
             <label for="signup-role" class="block text-sm font-medium text-gray-700 mb-1">I want to join as</label>
             <select id="signup-role" name="role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" required>
