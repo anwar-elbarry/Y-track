@@ -20,8 +20,8 @@
         
         <!-- Form tabs -->
         <div class="flex space-x-4 border-b border-gray-200">
-          <button  id="signin-tab" class="px-4 py-2 text-sm font-medium text-black border-b-2 border-black transition-colors duration-200">Sign In</button>
-          <button  id="signup-tab" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors duration-200">Sign Up</button>
+          <button  onclick="toggleForm('signin')" id="signin-tab" class="px-4 py-2 text-sm font-medium text-black border-b-2 border-black transition-colors duration-200">Sign In</button>
+          <button  onclick="toggleForm('signup')" id="signup-tab" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors duration-200">Sign Up</button>
         </div>
         
         <!-- Error messages -->
@@ -152,4 +152,31 @@
       </div>
     </div>
   </div>
+@endsection
+@section('script')
+<script>
+    // Toggle between sign-in and sign-up forms
+function toggleForm(formType) {
+  const signinForm = document.getElementById('signin-form');
+  const signupForm = document.getElementById('signup-form');
+  const signinTab = document.getElementById('signin-tab');
+  const signupTab = document.getElementById('signup-tab');
+  
+  if (formType === 'signin') {
+    signinForm.classList.remove('hidden');
+    signupForm.classList.add('hidden');
+    signinTab.classList.add('text-black', 'border-b-2', 'border-black');
+    signinTab.classList.remove('text-gray-600');
+    signupTab.classList.add('text-gray-600');
+    signupTab.classList.remove('text-black', 'border-b-2', 'border-black');
+  } else {
+    signinForm.classList.add('hidden');
+    signupForm.classList.remove('hidden');
+    signinTab.classList.remove('text-black', 'border-b-2', 'border-black');
+    signinTab.classList.add('text-gray-600');
+    signupTab.classList.remove('text-gray-600');
+    signupTab.classList.add('text-black', 'border-b-2', 'border-black');
+  }
+}
+</script>
 @endsection
