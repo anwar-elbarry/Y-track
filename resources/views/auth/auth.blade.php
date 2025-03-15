@@ -33,7 +33,8 @@ Make informed decisions and stay on top of your financial goals.</p>
         </div>
         
         <!-- Sign In Form -->
-        <form id="signin-form" action="/auth/login" method="post" class="space-y-6">
+        <form id="signin-form" action="{{ route('signin')}}" method="post" class="space-y-6">
+        @csrf
           <div>
             <label for="signin-email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
             <input type="email" id="signin-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" placeholder="name@gmail.com" required>
@@ -82,10 +83,11 @@ Make informed decisions and stay on top of your financial goals.</p>
         </form>
   
         <!-- Sign Up Form -->
-        <form id="signup-form" action="/auth/register" method="post" class="hidden space-y-6">
+        <form id="signup-form" action="{{ route('signup') }}" method="post" class="hidden space-y-6">
+          @csrf
           <div>
             <label for="signup-username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-            <input type="text" id="signup-username" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" placeholder="johndoe" required>
+            <input type="text" id="signup-username" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" placeholder="johndoe" required>
           </div>
           <div>
             <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
