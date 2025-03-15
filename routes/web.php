@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.auth');
+    return view('front.home');
 });
-Route::get('/auth',[AuthController::class,'index']);
+
+// auth
+Route::get('/auth',[AuthController::class,'index'])->name('auth');
+Route::post('/auth/signup',[AuthController::class,'signUp'])->name('signup');
+Route::post('/auth/signin',[AuthController::class,'signIn'])->name('signin');
+Route::post('/auth/logout',[AuthController::class,'logOut'])->name('logout');
