@@ -54,7 +54,8 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'currency' => $validated['currency']
+            'currency' => $validated['currency'],
+            'email_verified_at' => now()
           ]);
         Auth::login($user);
         return redirect()->route('auth');
