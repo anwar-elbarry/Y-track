@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,6 @@ Route::post('/auth/logout',[AuthController::class,'logOut'])->name('logout');
 // googleAuth
 Route::get('/auth/google',[GoogleAuthController::class,'redirect'])->name('google.login');
 Route::get('/auth/google/callback',[GoogleAuthController::class,'callback']);
+// FacebookAuth
+Route::get('/auth/facebook',[FacebookAuthController::class,'redirect'])->name('facebook.login');
+Route::get('/auth/facebook/callback',[FacebookAuthController::class,'callback']);
