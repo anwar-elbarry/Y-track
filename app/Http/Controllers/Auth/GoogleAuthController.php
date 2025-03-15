@@ -20,18 +20,24 @@ class GoogleAuthController extends Controller
            $user = User::where('google_id',$googleUser->id)->first();
            
            if(!$user){
-
-            $user = User::create([
-                'name' => $googleUser->getName(),
-                'email' => $googleUser->getEmail(),
-                'google_id' => $googleUser->getId(),
-                'email_verified_at' => now()
-            ]);
+              
+            $user = User::where('email',$googleUser->getEmail())->first();
+            if($user){
+                $user->update(['google_id' => $googleUser->getId()]);
+            }else{
+                $user = User::create([
+                    'name' => $googleUser->getName(),
+                    'email' => $googleUser->getEmail(),
+                    'google_id' => $googleUser->getId(),
+                    'email_verified_at' => now()
+                ]);
+            }
+            
            }
            Auth::login($user);
            return to_route('dashboard');
         }catch(\Exception $e){
-            return to_route('signin')->with('error','Failed to authenticate with Google.');
+            return to_route('signin')->with('error','Failed to authenticate with Google:' . $e->getMessage());
         }
     }
 }
