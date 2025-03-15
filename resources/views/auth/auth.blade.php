@@ -5,8 +5,10 @@
     <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-black to-gray-800 p-12 items-center justify-center">
       <div class="max-w-xl text-center">
         <img class="w-full h-auto mb-8 mx-auto" src="/assets/images/login.png" alt="Platform illustration">
-        <h2 class="text-white text-2xl font-bold mb-4">Welcome to EventConnect</h2>
-        <p class="text-indigo-100 text-lg">Connect, organize, and participate in events that matter to you.</p>
+        <h2 class="text-white text-2xl font-bold mb-4">Welcome to Y-TRACK</h2>
+        <p class="text-indigo-100 text-lg">Take control of your finances with Y-Track.
+Track your income, expenses, and investments effortlessly.
+Make informed decisions and stay on top of your financial goals.</p>
       </div>
     </div>
     
@@ -34,7 +36,7 @@
         <form id="signin-form" action="/auth/login" method="post" class="space-y-6">
           <div>
             <label for="signin-email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
-            <input type="email" id="signin-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" placeholder="name@company.com" required>
+            <input type="email" id="signin-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" placeholder="name@gmail.com" required>
           </div>
           <div>
             <label for="signin-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
@@ -87,7 +89,7 @@
           </div>
           <div>
             <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
-            <input type="email" id="signup-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" placeholder="name@company.com" required>
+            <input type="email" id="signup-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" placeholder="name@gmail.com" required>
           </div>
           <div>
             <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
@@ -119,13 +121,6 @@
       </select>
     </div>
   </div>
-          <div>
-            <label for="signup-role" class="block text-sm font-medium text-gray-700 mb-1">I want to join as</label>
-            <select id="signup-role" name="role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600" required>
-              <option value="participant">Participant - Join and attend events</option>
-              <option value="organizer">Organizer - Create and manage events</option>
-            </select>
-          </div>
           <div class="flex items-start">
             <input type="checkbox" id="agree-terms" name="agree_terms" class="h-4 w-4 mt-1 text-indigo-600 border-gray-300 rounded" required>
             <label for="agree-terms" class="ml-2 text-sm text-gray-600">I agree to the <a href="/terms" class="text-indigo-600 hover:text-indigo-500">Terms of Service</a> and <a href="/privacy" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a></label>
