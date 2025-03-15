@@ -6,6 +6,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 class AuthController extends Controller
 {
@@ -44,9 +45,9 @@ class AuthController extends Controller
 
     public function signUp(Request $request){
           $validated = $request->validate([
-             'name' => ['require','string'],
-             'email' => ['require','string','unique:users,email'],
-             'password' => ['require','string','min:8'],
+             'name' => ['required','string'],
+             'email' => ['required','string','unique:users,email'],
+             'password' => ['required','string','min:8'],
              'currency' => ['string']
           ]);
           $user = User::create([
@@ -61,8 +62,8 @@ class AuthController extends Controller
 
     public function signIn(Request $request){
          $validate = $request->validate([
-             'email' => ['require','string'],
-             'password' => ['require','string']
+             'email' => ['required','string'],
+             'password' => ['required','string']
          ]);
 
          if(Auth::attempt($validate)){
