@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
 
@@ -37,5 +39,22 @@ class AuthController extends Controller
     $data = json_decode($response,true);
     $currencies = $data['currencies'] ?? [];
     return $currencies;
+    }
+
+    public function signUp(Request $request){
+          $validated = $request->validate([
+             'name' => ['required','string'],
+             'email' => ['required','string','unique:users,email'],
+             'password' => ['required','string','min:8'],
+             'currency' => ['string']
+          ]);
+          $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'currency' => $validated['currency']
+          ]);
+        Auth::login($user);
+        return redirect()->route('auth');
     }
 }
