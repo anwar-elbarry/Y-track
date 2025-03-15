@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,9 +18,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('front.home');
 });
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
+})->name('dashboard');
 
 // auth
 Route::get('/auth',[AuthController::class,'index'])->name('auth');
 Route::post('/auth/signup',[AuthController::class,'signUp'])->name('signup');
 Route::post('/auth/signin',[AuthController::class,'signIn'])->name('signin');
 Route::post('/auth/logout',[AuthController::class,'logOut'])->name('logout');
+// googleAuth
+Route::get('/auth/google',[GoogleAuthController::class,'redirect'])->name('google.login');
+Route::get('/auth/google/callback',[GoogleAuthController::class,'callback']);
