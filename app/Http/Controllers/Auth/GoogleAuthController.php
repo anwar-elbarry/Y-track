@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleAuthController extends Controller
@@ -29,6 +30,7 @@ class GoogleAuthController extends Controller
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
+                    'password' => Hash::make(uniqid()),
                     'email_verified_at' => now()
                 ]);
             }
@@ -37,7 +39,8 @@ class GoogleAuthController extends Controller
            Auth::login($user);
            return to_route('dashboard');
         }catch(\Exception $e){
-            return to_route('signin')->with('error','Failed to authenticate with Google:' . $e->getMessage());
+            return to_route('auth')->with('error','Failed to authenticate with Google:' . $e->getMessage());
+            // dd($e->getMessage());
         }
     }
 }
