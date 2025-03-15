@@ -6,6 +6,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 class AuthController extends Controller
 {
 
@@ -43,9 +44,9 @@ class AuthController extends Controller
 
     public function signUp(Request $request){
           $validated = $request->validate([
-             'name' => ['required','string'],
-             'email' => ['required','string','unique:users,email'],
-             'password' => ['required','string','min:8'],
+             'name' => ['require','string'],
+             'email' => ['require','string','unique:users,email'],
+             'password' => ['require','string','min:8'],
              'currency' => ['string']
           ]);
           $user = User::create([
@@ -56,5 +57,17 @@ class AuthController extends Controller
           ]);
         Auth::login($user);
         return redirect()->route('auth');
+    }
+
+    public function signIn(Request $request){
+         $validate = $request->validate([
+             'email' => ['require','string'],
+             'password' => ['require','string']
+         ]);
+
+         if(Auth::attempt($validate)){
+            return redirect()->route('dashboard');
+         }
+         return redirect()->back()->with('error','The provided credentials do not match our records.');
     }
 }
