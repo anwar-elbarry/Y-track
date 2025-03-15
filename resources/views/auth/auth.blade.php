@@ -71,7 +71,7 @@ Make informed decisions and stay on top of your financial goals.</p>
               <i class="fa-brands fa-google text-xl text-gray-600 mr-2"></i>
               Google
             </a>
-            <a href="/auth/facebook" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+            <a href="{{ route('facebook.login') }}" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
               <i class="fa-brands fa-facebook text-xl text-blue-600 mr-2"></i>
               Facebook
             </a>
@@ -143,7 +143,7 @@ Make informed decisions and stay on top of your financial goals.</p>
               <i class="fa-brands fa-google text-xl text-gray-600 mr-2"></i>
               Google
             </a>
-            <a href="/auth/facebook" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+            <a href="{{ route('facebook.login') }}" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
               <i class="fa-brands fa-facebook text-xl text-blue-600 mr-2"></i>
               Facebook
             </a>
