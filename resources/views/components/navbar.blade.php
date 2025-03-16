@@ -1,6 +1,7 @@
 
 @section('navbar')
-<nav class="absolut fixed z-50 bg-white border self-center flex justify-between min-h-14 w-full max-w-[940px] gap-2.5 overflow-hidden pl-[31px] pr-[23px] rounded-[11px] border-[rgba(0,0,0,0.1)] border-solid max-md:max-w-full max-md:px-5 mt-4 mx-42">
+<div class="absolut fixed z-50 flex justify-center items-center w-full h-fit">
+<nav class="bg-white border self-center flex justify-between min-h-14 w-full max-w-[940px] gap-2.5 overflow-hidden px-5 rounded-[11px] border-[rgba(0,0,0,0.1)] border-solid max-md:max-w-full max-md:px-5 mt-4 mx-42">
     <div class="flex items-center justify-center">
     <img
     src="{{ asset('images/Y-TRACK_dark.svg') }}"
@@ -43,4 +44,5 @@
     </button>
   </div>
 </nav>
+</div>
 @endsection
