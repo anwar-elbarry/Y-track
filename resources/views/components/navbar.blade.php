@@ -1,12 +1,11 @@
 
-@extends('layoats.base')
 @section('navbar')
-<nav class="relative bg-white border self-center flex justify-between min-h-14 w-full max-w-[940px] gap-2.5 overflow-hidden pl-[31px] pr-[23px] rounded-[11px] border-[rgba(0,0,0,0.1)] border-solid max-md:max-w-full max-md:px-5 mt-4 mx-42">
+<nav class="absolut fixed z-50 bg-white border self-center flex justify-between min-h-14 w-full max-w-[940px] gap-2.5 overflow-hidden pl-[31px] pr-[23px] rounded-[11px] border-[rgba(0,0,0,0.1)] border-solid max-md:max-w-full max-md:px-5 mt-4 mx-42">
     <div class="flex items-center justify-center">
     <img
-    src="{{ asset('images/Y-TRACK.svg') }}"
+    src="{{ asset('images/Y-TRACK_dark.svg') }}"
     alt="Y-track logo"
-    class="aspect-[2.71] object-contain w-[65px] self-stretch z-0 shrink-0 "
+    class="aspect-[2.71] object-contain w-18 self-stretch"
   />
     </div>
 
@@ -14,23 +13,23 @@
     <div class="flex items-center gap-[35px]">
       <a
         href="#"
-        class="self-stretch gap-[9px] whitespace-nowrap  p-[9px]"
+        class="self-stretch  whitespace-nowrap  p-2"
       >
         Home
       </a>
       <a
         href="#"
-        class="self-stretch gap-[9px] whitespace-nowrap  p-[9px]"
+        class="self-stretch  whitespace-nowrap  p-2"
       >
         About
       </a>
       <a
         href="#"
-        class="self-stretch gap-[9px] whitespace-nowrap  p-[9px]"
+        class="self-stretch  whitespace-nowrap  p-2"
       >
         Features
       </a>
-      <a href="#" class="self-stretch gap-[9px]  p-[9px]">
+      <a href="#" class="self-stretch   p-2">
         Contact us
       </a>
     </div>
