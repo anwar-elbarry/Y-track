@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tailwindcss -i ./public/css/app.css -o ./public/dist/output.css --minify"
+        "watch": "tailwindcss -i ./public/css/app.css -o ./public/dist/output.css --watch"
     },
     "devDependencies": {
         "axios": "^1.6.4",
