@@ -39,18 +39,6 @@
     </section>
     <!-- features -->
     <section class="flex w-full flex-col items-stretch justify-center max-md:max-w-full">
-    <div id="feature-card-template" class="hidden">
-    <div class="justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-      <div class="items-center flex gap-[7px] w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-        <div class="flex min-h-6 w-6"></div>
-      </div>
-      <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
-        <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]"></h3>
-        <p class="text-[#42526B] text-base font-normal leading-6 mt-2"></p>
-      </div>
-    </div>
-  </div>
-
   <!-- Features Section -->
   <section class="flex w-full flex-col items-stretch justify-center max-md:max-w-full">
     <div class="flex w-full flex-col items-center text-[#061C3D] text-center justify-center max-md:max-w-full">
@@ -70,8 +58,8 @@
       <div class="flex gap-4 flex-wrap max-md:max-w-full">
         <!-- Expense Tracking -->
         <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-          <div class="items-center bg-[#F0E9E2] flex gap-[7px] w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-            <div class="flex min-h-6 w-6"></div>
+          <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+            <i class="fa-solid fa-magnifying-glass-dollar fa-xl text-orange-500"  ></i>
           </div>
           <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
@@ -85,8 +73,8 @@
 
         <!-- Income Management -->
         <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-          <div class="items-center bg-[#F0E9E2] flex gap-[7px] w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-            <div class="flex min-h-6 w-6"></div>
+        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+        <i class="fa-solid fa-money-bill-transfer fa-xl text-orange-500"></i>
           </div>
           <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
@@ -100,8 +88,8 @@
 
         <!-- Recurring Bills -->
         <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5 ">
-          <div class="items-center bg-[#F0E9E2] flex gap-[7px] w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-            <div class="flex min-h-6 w-6"></div>
+        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+        <i class="fa-solid fa-bullhorn fa-xl text-orange-500"></i>
           </div>
           <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
@@ -118,8 +106,8 @@
       <div class="flex gap-4 flex-wrap mt-4 max-md:max-w-full">
         <!-- Financial Reports -->
         <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-          <div class="items-center bg-[#F0E9E2] flex gap-[7px] w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-            <div class="flex min-h-6 w-6"></div>
+        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+        <i class="fa-solid fa-chart-pie fa-xl text-orange-500"></i>
           </div>
           <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
@@ -133,8 +121,8 @@
 
         <!-- Goal Planning -->
         <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-          <div class="items-center bg-[#F0E9E2] flex gap-[7px] w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-            <div class="flex min-h-6 w-6"></div>
+        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+        <i class="fa-solid fa-bullseye fa-xl text-orange-500"></i>
           </div>
           <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
@@ -148,8 +136,8 @@
 
         <!-- Invoice Generator -->
         <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-          <div class="items-center bg-[#F0E9E2] flex gap-[7px] w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-            <div class="flex min-h-6 w-6"></div>
+        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+        <i class="fa-solid fa-file-invoice fa-xl text-orange-500"></i>
           </div>
           <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
