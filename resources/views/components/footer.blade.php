@@ -1,5 +1,4 @@
-@extends('layoats.app')
-@section('main-content')
+@section('footer')
 <footer class="bg-[#061C3D] w-full overflow-hidden mt-[111px] pl-[202px] pr-48 max-md:max-w-full max-md:mt-10 max-md:px-5">
       <div class="flex items-center gap-[40px_91px] justify-center  py-[83px] lg:flex-nowrap flex-wrap max-md:max-w-full">
         <div class="self-stretch text-xs text-gray-400 font-normal leading-5 w-[210px] my-auto">
