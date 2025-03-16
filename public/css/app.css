@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.social_Footer i:hover{
+    color: chocolate;
+}
+.social_Footer i{
+    color: rgb(255, 255, 255);
+}
