@@ -12,3 +12,9 @@
 .cards .card:hover {
       box-shadow:0px 8px 37.333px 0px rgba(6,28,61,0.12);
 }
+.cards .card:hover .iconcover{
+    background-color: #FFA502;
+}
+.cards .card:hover i{
+    color: white;
+}
