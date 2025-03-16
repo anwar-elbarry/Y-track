@@ -22,12 +22,12 @@
         <p class="text-[#061C3D] text-base font-normal leading-5 mt-7 max-md:max-w-full">
           The all-in-one financial management platform designed for freelancers
         </p>
-        <div class="flex gap-[11px] text-base font-bold capitalize leading-[48px] mt-7">
-          <button class="self-stretch bg-[rgba(255,165,2,1)] gap-2 text-white px-5 rounded-2 max-md:px-5">
+        <div class="flex gap-3 text-base font-bold capitalize leading-[48px] mt-7">
+          <button class="self-stretch bg-[rgba(255,165,2,1)] gap-2 text-white px-5 rounded-[10px] max-md:px-5">
             Get Started
           </button>
-          <button class="justify-center items-center bg-[#FFA502] flex gap-2 text-[#F0E9E2] px-5 rounded-1 max-md:px-5">
-            <i class="fa-solid fa-book self-stretch" style=" color:#F0E9E2 ;display: flex; align-items: center;;"></i>
+          <button class="justify-center items-center bg-gray-100 flex gap-2 text-orange-400 px-5 rounded-[10px] max-md:px-5">
+            <i class="fa-solid fa-book self-stretch" style=" color:orange ;display: flex; align-items: center;;"></i>
             <span class="self-stretch my-auto">See Document</span>
           </button>
         </div>
@@ -151,5 +151,34 @@
       </div>
     </div>
     </section>
+<!-- testimonial section -->
+    <section class="flex w-full items-center gap-[40px_91px] justify-center flex-wrap mt-28 max-md:max-w-full max-md:mt-10">
+    <div class="self-stretch flex min-w-60 flex-col items-stretch w-[432px] my-auto max-md:max-w-full">
+      <h2 class="text-[#061C3D] text-[37px] font-bold leading-10 tracking-[-0.75px] max-md:max-w-full">
+        What our client says
+        <br />
+        about our application.
+      </h2>
+      <div class="shadow-[2px_0px_0px_0px_#0B63E5_inset] bg-white max-w-full w-[432px] text-base text-[#061C3D] font-normal leading-[21px] mt-8 pl-4">
+        <p>"This guy is true professional and very experienced in migration and server configuration. He was able to complete my order in time and as per agreed scope. Highly recommend!"</p>
+        <div class="flex min-h-8 w-8 mt-3"></div>
+      </div>
+      <div class="flex gap-3 mt-8">
+        <button
+          class="items-center justify-center bg-[#F0F5FF] flex gap-[7px] w-[43px] h-[42px] pl-3 pr-2.5 py-3 rounded hover:bg-orange-500">
+        <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <button
+          class="items-center justify-center bg-[#F0F5FF] flex gap-[7px] w-[43px] h-[43px] p-3 rounded hover:bg-orange-500">
+        <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    <img
+      src="{{ asset('images/client.png') }}"
+      alt="Client testimonial"
+      class="aspect-[1] object-contain w-[357px] self-stretch min-w-60 my-auto rounded-2xl"
+    />
+  </section>
 @endsection
 @include('components.footer')
