@@ -15,13 +15,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('front.home');
-});
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
-})->name('dashboard');
+Route::get('/home', function () {
+    return view('pages.home');
+})->name('home');
 
 // auth
 Route::get('/auth',[AuthController::class,'index'])->name('auth');
