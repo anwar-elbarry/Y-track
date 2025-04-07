@@ -5,10 +5,12 @@
       <img
         src="{{ asset('images/heroimg.png') }}"
         alt="Hero background"
-        class="absolute h-full w-full object-cover inset-0"
+        class="absolute h-full w-full object-cover z-[-1] inset-0"
       />
       <Navbar />
-      <div class="relative flex w-[507px] max-w-full flex-col items-stretch mt-41 max-md:mt-10">
+      <div class="flex mt-10 w-full">
+      
+        <div class="relative flex w-[507px] max-w-full flex-col items-stretch mt-41 max-md:mt-10">
         <div class="flex w-full max-w-[507px] flex-col items-stretch text-[#061C3D] max-md:max-w-full">
           <div class="bg-[#FFE9BD] gap-2 text-3 font-medium text-center uppercase tracking-[0.11px] leading-none px-4 py-2 rounded-[66.667px] w-fit">
             Welcome to Y-TRACK
@@ -31,14 +33,19 @@
             <span class="self-stretch my-auto">See Document</span>
           </button>
         </div>
+        </div>
+        <img
+          src="{{ asset('images/avatar.png') }}"
+          alt="Hero background"
+          class="w-fit object-cover inset-0"
+        />
       </div>
-      <div class="relative flex items-center  gap-2 text-24 text-black font-medium leading-normal justify-center h-10 mt-38 max-md:mt-10">
+      
+      <div class="relative flex items-center  gap-2 text-24 text-black font-medium leading-normal justify-center h-10 mt-10 max-md:mt-10">
       <i class="fa-solid fa-computer-mouse" ></i>
       <i class="fa-solid fa-down-long"></i>
       </div>
     </section>
-    <!-- features -->
-    <section class="flex w-full flex-col items-stretch justify-center max-md:max-w-full">
   <!-- Features Section -->
   <section class="flex w-full flex-col items-stretch justify-center max-md:max-w-full">
     <div class="flex w-full flex-col items-center text-[#061C3D] text-center justify-center max-md:max-w-full">
@@ -53,15 +60,15 @@
         ease.
       </p>
     </div>
-    <div class="cards flex w-full flex-col items-center justify-center mt-12 max-md:max-w-full max-md:mt-10">
-      <!-- First row of feature cards -->
-      <div class="flex gap-4 flex-wrap max-md:max-w-full">
+    <div class="cards flex w-full flex-col items-center justify-center mt-12 max-md:mt-6">
+      <!-- Feature cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-6xl px-4">
         <!-- Expense Tracking -->
-        <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-          <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-            <i class="fa-solid fa-magnifying-glass-dollar fa-xl text-orange-500"  ></i>
+        <div class="card bg-white flex flex-col items-center p-6 rounded-[10.667px] text-center shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="iconcover bg-[#F0E9E2] flex items-center justify-center w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+            <i class="fa-solid fa-magnifying-glass-dollar fa-xl text-orange-500"></i>
           </div>
-          <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
+          <div class="mt-4">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
               Expense Tracking
             </h3>
@@ -72,11 +79,11 @@
         </div>
 
         <!-- Income Management -->
-        <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-        <i class="fa-solid fa-money-bill-transfer fa-xl text-orange-500"></i>
+        <div class="card bg-white flex flex-col items-center p-6 rounded-[10.667px] text-center shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="iconcover bg-[#F0E9E2] flex items-center justify-center w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+            <i class="fa-solid fa-money-bill-transfer fa-xl text-orange-500"></i>
           </div>
-          <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
+          <div class="mt-4">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
               Income Management
             </h3>
@@ -87,11 +94,11 @@
         </div>
 
         <!-- Recurring Bills -->
-        <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5 ">
-        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-        <i class="fa-solid fa-bullhorn fa-xl text-orange-500"></i>
+        <div class="card bg-white flex flex-col items-center p-6 rounded-[10.667px] text-center shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="iconcover bg-[#F0E9E2] flex items-center justify-center w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+            <i class="fa-solid fa-bullhorn fa-xl text-orange-500"></i>
           </div>
-          <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
+          <div class="mt-4">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
               Recurring Bills
             </h3>
@@ -100,16 +107,13 @@
             </p>
           </div>
         </div>
-      </div>
 
-      <!-- Second row of feature cards -->
-      <div class="flex gap-4 flex-wrap mt-4 max-md:max-w-full">
         <!-- Financial Reports -->
-        <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-        <i class="fa-solid fa-chart-pie fa-xl text-orange-500"></i>
+        <div class="card bg-white flex flex-col items-center p-6 rounded-[10.667px] text-center shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="iconcover bg-[#F0E9E2] flex items-center justify-center w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+            <i class="fa-solid fa-chart-pie fa-xl text-orange-500"></i>
           </div>
-          <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
+          <div class="mt-4">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
               Financial Reports
             </h3>
@@ -120,11 +124,11 @@
         </div>
 
         <!-- Goal Planning -->
-        <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-        <i class="fa-solid fa-bullseye fa-xl text-orange-500"></i>
+        <div class="card bg-white flex flex-col items-center p-6 rounded-[10.667px] text-center shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="iconcover bg-[#F0E9E2] flex items-center justify-center w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+            <i class="fa-solid fa-bullseye fa-xl text-orange-500"></i>
           </div>
-          <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
+          <div class="mt-4">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
               Goal Planning
             </h3>
@@ -135,11 +139,11 @@
         </div>
 
         <!-- Invoice Generator -->
-        <div class="card justify-center items-center bg-white flex min-w-60 flex-col p-[21px] rounded-[10.667px] max-md:px-5">
-        <div class="iconcover items-center bg-[#F0E9E2] flex items-center  w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
-        <i class="fa-solid fa-file-invoice fa-xl text-orange-500"></i>
+        <div class="card bg-white flex flex-col items-center p-6 rounded-[10.667px] text-center shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="iconcover bg-[#F0E9E2] flex items-center justify-center w-[51px] h-[51px] p-[13px] rounded-[5.333px]">
+            <i class="fa-solid fa-file-invoice fa-xl text-orange-500"></i>
           </div>
-          <div class="flex max-w-full w-60 flex-col items-center text-center justify-center mt-4 pt-[3px]">
+          <div class="mt-4">
             <h3 class="text-[#061C3D] text-xl font-medium leading-[1.4]">
               Invoice Generator
             </h3>
@@ -296,8 +300,8 @@
           
           <div>
             <label for="profession" class="block text-sm text-[#061C3D] mb-1">Profession/Business Type</label>
-            <input id="profession" name="profession" type="text" placeholder="Web Developer" value="Web Developer" 
-                   class="w-full px-3 py-2 text-xs text-[#838E9E] border border-[#E6E8EC] rounded focus:outline-none focus:ring-1 focus:ring-[#E15606]" />
+            <input id="profession" name="profession" type="text" placeholder="Web Developer"
+                   class="w-full px-3 py-2 text-base text-[#838E9E] border border-[#E6E8EC] rounded focus:outline-none focus:ring-1 focus:ring-[#E15606]" />
           </div>
           
           <div>
