@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AuthController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home', function () {
     return view('pages.home');
 })->name('home');
-
+Route::get('/aside',function(){
+    return view('components.aside');
+});
 // auth
 Route::get('/auth',[AuthController::class,'index'])->name('auth');
 Route::post('/auth/signup',[AuthController::class,'signUp'])->name('signup');

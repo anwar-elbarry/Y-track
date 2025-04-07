@@ -2,7 +2,7 @@
 <footer class="bg-[#061C3D] text-gray-400 w-full py-16 px-4 md:px-8 lg:px-12">
   <div class="max-w-7xl mx-auto">
     <!-- Main Footer Content -->
-    <div class="flex flex-wrap justify-between gap-8 mb-12">
+    <div class="flex flex-wrap  justify-between items-center gap-8 mb-12">
       <!-- Logo and Description -->
       <div class="w-full md:w-64">
         <img

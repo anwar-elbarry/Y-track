@@ -17,7 +17,7 @@ Make informed decisions and stay on top of your financial goals.</p>
       <div class="w-full max-w-md space-y-8">
         <!-- Logo for mobile view -->
         <div class="block lg:hidden text-center mb-8">
-          <img class="h-12 mx-auto" src="/assets/images/logo.png" alt="EventConnect">
+          <img class="h-12 mx-auto" src="{{ asset('images/Y-TRACK_dark.svg') }}" alt="Y-track">
         </div>
         
         <!-- Form tabs -->
