@@ -7,8 +7,7 @@
         alt="Hero background"
         class="absolute h-full w-full object-cover z-[-1] inset-0"
       />
-      <Navbar />
-      <div class="flex justify-center items-center  flex-wrap mt-10 w-full">
+      <div class="flex justify-center items-center lg:flex-nowrap flex-wrap mt-10 w-full">
       
         <div class="relative flex w-126 max-w-full flex-col items-stretch mt-41 max-md:mt-10">
         <div class="flex w-full max-w-[507px] flex-col items-stretch text-[#061C3D] max-md:max-w-full">
