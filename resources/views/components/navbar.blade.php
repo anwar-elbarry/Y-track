@@ -38,7 +38,7 @@
   </nav>
 
   <!-- Mobile Menu Dropdown -->
-  <div id="mobile-menu" class="fixed top-[70px] left-0 right-0 bg-white shadow-md rounded-b-lg hidden z-50 mx-4">
+  <div id="mobile-menu" class="fixed top-16 left-0 right-0 bg-white border border-[rgba(0,0,0,0.1)] border-solid transition-all shadow-md hidden z-50 mx-4">
     <div class="flex flex-col text-[13px] text-black font-semibold tracking-[1.18px]">
       <a href="#" class="p-4 border-b border-gray-100 hover:bg-gray-50">Home</a>
       <a href="#" class="p-4 border-b border-gray-100 hover:bg-gray-50">About</a>
