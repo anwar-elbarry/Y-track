@@ -1,6 +1,7 @@
 @extends('layoats.base')
+@include('components.navbar')
 @section('base-content')
-<div id="auth-wrapper" class="flex min-h-screen w-full bg-gray-50">
+<div id="auth-wrapper" class="flex min-h-screen w-full bg-gray-50 pt-20">
     <!-- Left side banner-->
     <div class="hidden lg:flex lg:w-1/2 bg-black p-12 items-center justify-center">
       <div class="max-w-xl text-center">
@@ -78,7 +79,7 @@ Make informed decisions and stay on top of your financial goals.</p>
           </div>
           <div class="text-center text-sm text-gray-600">
             Don't have an account? 
-            <span class="text-orange-600 hover:text-orange-500 cursor-pointer transition-colors duration-200">Sign up</span>
+            <span onclick="toggleForm('signup')" class="text-orange-600 hover:text-orange-500 cursor-pointer transition-colors duration-200">Sign up</span>
           </div>
         </form>
   
@@ -150,7 +151,7 @@ Make informed decisions and stay on top of your financial goals.</p>
           </div>
           <div class="text-center text-sm text-gray-600">
             Already have an account? 
-            <span class="text-orange-600 hover:text-orange-500 cursor-pointer transition-colors duration-200">Sign in</span>
+            <span onclick="toggleForm('signin')" class="text-orange-600 hover:text-orange-500 cursor-pointer transition-colors duration-200">Sign in</span>
           </div>
         </form>
       </div>
@@ -184,3 +185,4 @@ function toggleForm(formType) {
 }
 </script>
 @endsection
+@include('components.footer')
