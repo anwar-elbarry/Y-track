@@ -11,20 +11,21 @@
 
   <!-- Desktop Navigation -->
 <div class="hidden md:flex md:flex-row items-center text-[13px] text-black font-semibold tracking-[1.18px] leading-none justify-center gap-[35px] py-[11px]">
-  <a href="#" class="whitespace-nowrap p-2">Home</a>
-  <a href="#" class="whitespace-nowrap p-2">About</a>
-  <a href="#" class="whitespace-nowrap p-2">Features</a>
-  <a href="#" class="p-2">Contact us</a>
+  <a href="{{ route('home') }}" class="whitespace-nowrap p-2">Home</a>
+  <a href="#about" class="whitespace-nowrap p-2">About</a>
+  <a href="#features" class="whitespace-nowrap p-2">Features</a>
+  <a href="#testimonial" class="whitespace-nowrap p-2">Testimonial</a>
+  <a href="#contact" class="p-2">Contact us</a>
 </div>
 
     <!-- Desktop Buttons -->
-    <div class="hidden md:flex items-center gap-4 text-xs font-bold text-center uppercase leading-none px-2 py-[11px]">
-      <button class="self-stretch border-orange-500 border min-h-[34px] gap-0.5 text-orange-500 whitespace-nowrap w-[68px] pl-3 pr-[11px] py-[13px] rounded-md border-solid">
+    <div class="hidden md:flex items-center gap-4 text-xs font-bold text-center  uppercase leading-none px-2 py-[11px]">
+      <a href="/auth" class="flex items-center justify-center border-orange-500 border min-h-[34px] gap-0.5 text-orange-500 whitespace-nowrap w-[68px] rounded-md border-solid">
         Sign Up
-      </button>
-      <button class="self-stretch bg-orange-500 min-h-[34px] gap-0.5 text-gray-800 w-[68px] p-[13px] rounded-md">
+      </a>
+      <a href="/auth" class="flex items-center justify-center bg-orange-500 min-h-[34px] gap-0.5 text-gray-800 w-[68px] rounded-md">
         Sign In
-      </button>
+      </a>
     </div>
 
     <!-- Mobile Burger Button -->
