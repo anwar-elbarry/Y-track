@@ -1,7 +1,7 @@
 @extends('layoats.base')
 @include('components.navbar')
 @section('base-content')
-<section class="flex flex-col relative min-h-[759px] w-full overflow-hidden pt-4 pb-[71px] px-20 max-md:max-w-full max-md:px-5">
+<section id="about" class="flex flex-col relative min-h-[759px] w-full overflow-hidden pt-4 pb-[71px] px-20 max-md:max-w-full max-md:px-5">
       <img
         src="{{ asset('images/heroimg.png') }}"
         alt="Hero background"
@@ -46,7 +46,7 @@
       </div>
     </section>
   <!-- Features Section -->
-  <section class="flex w-full flex-col items-stretch justify-center max-md:max-w-full">
+  <section id="features" class="flex w-full flex-col items-stretch justify-center max-md:max-w-full">
     <div class="flex w-full flex-col items-center text-[#061C3D] text-center justify-center max-md:max-w-full">
       <h2 class="text-[37px] font-bold leading-10 tracking-[-0.75px] w-[880px] max-md:max-w-full">
         Y-Track
@@ -155,7 +155,7 @@
     </div>
     </section>
 <!-- testimonial section -->
-    <section class="flex w-full items-center gap-[40px_91px] justify-center flex-wrap mt-28 max-md:max-w-full max-md:mt-10">
+    <section id="testimonial" class="flex w-full items-center gap-[40px_91px] justify-center flex-wrap mt-28 max-md:max-w-full max-md:mt-10">
     <div class="self-stretch flex min-w-60 flex-col items-stretch w-[432px] my-auto max-md:max-w-full">
       <h2 class="text-[#061C3D] text-[37px] font-bold leading-10 tracking-[-0.75px] max-md:max-w-full">
         What our client says
