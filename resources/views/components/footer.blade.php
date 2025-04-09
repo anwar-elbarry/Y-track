@@ -19,10 +19,11 @@
       <!-- Navigation Links -->
       <div class="w-full md:w-auto">
         <nav class="flex flex-wrap gap-6 text-base font-medium">
-          <a href="#" class="hover:text-white transition-colors">Home</a>
-          <a href="#" class="hover:text-white transition-colors">About</a>
-          <a href="#" class="hover:text-white transition-colors">Features</a>
-          <a href="#" class="hover:text-white transition-colors">Contact</a>
+          <a href="#home" class="hover:text-white transition-colors">Home</a>
+          <a href="#about" class="hover:text-white transition-colors">About</a>
+          <a href="#features" class="hover:text-white transition-colors">Features</a>
+          <a href="#testimonial" class="hover:text-white transition-colors">testimonial</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
         </nav>
       </div>
       

@@ -1,69 +1,229 @@
 @extends('layoats.app')
 @section('main-content')
-<aside class="bg-white h-screen w-52">
-<ul>
-    <li>
-        <span>
-            <img src="{{ asset('images/Y-TRACK_dark.svg') }}" alt="Y-track Logo">
-        </span>
-        <button class="toggle-btn">
-            <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.64701 3.56399C8.88467 3.80165 8.88467 4.18698 8.64701 4.42464L6.64305 6.4286L8.64701 8.43256C8.88467 8.67022 8.88467 9.05555 8.64701 9.29321C8.40935 9.53087 8.02402 9.53087 7.78636 9.29321L5.35207 6.85892C5.11441 6.62126 5.11441 6.23594 5.35207 5.99827L7.78636 3.56399C8.02402 3.32633 8.40935 3.32633 8.64701 3.56399Z" fill="#081021"/>
-            </svg>
-        </button>
-    </li>
-    <li>
-        <a href=""><span>Dashboard</span></a>
-        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M11.2049 9.81768V13.6213M9.30315 11.7195H13.1067M4.23172 7.28196H5.49958C6.1998 7.28196 6.76744 6.71433 6.76744 6.01411V4.74625C6.76744 4.04603 6.1998 3.47839 5.49958 3.47839H4.23172C3.53151 3.47839 2.96387 4.04603 2.96387 4.74625V6.01411C2.96387 6.71433 3.53151 7.28196 4.23172 7.28196ZM10.571 7.28196H11.8389C12.5391 7.28196 13.1067 6.71433 13.1067 6.01411V4.74625C13.1067 4.04603 12.5391 3.47839 11.8389 3.47839H10.571C9.87079 3.47839 9.30315 4.04603 9.30315 4.74625V6.01411C9.30315 6.71433 9.87079 7.28196 10.571 7.28196ZM4.23172 13.6213H5.49958C6.1998 13.6213 6.76744 13.0536 6.76744 12.3534V11.0855C6.76744 10.3853 6.1998 9.81768 5.49958 9.81768H4.23172C3.53151 9.81768 2.96387 10.3853 2.96387 11.0855V12.3534C2.96387 13.0536 3.53151 13.6213 4.23172 13.6213Z" stroke="#9CA3AF" stroke-width="1.14107" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </li>
-    <!-- Financial Managment -->
-    <li>
-    <svg width="8" height="6" viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.3111 1.54285L3.93387 3.92008L1.55664 1.54285" stroke="#F97316" stroke-width="1.14107" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-        <button class="dropdown-btn">Financial Managment</button>
-        <ul class="sub-menu">
-            <a href="/income"><svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M0.740234 10.0104C4.12168 10.0077 7.48841 10.4555 10.7516 11.3419C11.2123 11.4674 11.6724 11.1252 11.6724 10.6473V10.0104M1.69086 0.979492V1.4548C1.69086 1.58087 1.64078 1.70176 1.55164 1.7909C1.46251 1.88004 1.34161 1.93012 1.21555 1.93012H0.740234M0.740234 1.93012V1.69246C0.740234 1.2989 1.05964 0.979492 1.4532 0.979492H12.1477M0.740234 1.93012V7.63387M12.1477 0.979492V1.4548C12.1477 1.71718 12.3607 1.93012 12.623 1.93012H13.0984M12.1477 0.979492H12.3854C12.7789 0.979492 13.0984 1.2989 13.0984 1.69246V7.87152C13.0984 8.26508 12.7789 8.58449 12.3854 8.58449H12.1477M0.740234 7.63387V7.87152C0.740234 8.06061 0.815351 8.24196 0.949058 8.37567C1.08277 8.50938 1.26411 8.58449 1.4532 8.58449H1.69086M0.740234 7.63387H1.21555C1.34161 7.63387 1.46251 7.68394 1.55164 7.77308C1.64078 7.86222 1.69086 7.98312 1.69086 8.10918V8.58449M12.1477 8.58449V8.10918C12.1477 7.98312 12.1978 7.86222 12.2869 7.77308C12.3761 7.68394 12.497 7.63387 12.623 7.63387H13.0984M12.1477 8.58449H1.69086M8.82055 4.78199C8.82055 5.28623 8.62024 5.76983 8.26368 6.12638C7.90713 6.48293 7.42354 6.68324 6.9193 6.68324C6.41505 6.68324 5.93146 6.48293 5.57491 6.12638C5.21836 5.76983 5.01805 5.28623 5.01805 4.78199C5.01805 4.27775 5.21836 3.79416 5.57491 3.43761C5.93146 3.08105 6.41505 2.88074 6.9193 2.88074C7.42354 2.88074 7.90713 3.08105 8.26368 3.43761C8.62024 3.79416 8.82055 4.27775 8.82055 4.78199ZM10.7218 4.78199H10.7269V4.78706H10.7218V4.78199ZM3.1168 4.78199H3.12187V4.78706H3.1168V4.78199Z" stroke="#64748B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <div
+        class="bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-68 flex-col  mx-auto rounded-xl overflow-auto">
+        <!-- up logo -->
+        <div
+            class="relative flex min-h-10 w-full gap-4 flex items-center justify-center border-[rgba(0,0,0,0.13)] border-b">
+
+            <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/00008acb1b1da35f7526bf23b1e56f4067519dc4?placeholderIfAbsent=true"
+                class=" object-contain w-3 self-stretch my-auto right-[-2]" />
+
+            <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/3240b722e4b97a6cffdb191f2bdc7dd5a3b69b29?placeholderIfAbsent=true"
+                class=" object-contain w-[70px] h-[26px]" />
+        </div>
+        <!-- main content -->
+        <div class="side flex flex-col justify-between w-full  h-full">
+            <div class="buttons flex flex-col gap-2 py-4">
+                <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
+                    <div class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
+                        <div class="flex w-full items-stretch gap-2 my-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+                            </svg>
+
+                            <p class="  font-medium  flex-1">Dashboard</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
+                    <div class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
+                        <div class="flex w-full items-center gap-2 justify-between my-auto">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+
+
+                            <p class="  font-medium flex-1">Financial Managment</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="flesh size-3">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 </svg>
- <span>Income</span></a>
-            <a href="/expense"><span>Expense</span></a>
-            <a href="/bills"><span>Bills</span></a>
-            <a href="/goals"><span>Goals</span></a>
-            <a href="/transactions"><span>Transactions History</span></a>
-        </ul>
-    </li>
-    <!-- Tax Modul -->
-    <li>
-    <svg width="8" height="6" viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.3111 1.54285L3.93387 3.92008L1.55664 1.54285" stroke="#F97316" stroke-width="1.14107" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-        <button class="dropdown-btn">Tax Modul</button>
-        <ul class="sub-menu">
-            <a href="/tax"><span>Tax Dashboard</span></a>
-            <a href="/tax/calendar"><span>Tax Calendar</span></a>
-        </ul>
-    </li>
-    <!-- Reports & Analysis -->
-    <li>
-    <svg width="8" height="6" viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6.3111 1.54285L3.93387 3.92008L1.55664 1.54285" stroke="#F97316" stroke-width="1.14107" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-        <button class="dropdown-btn">Reports & Analysis</button>
-        <ul class="sub-menu">
-            <a href="/income"><span>Invoice Generator</span></a>
-            <a href="/expense"><span>Report Generator</span></a>
-        </ul>
-    </li>
-    <li>
-        <a href=""><span>Notifications</span></a>
-        <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M5.67114 1.98984L6.07087 1.90802V1.5V0.9375C6.07087 0.690566 6.26647 0.5 6.49944 0.5C6.73242 0.5 6.92802 0.690566 6.92802 0.9375V1.5V1.90802L7.32775 1.98984C9.21472 2.37609 10.6423 4.06503 10.6423 6.09375V6.64453C10.6423 8.14598 11.1886 9.59033 12.1739 10.7127L12.1749 10.7138L12.3896 10.9569L12.39 10.9574C12.5037 11.0858 12.5325 11.2718 12.4619 11.4294C12.3901 11.5896 12.236 11.6875 12.0709 11.6875H0.928016C0.76046 11.6875 0.60656 11.5877 0.538478 11.4327C0.467162 11.2703 0.497282 11.0835 0.608896 10.9574L0.609274 10.9569L0.824008 10.7138L0.824965 10.7127C1.81039 9.59023 2.35659 8.14291 2.35659 6.64453V6.09375C2.35659 4.06503 3.78417 2.37609 5.67114 1.98984ZM7.76461 13.625C7.6969 13.8022 7.5933 13.9644 7.45871 14.1003C7.20471 14.3567 6.85975 14.5 6.49944 14.5C6.13914 14.5 5.79418 14.3567 5.54018 14.1003C5.40559 13.9644 5.30198 13.8022 5.23428 13.625H6.49944H7.76461Z" fill="white" stroke="#6B7280"/>
+                        </div>
+
+                    </div>
+                    <ul class="flex flex-col ml-3 gap-3 hidden">
+                        <li class="flex gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                            </svg>
+                            income
+                        </li>
+                        <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+                            </svg>
+                            Expenses</li>
+                        <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                            </svg>
+                            bills</li>
+                        <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                            </svg>
+                            transactions History</li>
+                        <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5" />
+                            </svg>
+                            Goals</li>
+                    </ul>
+                </div>
+                <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
+                    <div class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
+                        <div class="flex w-full items-center justify-between my-auto">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                            </svg>
+
+                            <p class="  font-medium flex-1">Tax Module</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="flesh size-3">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+</svg>
+                        </div>
+                    </div>
+                    <ul class="flex flex-col ml-3 gap-3 hidden">
+                        <li class="flex gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                            </svg>
+
+                            Tax Dashboard
+                        </li>
+                        <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                            </svg>
+
+                            Tax Calendar</li>
+                    </ul>
+                </div>
+                <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
+                    <div class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
+                        <div class="flex w-full justify-between gap-2 items-center my-auto">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
 </svg>
 
-    </li>
-</ul>
-</aside>
+                            <p class="  font-medium flex-1">Reports & Analysis</p>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="flesh size-3">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+</svg>
+                        </div>
+                    </div>
+                    <ul class="flex flex-col ml-3 gap-3 hidden">
+                        <li class="flex gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                            </svg>
+
+
+                            Invoice Generator
+                        </li>
+                        <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                            </svg>
+
+
+                            Reports Generator</li>
+                    </ul>
+                </div>
+                <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
+                    <div class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
+                        <div class="flex w-full items-stretch gap-2 my-auto">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                            </svg>
+
+                            <p class="font-medium flex-1">Notifications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-slate-200 flex w-full items-center gap-[9px] font-medium p-[18px] border-t">
+                <div class="self-stretch flex items-center gap-[9px] flex-1 shrink basis-[0%] my-auto">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/45e57123962a8953bfb53bdd32aa95f39c12d072?placeholderIfAbsent=true"
+                        class="aspect-[1.03] object-contain w-[31px] self-stretch shrink-0 my-auto rounded-[75px]" />
+                    <div class="self-stretch flex-1 shrink basis-[0%] my-auto">
+                        <div class="text-slate-500 text-[9px] leading-[15px]">
+                            Welcome back 👋
+                        </div>
+                        <div class="text-[rgba(8,16,33,1)] text-[11px] leading-none">
+                            Johnathan
+                        </div>
+                    </div>
+                </div>
+                <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/ba6d3376f1f0a8d99b416d6c40adcfa1cc9b51d0?placeholderIfAbsent=true"
+                    class="aspect-[1] object-contain w-[15px] self-stretch shrink-0 my-auto" />
+            </div>
+        </div>
+
+    </div>
+@endsection
+@section('script')
+<script>
+    const up_btns = document.querySelectorAll('.up-btn');
+    const fleshs = document.querySelectorAll('.flesh');
+    
+    up_btns.forEach((btn) => {
+        const subMenu = btn.nextElementSibling;
+        const flesh = btn.querySelector('.flesh');
+
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Toggle sub-menu visibility
+            if (subMenu && subMenu.classList.contains('hidden')) {
+                subMenu.classList.remove('hidden');
+                flesh.classList.add('rotate-87');
+            } else if (subMenu) {
+                subMenu.classList.add('hidden');
+                flesh.classList.remove('rotate-87');
+            }
+
+            // Close other open menus
+            up_btns.forEach((otherBtn) => {
+                if (otherBtn !== btn) {
+                    const otherSubMenu = otherBtn.nextElementSibling;
+                    const otherFlesh = otherBtn.querySelector('.flesh');
+                    
+                    if (otherSubMenu) {
+                        otherSubMenu.classList.add('hidden');
+                        otherFlesh.classList.remove('-rotate-87');
+                    }
+                }
+            });
+        });
+    });
+</script>
 @endsection

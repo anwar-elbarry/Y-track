@@ -41,8 +41,11 @@
       </div>
       
       <div class="relative flex items-center  gap-2 text-24 text-black font-medium leading-normal justify-center h-10 mt-10 max-md:mt-10">
-      <i class="fa-solid fa-computer-mouse" ></i>
+      
+      <a href="#features">
+      <i class="fa-solid fa-computer-mouse" ></i>  
       <i class="fa-solid fa-down-long"></i>
+      </a>
       </div>
     </section>
   <!-- Features Section -->

@@ -11,11 +11,11 @@
 
   <!-- Desktop Navigation -->
 <div class="hidden md:flex md:flex-row items-center text-[13px] text-black font-semibold tracking-[1.18px] leading-none justify-center gap-[35px] py-[11px]">
-  <a href="{{ route('home') }}" class="whitespace-nowrap p-2">Home</a>
-  <a href="#about" class="whitespace-nowrap p-2">About</a>
-  <a href="#features" class="whitespace-nowrap p-2">Features</a>
-  <a href="#testimonial" class="whitespace-nowrap p-2">Testimonial</a>
-  <a href="#contact" class="p-2">Contact us</a>
+  <a href="{{ route('home') }}" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">Home</a>
+  <a href="#about" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">About</a>
+  <a href="#features" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">Features</a>
+  <a href="#testimonial" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">Testimonial</a>
+  <a href="#contact" class="p-2 hover:border-b-2 hover:border-orange-500">Contact us</a>
 </div>
 
     <!-- Desktop Buttons -->

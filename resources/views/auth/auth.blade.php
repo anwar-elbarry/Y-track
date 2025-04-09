@@ -79,7 +79,7 @@ Make informed decisions and stay on top of your financial goals.</p>
           </div>
           <div class="text-center text-sm text-gray-600">
             Don't have an account? 
-            <span onclick="toggleForm('signup')" class="text-orange-600 hover:text-orange-500 cursor-pointer transition-colors duration-200">Sign up</span>
+            <span onclick="toggleForm('signin')" class="text-orange-600 hover:text-orange-500 cursor-pointer transition-colors duration-200">Sign up</span>
           </div>
         </form>
   

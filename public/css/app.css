@@ -15,3 +15,31 @@
 .cards .card:hover i{
     color: white;
 }
+
+*{
+      transition: all ease-in-out 0.1s;
+}
+html {
+    scroll-behavior: smooth;
+}
+.toggle_button li{
+    color : #64748B;
+    padding-left:1rem;
+    font-size: small;
+}
+.toggle_button {
+    width: 100%;
+    padding-inline: 1.5rem;
+}
+.toggle_button ul {
+    border-left:0.38px solid rgba(0, 0, 0, 0.2) ;
+    padding-top: 0.4rem;
+}
+.up-btn {
+    border: 1px solid #ff6f0081;
+    background-color: rgba(255, 174, 0, 0.638) ;
+    color: #ff6f00;
+}
+.up-btn p {
+    font-size: small;
+}
