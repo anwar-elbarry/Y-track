@@ -25,21 +25,28 @@ html {
 .toggle_button li{
     color : #64748B;
     padding-left:1rem;
-    font-size: small;
+    font-size: x-small;
+}
+.toggle_button li:hover{
+    color : #ff8800;
+    border-left:1.5px solid #ff5e00;
+    cursor: pointer;
 }
 .toggle_button {
     width: 100%;
-    padding-inline: 1.5rem;
+    padding-inline: 1rem;
 }
 .toggle_button ul {
     border-left:0.38px solid rgba(0, 0, 0, 0.2) ;
     padding-top: 0.4rem;
 }
 .up-btn {
-    border: 1px solid #ff6f0081;
-    background-color: rgba(255, 174, 0, 0.638) ;
-    color: #ff6f00;
+    background-color: rgba(0, 0, 0, 0.899) ;
+    color: #ffffff;
+}
+.up-btn :hover{
+    cursor: pointer;
 }
 .up-btn p {
-    font-size: small;
+    font-size: x-small;
 }

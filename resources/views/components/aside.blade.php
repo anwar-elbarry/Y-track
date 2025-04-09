@@ -1,15 +1,18 @@
 @extends('layoats.app')
 @section('main-content')
     <div
-        class="bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-68 flex-col  mx-auto rounded-xl overflow-auto">
+        class="relative aside bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-53 flex-col  mx-auto rounded-xl overflow-auto">
         <!-- up logo -->
         <div
-            class="relative flex min-h-10 w-full gap-4 flex items-center justify-center border-[rgba(0,0,0,0.13)] border-b">
+            class=" flex min-h-10 w-full gap-4 flex items-center justify-center border-[rgba(0,0,0,0.13)] border-b">
+<div class="aside_flesh border w-fit rounded-full p-1 absolute -right-2 z-100">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="flesh size-3">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+</svg>
+</div>
+    
 
-            <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/00008acb1b1da35f7526bf23b1e56f4067519dc4?placeholderIfAbsent=true"
-                class=" object-contain w-3 self-stretch my-auto right-[-2]" />
-
-            <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/3240b722e4b97a6cffdb191f2bdc7dd5a3b69b29?placeholderIfAbsent=true"
+            <img src="{{ asset("./images/Y-TRACK_dark.svg") }}"
                 class=" object-contain w-[70px] h-[26px]" />
         </div>
         <!-- main content -->
@@ -24,7 +27,7 @@
                                     d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
                             </svg>
 
-                            <p class="  font-medium  flex-1">Dashboard</p>
+                            <p class="font-medium  flex-1">Dashboard</p>
                         </div>
 
                     </div>
@@ -71,7 +74,7 @@
                         <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                                    d="M3.75 3v11.25A2.25 2.25 0 0 0 6 3.75h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
                             </svg>
                             transactions History</li>
                         <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -103,7 +106,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                                    d="M3.75 3v11.25A2.25 2.25 0 0 0 6 3.75h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
                             </svg>
 
                             Tax Dashboard
@@ -170,7 +173,7 @@
                 </div>
             </div>
 
-            <div class="border-slate-200 flex w-full items-center gap-[9px] font-medium p-[18px] border-t">
+            <div class="border-slate-200 flex w-full items-center gap-[9px] font-medium p-3 border-t">
                 <div class="self-stretch flex items-center gap-[9px] flex-1 shrink basis-[0%] my-auto">
                     <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/45e57123962a8953bfb53bdd32aa95f39c12d072?placeholderIfAbsent=true"
                         class="aspect-[1.03] object-contain w-[31px] self-stretch shrink-0 my-auto rounded-[75px]" />
@@ -187,13 +190,14 @@
                     class="aspect-[1] object-contain w-[15px] self-stretch shrink-0 my-auto" />
             </div>
         </div>
-
     </div>
 @endsection
 @section('script')
 <script>
     const up_btns = document.querySelectorAll('.up-btn');
     const fleshs = document.querySelectorAll('.flesh');
+    const aside_flesh = document.querySelector('.aside_flesh');
+    const aside = document.querySelector('.aside');
     
     up_btns.forEach((btn) => {
         const subMenu = btn.nextElementSibling;
@@ -204,26 +208,39 @@
             
             // Toggle sub-menu visibility
             if (subMenu && subMenu.classList.contains('hidden')) {
+                // Prepare for transition
                 subMenu.classList.remove('hidden');
+                subMenu.classList.add('opacity-0', 'max-h-0');
+                
+                // Trigger reflow to ensure transition works
+                void subMenu.offsetWidth;
+                
+                // Animate in
+                subMenu.classList.remove('opacity-0', 'max-h-0');
+                subMenu.classList.add('opacity-100', 'max-h-screen');
                 flesh.classList.add('rotate-87');
             } else if (subMenu) {
-                subMenu.classList.add('hidden');
+                // Animate out
+                subMenu.classList.add('opacity-0', 'max-h-0');
+                subMenu.classList.remove('opacity-100', 'max-h-screen');
                 flesh.classList.remove('rotate-87');
+                
+                // Hide after transition
+                setTimeout(() => {
+                    subMenu.classList.add('hidden');
+                }, 300); 
             }
-
-            // Close other open menus
-            up_btns.forEach((otherBtn) => {
-                if (otherBtn !== btn) {
-                    const otherSubMenu = otherBtn.nextElementSibling;
-                    const otherFlesh = otherBtn.querySelector('.flesh');
-                    
-                    if (otherSubMenu) {
-                        otherSubMenu.classList.add('hidden');
-                        otherFlesh.classList.remove('-rotate-87');
-                    }
-                }
-            });
         });
     });
+
+    aside_flesh.addEventListener('click',function (e) {
+        e.preventDefault();
+        aside.classList.toggle('-translate-x-full');
+        
+        // Rotate the flesh icon
+        this.querySelector('.flesh').classList.toggle('rotate-90');
+        
+    })
+
 </script>
 @endsection
