@@ -323,6 +323,7 @@
       </div>
     </div>
   </section>
+  <footer_componant />
   </template>
 
 <script>
