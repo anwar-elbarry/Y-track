@@ -1,6 +1,10 @@
 <template>
-  <navbar />
-  <section id="about" class="flex flex-col relative min-h-[759px] w-full overflow-hidden pt-4 pb-[71px] px-20 max-md:max-w-full max-md:px-5">
+  <div class="home-container">
+    <!-- navbar -->
+    <Navbar />
+
+    <!-- hero section -->
+    <section id="about" class="flex flex-col relative min-h-[759px] w-full overflow-hidden pt-4 pb-[71px] px-20 max-md:max-w-full max-md:px-5">
         <img
           src="/images/heroimg.png"
           alt="Hero background"
@@ -157,7 +161,7 @@
         </div>
       </div>
       </section>
-  <!-- testimonial section -->
+    <!-- testimonial section -->
       <section id="testimonial" class="flex w-full items-center gap-[40px_91px] justify-center flex-wrap mt-28 max-md:max-w-full max-md:mt-10">
       <div class="self-stretch flex min-w-60 flex-col items-stretch w-[432px] my-auto max-md:max-w-full">
         <h2 class="text-[#061C3D] text-[37px] font-bold leading-10 tracking-[-0.75px] max-md:max-w-full">
@@ -187,7 +191,7 @@
       />
     </section>
     <section id="contact" class="flex flex-col items-center w-full py-16 px-4">
-    <!-- Header -->
+    <!-- contact Header -->
     <div class="max-w-lg text-center mb-12">
       <h2 class="text-4xl font-bold tracking-tight text-[#061C3D] mb-4 md:text-5xl">
         Have a question? Get in touch!
@@ -317,17 +321,27 @@
               Send Message
             </button>
           </form>
-
-          
-        </div>
+      </div>
       </div>
     </div>
   </section>
-  <footer_componant />
-  </template>
+  
+  <!-- footer -->
+  <Footer_componant />
+
+  </div>
+</template>
 
 <script>
+
+import Navbar from '../components/Navbar.vue';
+import Footer_componant from '../components/Footer.vue';
+
 export default {
-  name : 'Home'
+  name : 'Home',
+  components : {
+    Footer_componant,
+    Navbar
+  }
 }
 </script>
