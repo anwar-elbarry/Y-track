@@ -12,25 +12,25 @@
   <!-- Desktop Navigation -->
 <div class="hidden md:flex md:flex-row items-center text-[13px] text-black font-semibold tracking-[1.18px] leading-none justify-center gap-[35px] py-[11px]">
   <router-link to="/" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">Home</router-link>
-  <a href="#about" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">About</a>
-  <a href="#features" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">Features</a>
-  <a href="#testimonial" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">Testimonial</a>
-  <a href="#contact" class="p-2 hover:border-b-2 hover:border-orange-500">Contact us</a>
+  <router-link to="/#about" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">About</router-link>
+  <router-link to="/#features" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">Features</router-link>
+  <router-link to="/#testimonial" class="whitespace-nowrap p-2 hover:border-b-2 hover:border-orange-500">Testimonial</router-link>
+  <router-link to="/#contact" class="p-2 hover:border-b-2 hover:border-orange-500">Contact us</router-link>
 </div>
 
     <!-- Desktop Buttons -->
     <div class="hidden md:flex items-center gap-4 text-xs font-bold text-center  uppercase leading-none px-2 py-[11px]">
-      <a href="/auth" class="flex items-center justify-center border-orange-500 border min-h-[34px] gap-0.5 text-orange-500 whitespace-nowrap w-[68px] rounded-md border-solid">
+      <router-link to="/auth" class="flex items-center justify-center border-orange-500 border min-h-[34px] gap-0.5 text-orange-500 whitespace-nowrap w-[68px] rounded-md border-solid">
         Sign Up
-      </a>
-      <a href="/auth" class="flex items-center justify-center bg-orange-500 min-h-[34px] gap-0.5 text-gray-800 w-[68px] rounded-md">
+      </router-link>
+      <router-link to="/auth" class="flex items-center justify-center bg-orange-500 min-h-[34px] gap-0.5 text-gray-800 w-[68px] rounded-md">
         Sign In
-      </a>
+      </router-link>
     </div>
 
     <!-- Mobile Burger Button -->
     <div class="md:hidden flex items-center">
-      <button id="mobile-menu-button" class="p-2 focus:outline-none">
+      <button @click="toggleMenu()" id="mobile-menu-button" class="p-2 focus:outline-none">
         <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
@@ -39,7 +39,7 @@
   </nav>
 
   <!-- Mobile Menu Dropdown -->
-  <div id="mobile-menu" class="fixed top-16 left-0 right-0 bg-white border border-[rgba(0,0,0,0.1)] border-solid transition-all shadow-md hidden z-50 mx-4">
+  <div id="mobile-menu" :class="{'hidden': !isMobileMenuOpen}" class="fixed top-16 left-0 right-0 bg-white border border-[rgba(0,0,0,0.1)] border-solid transition-all shadow-md z-50 mx-4">
     <div class="flex flex-col text-[13px] text-black font-semibold tracking-[1.18px]">
       <a href="#" class="p-4 border-b border-gray-100 hover:bg-gray-50">Home</a>
       <a href="#" class="p-4 border-b border-gray-100 hover:bg-gray-50">About</a>
@@ -61,30 +61,32 @@
 <script>
 export default {
   name: 'Navbar',
-  methods : {
-    toggleMenu(){
-      document.addEventListener('DOMContentLoaded', function() {
+  data() {
+    return {
+      isMobileMenuOpen: false
+    }
+  },
+  methods: {
+    toggleMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) {
+        mobileMenu.classList.toggle('hidden');
+      }
+    }
+  },
+  mounted() {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
-    
-    mobileMenuButton.addEventListener('click', function() {
-      mobileMenu.classList.toggle('hidden');
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-      const isClickInside = mobileMenuButton.contains(event.target) || mobileMenu.contains(event.target);
-      if (!isClickInside && !mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
+
+    document.addEventListener('click', (event) => {
+      const isClickInside = mobileMenuButton.contains(event.target) || 
+                             (mobileMenu && mobileMenu.contains(event.target));
+      
+      if (!isClickInside && this.isMobileMenuOpen) {
+        this.toggleMenu();
       }
     });
-  });
-    }
-  
-
-  },
-  created(){
-    this.toggleMenu()
   }
-  }
+}
 </script>
