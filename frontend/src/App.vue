@@ -1,6 +1,5 @@
 <template>
     <div class="app-container">
-      <navbar />
       <main>
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
