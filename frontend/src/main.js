@@ -12,10 +12,10 @@ const app = createApp(App);
 app.component("v-icon", OhVueIcon);
 
 import Navbar from './components/Navbar.vue'
-app.component("navbar",Navbar);
+app.component("Navbar",Navbar);
 
 import Footer from './components/Footer.vue'
-app.component('footer_componant',Footer);
+app.component('Footer_componant',Footer);
 
 app.use(router);
 
