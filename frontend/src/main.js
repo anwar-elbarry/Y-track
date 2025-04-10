@@ -17,6 +17,9 @@ app.component("Navbar",Navbar);
 import Footer from './components/Footer.vue'
 app.component('Footer_componant',Footer);
 
+import Aside from './components/Aside.vue';
+app.component('Aside',Aside)
+
 app.use(router);
 
 app.mount("#app");
