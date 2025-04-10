@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.home');
 })->name('home');
-Route::get('/aside',function(){
-    return view('components.aside');
+Route::get('/dashboard',function(){
+    return view('pages.base_dashboard');
 });
 // auth
 Route::get('/auth',[AuthController::class,'index'])->name('auth');

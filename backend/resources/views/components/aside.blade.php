@@ -1,7 +1,7 @@
 @extends('layoats.app')
 @section('main-content')
     <div
-        class="relative aside bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-53 flex-col  mx-auto rounded-xl overflow-auto">
+        class="relative aside bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-53 flex-col  rounded-xl overflow-y-auto overflow-x-hidden">
         <!-- up logo -->
         <div
             class=" flex min-h-10 w-full gap-4 flex items-center justify-center border-[rgba(0,0,0,0.13)] border-b">
@@ -235,7 +235,7 @@
 
     aside_flesh.addEventListener('click',function (e) {
         e.preventDefault();
-        aside.classList.toggle('-translate-x-full');
+        aside.classList.toggle('-translate-x-20');
         
         // Rotate the flesh icon
         this.querySelector('.flesh').classList.toggle('rotate-90');
