@@ -4,7 +4,7 @@
 >
   <input
     type="text"
-    placeholder="Search for products"
+    :placeholder="`Search for ${ title }`"
     class="w-full h-full pl-4 outline-none placeholder-gray-500 text-sm"
   />
   <svg
@@ -24,7 +24,13 @@
 </template>
 <script>
 export default {
-    name : 'SearchBtn'
+    name : 'SearchBtn',
+    props : {
+        title: {
+            type : String,
+            default : 'income'
+        }
+    }
 }
 
 </script>
