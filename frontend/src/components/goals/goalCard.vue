@@ -1,15 +1,16 @@
 <template>
-    <div class="border border-gray-100 shadow-md bg-white p-6 rounded-xl min-w-2xs max-h-60">
+    <div class="border border-gray-100 shadow-md bg-white p-6 rounded-xl min-w-2xs max-h-60 hover:shadow-2xl">
         <div class="flex justify-between items-start">
             <div>
                 <h3 class="text-gray-900 text-xl font-semibold">
                     {{ title }}
                 </h3>
-                <div class="text-gray-600 mt-4">
-                    Target: {{ target }}
+                <div class="flex items-center gap-2 mt-4">
+                    <v-icon name="gi-archery-target" class="text-black"/>
+                    <p class="text-gray-500">Target: {{ target }}</p> 
                 </div>
                 <div class="flex items-center gap-2 mt-3">
-                    <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500"/>
+                    <v-icon name="md-timer-outlined" />
                     <span class="text-gray-500 text-sm">
                         {{ daysRemaining }} days remaining
                     </span>
