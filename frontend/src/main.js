@@ -4,8 +4,8 @@ import App from './App.vue'
 import router from './router';
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaWallet, BiCashCoin , BiCalendarCheckFill , BiEyeFill,RiLineChartLine , GiOnTarget , RiFileTextFill , BiArrowLeft , BiArrowRight} from "oh-vue-icons/icons";
-addIcons(FaWallet, BiCashCoin ,BiCalendarCheckFill ,BiEyeFill, RiLineChartLine , GiOnTarget , RiFileTextFill , BiArrowLeft, BiArrowRight);
+import { FaWallet, BiCashCoin , BiCalendarCheckFill ,LaEditSolid,OiTrash, BiEyeFill,RiLineChartLine , GiOnTarget , RiFileTextFill , BiArrowLeft , BiArrowRight} from "oh-vue-icons/icons";
+addIcons(FaWallet, BiCashCoin ,BiCalendarCheckFill ,LaEditSolid,OiTrash,BiEyeFill, RiLineChartLine , GiOnTarget , RiFileTextFill , BiArrowLeft, BiArrowRight);
 
 
 const app = createApp(App);
