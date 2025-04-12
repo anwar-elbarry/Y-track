@@ -1,10 +1,17 @@
 <template>
   <div class="flex flex-col w-full gap-7">
     <div class="up_content w-full justify-end items-center flex gap-5">
-      <SearchBare />
-      <AddBtn name="Add income" />
+      <SearchBare
+       title="Goal" />
+      <AddBtn name="Add Goal" />
     </div>
     <div class="goals_cards flex flex-wrap justify-evenly gap-4">
+      <goal-card title="Vacation Fund" :target="5000" :days-remaining="45" icon-src="/icons/vacation.svg" :saved="2500"
+        :percentage="50" />
+      <goal-card title="Vacation Fund" :target="5000" :days-remaining="45" icon-src="/icons/vacation.svg" :saved="2500"
+        :percentage="50" />
+      <goal-card title="Vacation Fund" :target="5000" :days-remaining="45" icon-src="/icons/vacation.svg" :saved="2500"
+        :percentage="50" />
       <goal-card title="Vacation Fund" :target="5000" :days-remaining="45" icon-src="/icons/vacation.svg" :saved="2500"
         :percentage="50" />
       <goal-card title="Vacation Fund" :target="5000" :days-remaining="45" icon-src="/icons/vacation.svg" :saved="2500"
