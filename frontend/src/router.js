@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Dashboard from './views/dashboard.vue'
 
 const routes = [
   {
@@ -18,6 +17,18 @@ const routes = [
     path : '/dashboard',
     name : 'Dashboard',
     component : () => import('./views/dashboard.vue'),
+    children : [
+      {
+        path : '',
+        name : 'DashboardHome',
+        component : () => import('./views/DashboardHome.vue')
+      },
+      {
+        path : 'Goals',
+        name : 'Goals',
+        component : () => import('./views/Goals.vue')
+      },
+    ]
   }
 ]
 
