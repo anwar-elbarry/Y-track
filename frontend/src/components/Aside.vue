@@ -1,6 +1,6 @@
 <template>
     <div
-       :class="{'-translate-x-50': !hidedAside}"  class="relative aside bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-53 flex-col rounded-xl">
+       :class="{'-translate-x-50': open}"  class="fixed aside bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-53 flex-col rounded-xl">
         <!-- up logo -->
         <div class="absolute -right-4 top-3 z-20">
             <div @click="toggle_aside()" class="aside_flesh bg-white shadow-md border border-gray-100 w-8 h-8 rounded-full flex items-center justify-center">
@@ -195,11 +195,18 @@
 <script>
 export default {
     name: 'Aside',
-    data() {
-        return {
-            hidedAside: false
+    props : {
+        isOpen : {
+            type : Boolean,
+            required : true
         }
     },
+    data (){
+        return {
+            open : true
+        }
+    },
+    emits : ['toggle-aside'],
     methods: {
         toggle_btns() {
             const up_btns = document.querySelectorAll('.up-btn');
@@ -244,9 +251,10 @@ export default {
             const fleshIcon = document.querySelector('.flesh');
             
             if (aside && flesh && fleshIcon) {
-                this.hidedAside = !this.hidedAside;
+                this.open = !this.open;
                 fleshIcon.classList.toggle('rotate-180');
             }
+            this.$emit('toggle-aside',this.open);
         }
     },
     mounted() {
