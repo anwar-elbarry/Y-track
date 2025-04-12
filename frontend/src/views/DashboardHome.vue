@@ -25,7 +25,7 @@
 
 <script>
 
-import Dash_card from '../components/Dash_card.vue';
+import Dash_card from '../components/dashboard/Dash_card.vue';
 
 export default {
     name: 'DashboardHome',
