@@ -1,7 +1,13 @@
 <template>
 <div class="dashboard_container flex">
-    <dash_Aside />
-    <main>
+    <dash_Aside  
+    :is-open="isAsideOpen"
+    @toggle-aside="handleAsideToggle"
+    />
+    <main :class="[
+        'flex-grow p-5 transition-all duration-300',
+        !isAsideOpen ? 'ml-54' : 'ml-0'
+      ]">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
             <component :is="Component" />
@@ -20,6 +26,16 @@ export default {
     name : 'Dashboard',
     components : {
         dash_Aside
+    },
+    data(){
+      return {
+        isAsideOpen : true
+      }
+    },
+    methods : {
+      handleAsideToggle(isOpen){
+        this.isAsideOpen = isOpen;
+      }
     }
 }
 </script>
