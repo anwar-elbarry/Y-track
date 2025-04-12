@@ -9,21 +9,14 @@
                     Target: {{ target }}
                 </div>
                 <div class="flex items-center gap-2 mt-3">
-                    <img
-                        src="#"
-                        class="w-4 h-4"
-                        alt="Calendar icon"
-                    />
+                    <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500"/>
                     <span class="text-gray-500 text-sm">
                         {{ daysRemaining }} days remaining
                     </span>
                 </div>
             </div>
-            <img
-                :src="iconSrc"
-                class="w-10 h-10"
-                alt="Goal icon"
-            />
+            <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500"/>
+            <v-icon name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
         </div>
         <div class="mt-6">
             <div class="bg-gray-200 rounded-full h-2">
