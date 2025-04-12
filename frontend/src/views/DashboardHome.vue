@@ -1,7 +1,7 @@
 <template>
         <div class="cards gap-2 flex flex-wrap w-full">
           <Dash_card 
-           :value="3000"
+           :value="300"
            title="Income"
            
           />
@@ -25,7 +25,7 @@
 
 <script>
 
-import Dash_card from './Dash_card.vue';
+import Dash_card from '../components/Dash_card.vue';
 
 export default {
     name: 'DashboardHome',
