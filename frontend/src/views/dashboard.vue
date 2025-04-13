@@ -6,7 +6,7 @@
     />
     <main :class="[
         'flex-grow p-5 transition-all duration-300',
-        !isAsideOpen ? 'ml-54' : 'ml-0'
+        isAsideOpen ? 'ml-54' : 'ml-0'
       ]">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
