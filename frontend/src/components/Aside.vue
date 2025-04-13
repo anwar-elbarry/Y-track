@@ -1,11 +1,11 @@
 <template>
     <div
-       :class="{'-translate-x-50': open}"  class="fixed aside bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-53 flex-col rounded-xl">
+       :class="{'-translate-x-50': !open}"  class="fixed aside bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-53 flex-col rounded-xl">
         <!-- up logo -->
         <div class="absolute -right-4 top-3 z-20">
             <div @click="toggle_aside()" class="aside_flesh bg-orange-500 shadow-md border border-gray-100 w-8 h-8 rounded-full flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="flesh size-4 text-white">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                 </svg>
             </div>
         </div>
