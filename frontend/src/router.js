@@ -43,6 +43,11 @@ const routes = [
         name : 'Bills',
         component : () => import('./views/Bills.vue')
       },
+      {
+        path : 'Transactions_History',
+        name : 'Transactions_History',
+        component : () => import('./views/Transictions_History.vue')
+      },
     ]
   }
 ]
