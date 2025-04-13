@@ -3,18 +3,11 @@
       <table class="min-w-full bg-white">
         <!-- Table Header -->
         <thead>
-          <tr class="border-b bg-gray-50">
+          <tr class="border-b border-gray-300 bg-gray-50">
             <th class="w-12 p-3">
               <input type="checkbox" class="rounded border-gray-300" @change="toggleSelectAll" v-model="selectAll">
             </th>
-            <th class="p-3 text-left text-sm font-medium text-gray-500">
-              <div class="flex items-center">
-                Income
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </th>
+            <th class="p-3 text-left text-sm font-medium text-gray-500">Income</th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">Amount</th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">Date</th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">Source</th>
@@ -65,7 +58,7 @@
         </button>
         
         <div class="flex items-center space-x-2">
-          <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer bg-blue-100 text-blue-800">1</span>
+          <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer bg-orange-100 text-orange-800">1</span>
           <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer">2</span>
           <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer">3</span>
           <span class="px-3 py-1 text-sm cursor-default">...</span>

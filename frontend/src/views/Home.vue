@@ -334,14 +334,7 @@
 
 <script>
 
-import Navbar from '../components/Navbar.vue';
-import Footer_componant from '../components/Footer.vue';
-
 export default {
-  name : 'Home',
-  components : {
-    Footer_componant,
-    Navbar
-  }
+  name : 'Home'
 }
 </script>
