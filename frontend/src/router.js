@@ -19,7 +19,7 @@ const routes = [
     component : () => import('./views/dashboard.vue'),
     children : [
       {
-        path : '',
+        path : 'DashboardHome',
         name : 'DashboardHome',
         component : () => import('./views/DashboardHome.vue')
       },
@@ -52,6 +52,11 @@ const routes = [
         path : 'Clients',
         name : 'Clients',
         component : () => import('./views/Clients.vue')
+      },
+      {
+        path : 'ProfileSettings',
+        name : 'ProfileSettings',
+        component : () => import('./views/profile_settings.vue')
       },
     ]
   }
