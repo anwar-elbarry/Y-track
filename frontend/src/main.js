@@ -20,6 +20,9 @@ app.component('Footer_componant',Footer);
 import Aside from './components/Aside.vue';
 app.component('Aside',Aside)
 
+import incomes from './views/incomes.vue';
+app.component('Incomes',incomes);
+
 app.use(router);
 
 app.mount("#app");
