@@ -58,6 +58,16 @@ const routes = [
         name : 'ProfileSettings',
         component : () => import('./views/profile_settings.vue')
       },
+      {
+        path : 'Taxes',
+        name : 'Taxes',
+        component : () => import('./views/Taxes.vue')
+      },
+      {
+        path : 'Invoices',
+        name : 'Invoices',
+        component : () => import('./views/invoices.vue')
+      },
     ]
   }
 ]
