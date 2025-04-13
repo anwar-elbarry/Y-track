@@ -29,7 +29,7 @@
             <td class="p-3 text-sm text-gray-700">{{ item.due_date }}</td>
             <td class="p-3 text-sm">
               <div class="flex items-center">
-                <img v-if="item.image" :src="item.image" class="w-8 h-8 rounded-full mr-2" alt="Profile">
+                <img  v-if="item.image" :src="item.image" class="w-8 h-8 rounded-full mr-2" alt="Profile">
                 <div v-else class="w-8 h-8 rounded-full bg-gray-200 mr-2 flex items-center justify-center">
                   <span class="text-gray-600 font-bold">{{ getInitials(item.name) }}</span>
                 </div>
@@ -39,8 +39,8 @@
               </div>
             </td>
             <td class="p-3">
-              <span class="px-2 py-1 text-xs rounded-full" :class="{ 'bg-green-100 text-green-800': item.status === 'Active', 'bg-red-100 text-red-800': item.status === 'Inactive' }">
-                <span class="inline-block w-2 h-2 rounded-full mr-1" :class="{ 'bg-green-500': item.status === 'Active', 'bg-red-500': item.status === 'Inactive' }"></span>
+              <span class="px-2 py-1 border border-gray-500 text-xs rounded-full bg-white" :class="{ ' text-green-800': item.status === 'Paid', ' text-red-800': item.status === 'unpaid' }">
+                <span class="inline-block w-2 h-2 rounded-full mr-1" :class="{ 'bg-green-500': item.status === 'Paid', 'bg-red-500': item.status === 'unpaid' }"></span>
                 {{ item.status }}
               </span>
             </td>
@@ -92,7 +92,7 @@
             currency: 'DH',
             due_date: 'Jan 6, 2025',
             name: 'Olivia Rhye',
-            status: 'Active',
+            status: 'unpaid',
             category: 'internet',
             frequency: 'Monthly',
             selected: false
@@ -102,8 +102,9 @@
             amount: 2000,
             currency: 'DH',
             due_date: 'Jan 6, 2025',
+            image: '/Y-track/frontend/src/assets/bills_icons/Google_Ads.png',
             name: 'Digital Product Sales',
-            status: 'Active',
+            status: 'Paid',
             category: 'internet',
             frequency: 'One-Time',
             selected: false
@@ -115,7 +116,7 @@
             due_date: 'Jan 6, 2025',
             name: 'Lana Steiner',
             email: 'lana@untitledui.com',
-            status: 'Active',
+            status: 'Paid',
             category: 'internet',
             frequency: 'Monthly',
             selected: false
@@ -126,7 +127,7 @@
             currency: 'DH',
             due_date: 'Jan 5, 2025',
             name: 'Demi Wilkinson',
-            status: 'Active',
+            status: 'Paid',
             category: 'internet',
             frequency: 'Annually',
             selected: false
@@ -137,7 +138,7 @@
             currency: 'DH',
             due_date: 'Jan 5, 2025',
             name: 'Candice Wu',
-            status: 'Active',
+            status: 'Paid',
             category: 'internet',
             frequency: 'Weekly',
             selected: false
@@ -148,7 +149,7 @@
             currency: 'DH',
             due_date: 'Jan 5, 2025',
             name: 'Natali Craig',
-            status: 'Active',
+            status: 'Paid',
             category: 'internet',
             frequency: 'Weekly',
             selected: false
@@ -159,7 +160,7 @@
             currency: 'DH',
             due_date: 'Jan 4, 2025',
             name: 'Drew Cano',
-            status: 'Active',
+            status: 'Paid',
             category: 'internet',
             frequency: 'Weekly',
             selected: false
