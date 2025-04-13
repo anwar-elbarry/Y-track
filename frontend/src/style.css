@@ -24,6 +24,7 @@ html {
   color : #64748B;
   padding-left:1rem;
   font-size: x-small;
+  cursor: pointer;
 }
 .toggle_button li:hover{
   color : #ff8800;
