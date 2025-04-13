@@ -13,6 +13,7 @@
             <th class="p-3 text-left text-sm font-medium text-gray-500">Source</th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">Status</th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">Frequency</th>
+            <th class="p-3 text-left text-sm font-medium text-gray-500">Actions</th>
           </tr>
         </thead>
         
@@ -44,12 +45,16 @@
               </span>
             </td>
             <td class="p-3 text-sm text-gray-700">{{ item.frequency }}</td>
+            <td class="p-3 text-sm text-gray-700">
+                <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
+                <v-icon name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
+            </td>
           </tr>
         </tbody>
       </table>
       
       <!-- Pagination -->
-      <div class="flex items-center justify-between p-4 border-t">
+      <div class="flex items-center justify-between p-4">
         <button class="flex items-center px-4 py-2 text-sm border rounded text-gray-600 hover:bg-gray-50">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
