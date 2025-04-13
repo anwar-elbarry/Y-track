@@ -120,6 +120,7 @@
                         </div>
                     </div>
                     <ul class="flex flex-col ml-3 gap-3 hidden">
+                        <router-link to="/dashboard/Taxes">
                         <li class="flex gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-4">
@@ -129,6 +130,7 @@
 
                             Tax Dashboard
                         </li>
+                    </router-link>
                         <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -155,6 +157,7 @@
                         </div>
                     </div>
                     <ul class="flex flex-col ml-3 gap-3 hidden">
+                        <router-link to="/dashboard/Invoices">
                         <li class="flex gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-4">
@@ -165,14 +168,17 @@
 
                             Invoice Generator
                         </li>
-                        <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    </router-link>
+                            <li class="flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                             </svg>
 
 
-                            Reports Generator</li>
+                            Reports</li>
+                        
+                       
                     </ul>
                 </div>
                 <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
@@ -192,6 +198,7 @@
             </div>
 
             <div class="border-slate-200 flex w-full items-center gap-[9px] font-medium p-3 border-t">
+                <router-link to="/dashboard/ProfileSettings">
                 <div class="self-stretch flex items-center gap-[9px] flex-1 shrink basis-[0%] my-auto">
                     <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/45e57123962a8953bfb53bdd32aa95f39c12d072?placeholderIfAbsent=true"
                         class="aspect-[1.03] object-contain w-[31px] self-stretch shrink-0 my-auto rounded-[75px]" />
@@ -204,6 +211,7 @@
                         </div>
                     </div>
                 </div>
+                </router-link>
                 <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/ba6d3376f1f0a8d99b416d6c40adcfa1cc9b51d0?placeholderIfAbsent=true"
                     class="aspect-[1] object-contain w-[15px] self-stretch shrink-0 my-auto" />
             </div>
