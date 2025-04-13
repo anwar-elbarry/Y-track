@@ -17,7 +17,7 @@
         <!-- main content -->
         <div class="side  overflow-y-auto flex flex-col justify-between w-full  h-full">
             <div class="buttons flex flex-col gap-2 py-4">
-                <router-link to="/dashboard">
+                <router-link :to="{name : 'DashboardHome'}">
                 <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
                     
                         <div class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
