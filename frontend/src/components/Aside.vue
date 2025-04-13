@@ -2,7 +2,7 @@
     <div
        :class="{'-translate-x-50': !open}"  class="fixed aside bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-53 flex-col rounded-xl">
         <!-- up logo -->
-        <div class="absolute -right-4 top-3 z-20">
+        <div class="absolute -right-4 top-3 z-20 cursor-pointer">
             <div @click="toggle_aside()" class="aside_flesh bg-orange-500 shadow-md border border-gray-100 w-8 h-8 rounded-full flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="flesh size-4 text-white">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -15,7 +15,7 @@
             <img src="/images/Y-TRACK_dark.svg" class="object-contain w-[70px] h-[26px]" />
         </div>
         <!-- main content -->
-        <div class="side flex flex-col justify-between w-full  h-full">
+        <div class="side  overflow-y-auto flex flex-col justify-between w-full  h-full">
             <div class="buttons flex flex-col gap-2 py-4">
                 <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
                     <div class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
