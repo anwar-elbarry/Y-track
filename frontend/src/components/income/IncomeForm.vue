@@ -120,35 +120,6 @@
             <p v-if="errors.customSource" class="mt-1 text-sm text-red-600">{{ errors.customSource }}</p>
           </div>
           
-          <!-- Status Field -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-            <div class="flex">
-              <button 
-                type="button"
-                @click="form.status = 'Active'"
-                class="flex-1 py-2 px-4 text-center text-sm font-medium transition-colors duration-200 rounded-l-md border"
-                :class="form.status === 'Active' ? 'bg-orange-100 border-orange-500 text-orange-700' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'"
-              >
-                <div class="flex items-center justify-center">
-                  <span class="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
-                  Active
-                </div>
-              </button>
-              <button 
-                type="button"
-                @click="form.status = 'Inactive'"
-                class="flex-1 py-2 px-4 text-center text-sm font-medium transition-colors duration-200 rounded-r-md border"
-                :class="form.status === 'Inactive' ? 'bg-orange-100 border-orange-500 text-orange-700' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'"
-              >
-                <div class="flex items-center justify-center">
-                  <span class="h-2 w-2 bg-gray-400 rounded-full mr-2"></span>
-                  Inactive
-                </div>
-              </button>
-            </div>
-          </div>
-          
           <!-- Frequency Field -->
           <div>
             <label for="frequency" class="block text-sm font-medium text-gray-700 mb-1">Frequency*</label>
@@ -172,18 +143,6 @@
               </div>
             </div>
             <p v-if="errors.frequency" class="mt-1 text-sm text-red-600">{{ errors.frequency }}</p>
-          </div>
-          
-          <!-- Description Field (New) -->
-          <div>
-            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description <span class="text-gray-400">(optional)</span></label>
-            <textarea 
-              id="description" 
-              v-model="form.description" 
-              class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500"
-              placeholder="Additional details about this income"
-              rows="3"
-            ></textarea>
           </div>
           
           <!-- Form Actions -->
