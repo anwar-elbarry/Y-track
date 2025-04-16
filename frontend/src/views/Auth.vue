@@ -163,7 +163,7 @@ Make informed decisions and stay on top of your financial goals.</p>
 
 import Footer_componant from '../components/Footer.vue';
 import Navbar from '../components/Navbar.vue';
-
+import axios from 'axios';
 export default {
   name: 'Auth',
   components: {
@@ -214,6 +214,9 @@ export default {
         icon.classList.remove('fa-eye-slash');
         icon.classList.add('fa-eye');
       }
+    },
+    submitRegisteration(){
+      
     }
   }
 }
