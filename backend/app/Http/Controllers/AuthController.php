@@ -8,16 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use Spatie\FlareClient\Api;
 class AuthController extends Controller
 {
-
-
-
-
     public function index(){
         $currencies = $this->CurrenciesApi();
-        return view('auth.auth',compact("currencies"));
+        return response()->json([
+          'currencies' => $currencies
+        ],200);
     }
+    // currency api function
     public function CurrenciesApi(){
         $curl = curl_init();
 
@@ -57,27 +57,44 @@ class AuthController extends Controller
             'currency' => $validated['currency'],
             'email_verified_at' => now()
           ]);
-        Auth::login($user);
-        return redirect()->route('auth');
+
+        return response()->json([
+          'message' => 'User registered successfully',
+          'user' => $user
+      ], 201);
     }
 
     public function signIn(Request $request){
-         $validate = $request->validate([
-             'email' => ['required','string'],
-             'password' => ['required','string']
-         ]);
+      $validate = $request->validate([
+        'email' => ['required', 'string', 'email'],
+        'password' => ['required', 'string']
+    ]);
 
-         if(Auth::attempt($validate)){
-            return redirect()->route('dashboard');
-         }
-         return redirect()->back()->with('error','The provided credentials do not match our records.');
+    $user = User::where('email', $validate['email'])->first();
+
+    if (!$user || !Hash::check($validate['password'], $user->password)) {
+        return response()->json([
+            'message' => 'Email ou mot de passe incorrect.'
+        ], 401);
+    }
+
+    Auth::login($user);
+
+    $token = $user->createToken('API Token')->plainTextToken;
+
+    return response()->json([
+        'message' => 'Utilisateur connecté avec succès.',
+        'user' => $user,
+        'token' => $token
+    ], 200);
+         
     }
 
     public function logOut(Request $request){
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->user()->currentAccessToken()->delete();
 
-        return to_route('auth');
+        return response()->json([
+          'message' => 'user logged out seccussfully'
+        ],200);
     }
 }
