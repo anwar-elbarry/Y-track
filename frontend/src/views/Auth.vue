@@ -34,16 +34,18 @@ Make informed decisions and stay on top of your financial goals.</p>
         </div>
         
         <!-- Sign In Form -->
-        <form id="signin-form" action="#" method="post" class="space-y-6">
+        <form id="signin-form" 
+        @submit.prevent="submitLogin"
+        class="space-y-6">
        
           <div>
             <label for="signin-email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
-            <input type="email" id="signin-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="name@gmail.com" required>
+            <input v-model="loginCredentials.email" type="email" id="signin-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="name@gmail.com" required>
           </div>
           <div>
             <label for="signin-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <div class="relative">
-              <input type="password" id="signin-password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="••••••••" required>
+              <input v-model="loginCredentials.password" type="password" id="signin-password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="••••••••" required>
               <button @click="togglePasswordVisibility('signin-password' , 'signin-password-icon')" type="button" class="absolute right-3 top-2 text-gray-500" >
                 <i id="signin-password-icon" class="fa-regular fa-eye"></i>
               </button>
@@ -116,7 +118,7 @@ Make informed decisions and stay on top of your financial goals.</p>
     <div class="relative">
       <select v-model="singupCredentials.currency" id="currency" name="currency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600">
       <option value="#">Select your preffered Currency</option>
-        <option v-for="(currency , code) in currencies" :value="currency">{{ code }}  :  {{ currency }}</option>
+        <option v-for="(currency , code) in currencies" :value="code">{{ code }}  :  {{ currency }}</option>
       </select>
     </div>
   </div>
@@ -161,6 +163,7 @@ Make informed decisions and stay on top of your financial goals.</p>
 import Footer_componant from '../components/Footer.vue';
 import Navbar from '../components/Navbar.vue';
 import api from '../api'
+import auth from '../stores/auth';
 
 export default {
   name: 'Auth',
@@ -230,6 +233,12 @@ export default {
       .then(Response => {
         console.log(Response.data.user);
         console.log(Response.data.message);
+            this.singupCredentials.email = ''
+            this.singupCredentials.name = ''
+            this.singupCredentials.password = ''
+            this.singupCredentials.confirmPassword = ''
+            this.singupCredentials.currency = ''
+            this.$router.push('/auth#signin-form')
       })
       .catch(error => {
         console.log('error' , error);
@@ -244,6 +253,17 @@ export default {
       .catch(error => {
         console.log('error' , error);
       })
+    },
+    async submitLogin(){
+        try {
+          const authStore = auth()
+          await authStore.login(this.loginCredentials)
+          console.log(authStore.message)
+          this.$router.push('/dashboard')
+        }catch(error){
+          console.log(error)
+          this.loginError = error.response?.data?.message || 'Login failed'
+        }
     }
   },
   created(){
