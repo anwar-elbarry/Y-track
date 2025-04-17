@@ -44,7 +44,7 @@ Make informed decisions and stay on top of your financial goals.</p>
             <label for="signin-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <div class="relative">
               <input type="password" id="signin-password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="••••••••" required>
-              <button type="button" class="absolute right-3 top-2 text-gray-500" >
+              <button @click="togglePasswordVisibility('signin-password' , 'signin-password-icon')" type="button" class="absolute right-3 top-2 text-gray-500" >
                 <i id="signin-password-icon" class="fa-regular fa-eye"></i>
               </button>
             </div>
@@ -84,42 +84,39 @@ Make informed decisions and stay on top of your financial goals.</p>
         </form>
   
         <!-- Sign Up Form -->
-        <form id="signup-form" action="#" method="post" class="hidden space-y-6">
+        <form id="signup-form" 
+        @submit.prevent="submitRegisteration" 
+        class="hidden space-y-6">
           <div>
             <label for="signup-username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-            <input type="text" id="signup-username" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="johndoe" required>
+            <input v-model="singupCredentials.name" type="text" id="signup-username" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="johndoe" required>
           </div>
           <div>
             <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
-            <input type="email" id="signup-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="name@gmail.com" required>
+            <input v-model="singupCredentials.email" type="email" id="signup-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="name@gmail.com" required>
           </div>
           <div>
             <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <div class="relative">
-              <input type="password" id="signup-password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="••••••••" required>
-              <button type="button" class="absolute right-3 top-2 text-gray-500">
+              <input v-model="singupCredentials.password" type="password" id="signup-password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="••••••••" required>
+              <button @click="togglePasswordVisibility('signup-password' , 'signup-password-icon')" type="button" class="absolute right-3 top-2 text-gray-500">
                 <i id="signup-password-icon" class="fa-regular fa-eye"></i>
               </button>
             </div>
             <p class="text-xs text-gray-500 mt-1">Password must be at least 8 characters with numbers and special characters.</p>
           </div>
           <div>
-            <label for="signup-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+            <label  for="signup-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
             <div class="relative">
-              <input type="password" id="signup-confirm-password" name="confirm_password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="••••••••" required>
-              <button type="button" class="absolute right-3 top-2 text-gray-500" >
-                <i id="signup-confirm-password-icon" class="fa-regular fa-eye"></i>
-              </button>
+              <input v-model="singupCredentials.confirmPassword" type="password" id="signup-confirm-password" name="confirm_password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600" placeholder="••••••••" required>
             </div>
           </div>
           <div>
     <label for="currency" class="block text-sm font-medium text-gray-700 mb-1">Preferred Currency</label>
     <div class="relative">
-      <select id="currency" name="currency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600">
+      <select v-model="singupCredentials.currency" id="currency" name="currency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600">
       <option value="#">Select your preffered Currency</option>
-        
-        <option value="usd">usd </option>
-       
+        <option v-for="(currency , code) in currencies" :value="currency">{{ code }}  :  {{ currency }}</option>
       </select>
     </div>
   </div>
@@ -159,11 +156,12 @@ Make informed decisions and stay on top of your financial goals.</p>
   <Footer_componant />
   </div>
 </template>
-<script>
+<script >
 
 import Footer_componant from '../components/Footer.vue';
 import Navbar from '../components/Navbar.vue';
-import axios from 'axios';
+import api from '../api'
+
 export default {
   name: 'Auth',
   components: {
@@ -172,7 +170,19 @@ export default {
   },
   data() {
     return {
-      activeForm: 'signin'
+      activeForm: 'signin',
+      currencies: [] ,
+      loginCredentials : {
+        email : '',
+        password : '',
+      },
+      singupCredentials : {
+        name : '',
+        email : '',
+        password : '',
+        confirmPassword : '',
+        currency : '',
+      }
     }
   },
   methods: {
@@ -215,9 +225,29 @@ export default {
         icon.classList.add('fa-eye');
       }
     },
-    submitRegisteration(){
-      
+   async submitRegisteration(){
+      api.post('/auth/signup',this.singupCredentials)
+      .then(Response => {
+        console.log(Response.data.user);
+        console.log(Response.data.message);
+      })
+      .catch(error => {
+        console.log('error' , error);
+      });
+      },
+   async getCurrencies(){
+      api.get('/auth')
+      .then(response => {
+        this.currencies = response.data.currencies
+        console.log(this.currencies);
+      })
+      .catch(error => {
+        console.log('error' , error);
+      })
     }
+  },
+  created(){
+    this.getCurrencies();
   }
 }
 </script>
