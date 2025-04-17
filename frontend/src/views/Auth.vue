@@ -233,11 +233,7 @@ export default {
       .then(Response => {
         console.log(Response.data.user);
         console.log(Response.data.message);
-            this.singupCredentials.email = ''
-            this.singupCredentials.name = ''
-            this.singupCredentials.password = ''
-            this.singupCredentials.confirmPassword = ''
-            this.singupCredentials.currency = ''
+            this.$refs.signinForm.reset();
             this.$router.push('/auth#signin-form')
       })
       .catch(error => {
@@ -259,6 +255,7 @@ export default {
           const authStore = auth()
           await authStore.login(this.loginCredentials)
           console.log(authStore.message)
+          this.$refs.signupForm.reset();
           this.$router.push('/dashboard')
         }catch(error){
           console.log(error)
