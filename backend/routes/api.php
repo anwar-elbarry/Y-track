@@ -15,15 +15,20 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('/auth',[AuthController::class,'index'])->name('auth');
-Route::post('/auth/signup',[AuthController::class,'signUp'])->name('signup');
-Route::post('/auth/signin',[AuthController::class,'signIn'])->name('signin');
-Route::middleware('auth:sanctum')->group(function(){
-    Route::post('/auth/logout',[AuthController::class,'logOut'])->name('logout');
+
+    // Auth Routes
+Route::prefix('/auth')->group(function(){
+    Route::get('/',[AuthController::class,'index'])->name('auth');
+    Route::post('/signup',[AuthController::class,'signUp'])->name('signup');
+    Route::post('/signin',[AuthController::class,'signIn'])->name('signin');
     // googleAuth
-    Route::get('/auth/google',[GoogleAuthController::class,'redirect'])->name('google.login');
-    Route::get('/auth/google/callback',[GoogleAuthController::class,'callback']);
+    Route::get('/google',[GoogleAuthController::class,'redirect'])->name('google.login');
+    Route::get('/google/callback',[GoogleAuthController::class,'callback']);
     // FacebookAuth
-    Route::get('/auth/facebook',[FacebookAuthController::class,'redirect'])->name('facebook.login');
-    Route::get('/auth/facebook/callback',[FacebookAuthController::class,'callback']);
+    Route::get('/facebook',[FacebookAuthController::class,'redirect'])->name('facebook.login');
+    Route::get('/facebook/callback',[FacebookAuthController::class,'callback']);
+    // logoutAuth
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::post('/logout',[AuthController::class,'logOut'])->name('logout');
+    });    
 });
