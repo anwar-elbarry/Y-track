@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('incomes', function (Blueprint $table) {
+        Schema::create('taxes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('client_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('tax_type');
+            $table->decimal('rate', 5, 2);
             $table->decimal('amount', 10, 2);
-            $table->string('source');
-            $table->date('date');
-            $table->enum('frequency', ['one-time', 'daily', 'weekly', 'monthly', 'yearly'])->default('one-time');
+            $table->date('due_date');
+            $table->enum('frequency', ['one-time', 'monthly', 'quarterly', 'yearly'])->default('yearly');
+            $table->enum('status', ['pending', 'paid', 'overdue'])->default('pending');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('income');
+        Schema::dropIfExists('taxes');
     }
 };

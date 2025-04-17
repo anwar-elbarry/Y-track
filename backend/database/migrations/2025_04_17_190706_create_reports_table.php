@@ -11,14 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('incomes', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('client_id')->nullable()->constrained()->onDelete('set null');
-            $table->decimal('amount', 10, 2);
-            $table->string('source');
-            $table->date('date');
-            $table->enum('frequency', ['one-time', 'daily', 'weekly', 'monthly', 'yearly'])->default('one-time');
+            $table->string('title');
+            $table->enum('report_type', [
+                'income', 
+                'expense', 
+                'tax', 
+                'bill', 
+                'financial_summary',
+            ]);
+            $table->string('file_pdf_path')->nullable();
+            $table->string('file_csv_path')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('income');
+        Schema::dropIfExists('reports');
     }
 };

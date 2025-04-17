@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('incomes', function (Blueprint $table) {
+        Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('client_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('nom');
             $table->decimal('amount', 10, 2);
-            $table->string('source');
-            $table->date('date');
-            $table->enum('frequency', ['one-time', 'daily', 'weekly', 'monthly', 'yearly'])->default('one-time');
+            $table->string('bills_category');
+            $table->enum('frequency', ['one-time', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly'])->default('monthly');
+            $table->date('due_date');
+            $table->date('last_payment')->nullable();
+            $table->boolean('is_recurred')->default(false);
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('income');
+        Schema::dropIfExists('bills');
     }
 };
