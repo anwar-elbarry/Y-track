@@ -5,7 +5,7 @@
       <img
         src="/images/Y-TRACK_dark.svg"
         alt="Y-track logo"
-        class="aspect-[2.71] object-contain w-18 self-stretch"
+        class="aspect-[2.71] object-contain max-w-18 "
       />
     </div>
 
