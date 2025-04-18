@@ -2,6 +2,7 @@
 use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IncomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +32,11 @@ Route::prefix('/auth')->group(function(){
     Route::middleware('auth:sanctum')->group(function(){
         Route::post('/logout',[AuthController::class,'logOut'])->name('logout');
     });    
+});
+
+Route::prefix('/income')->group(function (){
+    Route::post('/create',[IncomeController::class,'store'])->name('create');
+    Route::post('/update',[IncomeController::class,'update'])->name('update');
+    Route::post('/removeMultiple',[IncomeController::class,'destroyMultiple'])->name('destroy_Multiple');
+    Route::delete('/remove/{id}',[IncomeController::class,'destroy'])->name('destroy');
 });
