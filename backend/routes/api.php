@@ -35,8 +35,10 @@ Route::prefix('/auth')->group(function(){
 });
 
 Route::prefix('/income')->group(function (){
-    Route::post('/create',[IncomeController::class,'store'])->name('create');
-    Route::post('/update',[IncomeController::class,'update'])->name('update');
-    Route::post('/removeMultiple',[IncomeController::class,'destroyMultiple'])->name('destroy_Multiple');
-    Route::delete('/remove/{id}',[IncomeController::class,'destroy'])->name('destroy');
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::post('/create',[IncomeController::class,'store'])->name('create');
+        Route::post('/update',[IncomeController::class,'update'])->name('update');
+        Route::post('/removeMultiple',[IncomeController::class,'destroyMultiple'])->name('destroy_Multiple');
+        Route::delete('/remove/{id}',[IncomeController::class,'destroy'])->name('destroy');
+    });
 });
