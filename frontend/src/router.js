@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import api from './api'
 const routes = [
   {
     path: '/',
@@ -16,6 +16,7 @@ const routes = [
   {
     path : '/dashboard',
     name : 'Dashboard',
+    meta : {requiresAuth : true},
     component : () => import('./views/dashboard.vue'),
     children : [
       {
@@ -96,6 +97,19 @@ const router = createRouter({
       return savedPosition
     }
     return { top: 0 }
+  }
+})
+
+router.beforeEach(async (to,from,next) => {
+  if(to.meta.requiresAuth){
+    try{
+      await api.get('/api/auth/user')
+      next()
+    }catch(error){
+      next('/auth')
+    }
+  }else{
+    next()
   }
 })
 
