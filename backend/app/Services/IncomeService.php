@@ -5,16 +5,16 @@ use App\Models\Income;
 USE Illuminate\Support\Facades\DB;
 class IncomeService {
 
-    function showAll(){
+   public function showAll(){
         $incomes = Income::all();
         return $incomes;
     }
-    function create(array $incomeData){
+   public  function create(array $incomeData){
         $income =  Income::create($incomeData);
         return $income;
     }
 
-    function update(int $incomeId , array $incomeData){
+   public  function update(int $incomeId , array $incomeData){
         $income = Income::findOrFail($incomeId);
         if($income->update($incomeData)){
             return true;
@@ -22,7 +22,7 @@ class IncomeService {
         return false;
     }
 
-    function remove(int $incomeId){
+    public function remove(int $incomeId){
         $income = Income::findOrFail($incomeId);
         if($income->delete()){
             return true;
@@ -30,7 +30,7 @@ class IncomeService {
         return false;
     }
 
-    function removeMultiple(array $incomesId){
+    public function removeMultiple(array $incomesId){
         if(Income::destroy($incomesId)){
             return true;
         }
