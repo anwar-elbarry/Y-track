@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import api from './api'
+import auth from './stores/auth'
 const routes = [
   {
     path: '/',
@@ -103,10 +104,19 @@ const router = createRouter({
 router.beforeEach(async (to,from,next) => {
   if(to.meta.requiresAuth){
     try{
-      await api.get('/api/auth/user')
+      const user = localStorage.getItem("user");
+      const token = localStorage.getItem("token");
+
+      if (!user && !token){
+        throw new Error("no user");
+      }
+
       next()
     }catch(error){
+      const {logout} = auth();
+      logout();
       next('/auth')
+
     }
   }else{
     next()

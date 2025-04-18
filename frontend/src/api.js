@@ -3,13 +3,14 @@ import axios from "axios";
 import useAuthStore from './stores/auth'; 
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
+  baseURL: 'http://localhost:8000',
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  withCredentials: true  
 });
 
-// Add request interceptor
+//  request interceptor
 api.interceptors.request.use((config) => {
   const authStore = useAuthStore(); // get the store instance
   if (authStore.token) {

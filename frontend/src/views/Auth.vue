@@ -229,11 +229,15 @@ export default {
       }
     },
    async submitRegisteration(){
-      api.post('/auth/signup',this.singupCredentials)
+      api.post('api/auth/signup',this.singupCredentials)
       .then(Response => {
         console.log(Response.data.user);
         console.log(Response.data.message);
-            this.$refs.signinForm.reset();
+        this.singupCredentials.name = '';
+          this.singupCredentials.email = '';
+          this.singupCredentials.confirmPassword = '';
+          this.singupCredentials.currency = '';
+          this.singupCredentials.password = '';
             this.$router.push('/auth#signin-form')
       })
       .catch(error => {
@@ -241,7 +245,7 @@ export default {
       });
       },
    async getCurrencies(){
-      api.get('/auth')
+      api.get('/api/auth')
       .then(response => {
         this.currencies = response.data.currencies
         console.log(this.currencies);
@@ -255,7 +259,8 @@ export default {
           const authStore = auth()
           await authStore.login(this.loginCredentials)
           console.log(authStore.message)
-          this.$refs.signupForm.reset();
+          this.loginCredentials.email = '';
+          this.loginCredentials.password = '';
           this.$router.push('/dashboard')
         }catch(error){
           console.log(error)

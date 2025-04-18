@@ -18,6 +18,7 @@
         </thead>
         
         <!-- Table Body -->
+         
         <tbody>
           <tr v-for="item in incomeItems" :key="item.id" class="border-b border-gray-200 hover:bg-gray-50">
             <td class="p-3">
@@ -78,6 +79,8 @@
   </template>
   
   <script>
+import api from '../../api';
+
   export default {
     
     name : 'incomeTable',
@@ -85,82 +88,82 @@
       return {
         selectAll: false,
         incomeItems: [
-          {
-            id: '#3066',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 6, 2025',
-            source: 'Olivia Rhye',
-            email: 'olivia@untitledui.com',
-            status: 'Active',
-            frequency: 'Monthly',
-            selected: false
-          },
-          {
-            id: '#3065',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 6, 2025',
-            source: 'Digital Product Sales',
-            status: 'Active',
-            frequency: 'One-Time',
-            selected: false
-          },
-          {
-            id: '#3064',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 6, 2025',
-            source: 'Lana Steiner',
-            email: 'lana@untitledui.com',
-            status: 'Active',
-            frequency: 'Monthly',
-            selected: false
-          },
-          {
-            id: '#3063',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 5, 2025',
-            source: 'Demi Wilkinson',
-            email: 'demi@untitledui.com',
-            status: 'Active',
-            frequency: 'Annually',
-            selected: false
-          },
-          {
-            id: '#3062',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 5, 2025',
-            source: 'Candice Wu',
-            email: 'candice@untitledui.com',
-            status: 'Active',
-            frequency: 'Weekly',
-            selected: false
-          },
-          {
-            id: '#3061',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 5, 2025',
-            source: 'Natali Craig',
-            email: 'natali@untitledui.com',
-            status: 'Active',
-            frequency: 'Weekly',
-            selected: false
-          },
-          {
-            id: '#3060',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 4, 2025',
-            source: 'Drew Cano',
-            email: 'drew@untitledui.com',
-            status: 'Active',
-            frequency: 'Weekly',
-            selected: false
-          }
+          // {
+          //   id: '#3066',
+          //   amount: 2000,
+          //   currency: 'DH',
+          //   date: 'Jan 6, 2025',
+          //   source: 'Olivia Rhye',
+          //   email: 'olivia@untitledui.com',
+          //   status: 'Active',
+          //   frequency: 'Monthly',
+          //   selected: false
+          // },
+          // {
+          //   id: '#3065',
+          //   amount: 2000,
+          //   currency: 'DH',
+          //   date: 'Jan 6, 2025',
+          //   source: 'Digital Product Sales',
+          //   status: 'Active',
+          //   frequency: 'One-Time',
+          //   selected: false
+          // },
+          // {
+          //   id: '#3064',
+          //   amount: 2000,
+          //   currency: 'DH',
+          //   date: 'Jan 6, 2025',
+          //   source: 'Lana Steiner',
+          //   email: 'lana@untitledui.com',
+          //   status: 'Active',
+          //   frequency: 'Monthly',
+          //   selected: false
+          // },
+          // {
+          //   id: '#3063',
+          //   amount: 2000,
+          //   currency: 'DH',
+          //   date: 'Jan 5, 2025',
+          //   source: 'Demi Wilkinson',
+          //   email: 'demi@untitledui.com',
+          //   status: 'Active',
+          //   frequency: 'Annually',
+          //   selected: false
+          // },
+          // {
+          //   id: '#3062',
+          //   amount: 2000,
+          //   currency: 'DH',
+          //   date: 'Jan 5, 2025',
+          //   source: 'Candice Wu',
+          //   email: 'candice@untitledui.com',
+          //   status: 'Active',
+          //   frequency: 'Weekly',
+          //   selected: false
+          // },
+          // {
+          //   id: '#3061',
+          //   amount: 2000,
+          //   currency: 'DH',
+          //   date: 'Jan 5, 2025',
+          //   source: 'Natali Craig',
+          //   email: 'natali@untitledui.com',
+          //   status: 'Active',
+          //   frequency: 'Weekly',
+          //   selected: false
+          // },
+          // {
+          //   id: '#3060',
+          //   amount: 2000,
+          //   currency: 'DH',
+          //   date: 'Jan 4, 2025',
+          //   source: 'Drew Cano',
+          //   email: 'drew@untitledui.com',
+          //   status: 'Active',
+          //   frequency: 'Weekly',
+          //   selected: false
+          // }
         ]
       }
     },
@@ -178,7 +181,20 @@
           .join('')
           .toUpperCase()
           .substring(0, 2);
-      }
+      },
+      async fetchIncomes(){
+            api.get('api/income/index')
+            .then(response => {
+                this.incomeItems = response.data.incomes
+                console.log(response.data.incomes);
+            })
+            .catch(error =>{
+                console.log(error);
+            })
+        }
+    },
+    created(){
+      this.fetchIncomes();
     }
   }
   </script>

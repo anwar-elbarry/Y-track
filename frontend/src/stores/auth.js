@@ -5,17 +5,18 @@ import api from '../api';
 export default defineStore('auth', {
   state() {
     return {
-      token: null,
-      user: null,
+      token: localStorage.getItem("token" || null),
+      user: JSON.parse(localStorage.getItem("user") || null) ,
       message: null,
     };
   },
   actions: {
     async login(credentials) {
-      const response = await api.post('/auth/signin', credentials);
-      this.token = response.data.token;
-      this.user = response.data.user;
+      const response = await api.post('/api/auth/signin', credentials);
       this.message = response.data.message;
+
+      this.setAuth(response.data.user, response.data.token);
+
     },
     async fetchUser() {
       const response = await api.get('/user');
@@ -24,6 +25,14 @@ export default defineStore('auth', {
     logout() {
       this.token = null;
       this.user = null;
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     },
+    setAuth(user, token) {
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
+      this.user = user;
+      this.token = token;
+    }
   },
 });

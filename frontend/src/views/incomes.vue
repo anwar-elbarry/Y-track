@@ -56,7 +56,7 @@ export default {
             if (savedIncomes) {
                 this.incomes = JSON.parse(savedIncomes);
             }
-        }
+        },
     },
     mounted() {
         // Load existing incomes when component is mounted
