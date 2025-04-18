@@ -3,6 +3,7 @@ use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\ExpenseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,10 +37,19 @@ Route::prefix('/auth')->group(function(){
 
 Route::prefix('/income')->group(function (){
     Route::middleware('auth:sanctum')->group(function(){
-        Route::get('/index',[IncomeController::class,'index'])->name('index');
-        Route::post('/create',[IncomeController::class,'store'])->name('create');
-        Route::post('/update/{id}',[IncomeController::class,'update'])->name('update');
-        Route::post('/removeMultiple',[IncomeController::class,'destroyMultiple'])->name('destroy_Multiple');
-        Route::delete('/remove/{id}',[IncomeController::class,'destroy'])->name('destroy');
+        Route::get('/index',[IncomeController::class,'index']);
+        Route::post('/create',[IncomeController::class,'store']);
+        Route::put('/update/{id}',[IncomeController::class,'update']);
+        Route::post('/removeMultiple',[IncomeController::class,'destroyMultiple']);
+        Route::delete('/remove/{id}',[IncomeController::class,'destroy']);
+    });
+});
+Route::prefix('/expence')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[ExpenseController::class,'index']);
+        Route::post('/create',[ExpenseController::class,'store']);
+        Route::put('/update/{id}',[ExpenseController::class,'update']);
+        Route::post('/removeMultiple',[ExpenseController::class,'destroyMultiple']);
+        Route::delete('/remove/{id}',[ExpenseController::class,'destroy']);
     });
 });
