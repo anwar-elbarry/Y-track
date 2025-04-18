@@ -9,6 +9,10 @@ class IncomeService {
         $incomes = Income::all();
         return $incomes;
     }
+   public function show(int $incomeId){
+        $income = Income::findOrFail($incomeId);
+        return $income;
+    }
    public  function create(array $incomeData){
         $income =  Income::create($incomeData);
         return $income;
@@ -17,7 +21,7 @@ class IncomeService {
    public  function update(int $incomeId , array $incomeData){
         $income = Income::findOrFail($incomeId);
         if($income->update($incomeData)){
-            return true;
+            return $income;
         }
         return false;
     }
