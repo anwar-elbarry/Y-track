@@ -26,7 +26,7 @@ class Income extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Relationship with Client (optional)
+    // Relationship with Client
     public function client()
     {
         return $this->belongsTo(Client::class)->nullable();

@@ -19,7 +19,6 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        try {
             $incomes = $this->incomeService->showAll();
             if($incomes){
                 return response()->json([
@@ -27,20 +26,6 @@ class IncomeController extends Controller
                     'incomes' => $incomes
                 ],200);
             }
-            Log::warning('Failed to fetch incomes');
-            return response()->json([
-                'message' => 'failed to fetch the data'
-            ],400);
-        } catch (\Exception $e) {
-            Log::error('Income Index Error', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            return response()->json([
-                'message' => 'Unexpected error occurred',
-                'error' => $e->getMessage()
-            ], 500);
-        }
     }
 
     /**

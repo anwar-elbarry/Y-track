@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('client_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('amount', 10, 2);
-            $table->string('source');
+            $table->string('source')->nullable();
             $table->date('date');
             $table->enum('frequency', ['one-time', 'daily', 'weekly', 'monthly', 'yearly'])->default('one-time');
             $table->timestamps();
