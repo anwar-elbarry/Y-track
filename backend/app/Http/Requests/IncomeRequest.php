@@ -22,12 +22,11 @@ class IncomeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'client_id' => 'nullable|exists:clients,id',
-            'amount' => 'required|numeric|min:0',
-            'source' => 'nullable|string|max:255',
-            'date' => 'required|date',
-            'frequency' => 'required|in:one-time,daily,weekly,monthly,yearly'
+            'client_id' => 'exists:clients,id',
+            'amount' => 'numeric|min:0',
+            'source' => 'string|max:255',
+            'date' => 'date',
+            'frequency' => 'in:one-time,daily,weekly,monthly,yearly'
         ];
     }
 
