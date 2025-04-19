@@ -118,7 +118,7 @@ Make informed decisions and stay on top of your financial goals.</p>
     <div class="relative">
       <select v-model="singupCredentials.currency" id="currency" name="currency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600">
       <option value="#">Select your preffered Currency</option>
-        <option v-for="(currency , code) in currencies" :value="code">{{ code }}  :  {{ currency }}</option>
+        <option v-for="country in currencies" :value="code">{{ country.currency }}  :  {{ country.name }}</option>
       </select>
     </div>
   </div>
@@ -164,6 +164,7 @@ import Footer_componant from '../components/Footer.vue';
 import Navbar from '../components/Navbar.vue';
 import api from '../api'
 import auth from '../stores/auth';
+import axios from 'axios';
 
 export default {
   name: 'Auth',
@@ -244,16 +245,20 @@ export default {
         console.log('error' , error);
       });
       },
-   async getCurrencies(){
-      api.get('/api/auth')
-      .then(response => {
-        this.currencies = response.data.currencies
-        console.log(this.currencies);
-      })
-      .catch(error => {
-        console.log('error' , error);
-      })
-    },
+   async getCurrencies() {
+  axios.get('https://countriesnow.space/api/v0.1/countries/currency')
+    .then(response => {
+      // Map the data to extract the country name and currency
+      this.currencies = response.data.data.map(item => ({
+        name: item.name,
+        currency: item.currency
+      }));
+      console.log(this.currencies);
+    })
+    .catch(error => {
+      console.log('error', error);
+    });
+},
     async submitLogin(){
         try {
           const authStore = auth()
