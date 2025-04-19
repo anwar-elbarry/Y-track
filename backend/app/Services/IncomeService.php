@@ -2,11 +2,12 @@
 
 namespace App\Services;
 use App\Models\Income;
+use Auth;
 USE Illuminate\Support\Facades\DB;
 class IncomeService {
 
    public function showAll(){
-        $incomes = Income::all();
+        $incomes = DB::table('incomes')->where('user_id',Auth::id())->get();
         return $incomes;
     }
    public function show(int $incomeId){

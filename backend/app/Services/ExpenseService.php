@@ -2,11 +2,12 @@
 
 namespace App\Services;
 use App\Models\Expense;
+use Illuminate\Support\Facades\Auth;
 USE Illuminate\Support\Facades\DB;
 class ExpenseService {
 
    public function showAll(){
-        $Expenses = Expense::all();
+        $Expenses = Expense::where('user_id',Auth::id());
         return $Expenses;
     }
    public function show(int $ExpenseId){
