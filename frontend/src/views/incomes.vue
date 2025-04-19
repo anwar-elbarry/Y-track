@@ -5,12 +5,15 @@
             <AddBtn name="Add Income" @click="showForm = true"/>
         </div>
         
-        <Income_table />
+        <Income_table 
+            :incomes="incomes"
+            @reload-incomes="fetchIncomes()"
+        />
         
         <IncomeForm 
             v-if="showForm" 
             @close="showForm = false"
-            @submit="handleIncomeSubmit"
+            @income-added="fetchIncomes()"
         />    
     </div>
 </template>
@@ -20,6 +23,7 @@ import AddBtn from '../components/dashboard/addBtn.vue';
 import SearchBare from '../components/dashboard/searchBare.vue';
 import Income_table from '../components/income/income_table.vue';
 import IncomeForm from '../components/income/IncomeForm.vue';
+import api from '../api';
 
 export default {
     name: 'Incomes',
@@ -36,31 +40,22 @@ export default {
         }
     },
     methods: {
-        handleIncomeSubmit(newIncome) {
-            // Add new income to the list
-            this.incomes.push(newIncome);
-            
-            // Close the form
+        handleIncomeSubmit() {
             this.showForm = false;
-            
-            // Optional: You might want to save to backend or local storage
-            this.saveIncomes();
         },
-        saveIncomes() {
-            // Implement saving logic (e.g., to local storage or backend)
-            localStorage.setItem('incomes', JSON.stringify(this.incomes));
-        },
-        loadIncomes() {
-            // Load incomes from storage
-            const savedIncomes = localStorage.getItem('incomes');
-            if (savedIncomes) {
-                this.incomes = JSON.parse(savedIncomes);
-            }
+        async fetchIncomes(){
+            api.get('api/income/index')
+            .then(response => {
+                this.incomes = response.data.incomes
+                console.log(response.data.incomes);
+            })
+            .catch(error =>{
+                console.log(error);
+            })
         },
     },
-    mounted() {
-        // Load existing incomes when component is mounted
-        this.loadIncomes();
+    created(){
+        this.fetchIncomes();
     }
 }
 </script>
