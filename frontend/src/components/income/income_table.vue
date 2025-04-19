@@ -41,7 +41,7 @@
             <td class="p-3 text-sm text-gray-700">{{ item.frequency }}</td>
             <td class="p-3 text-sm text-gray-700">
                 <v-icon @click="removeIncome(item.id)" name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
-                <v-icon name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
+                <v-icon @click="sendUpdateIncome(item.id)" name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
             </td>
           </tr>
         </tbody>
@@ -83,7 +83,7 @@ import api from '../../api';
         default: () => []
       }
     },
-    emits : ['reload-incomes'],
+    emits : ['reload-incomes','selected-income'],
     data() {
       return {
         selectAll: false,
@@ -110,6 +110,9 @@ import api from '../../api';
             .catch(error => {
               console.log(error);
             })
+      },
+      sendUpdateIncome(id){
+        this.$emit('selected-income',id);
       }
     }
   }
