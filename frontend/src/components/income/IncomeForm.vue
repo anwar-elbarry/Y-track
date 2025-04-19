@@ -9,7 +9,7 @@
         <form @submit.prevent="validateAndSubmit" class="space-y-5">
           <!-- Amount Field -->
           <div>
-            <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Amount*</label>
+            <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
             <div class="relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none">
                 <span class="text-gray-500 sm:text-sm">{{ favCurrency }}</span>
@@ -130,11 +130,11 @@
                 class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500 appearance-none"
                 :class="{'border-red-500': errors.frequency}"
               >
-                <option value="One-Time">One-Time</option>
-                <option value="Weekly">Weekly</option>
-                <option value="Monthly">Monthly</option>
-                <option value="Quarterly">Quarterly</option>
-                <option value="Annually">Annually</option>
+                <option value="one-time">One-Time</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
               </select>
               <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -173,33 +173,26 @@
 </template>
 
 <script>
+import api from '../../api';
+import auth from '../../stores/auth';
+const useAuthStore = auth();
 export default {
   name: 'IncomeForm',
   emits: ['income-added', 'close'],
   data() {
     return {
-      favCurrency : 'DH',
+      favCurrency :useAuthStore.user.currency,
       isSubmitting: false,
       errors: {},
       form: {
         amount: '',
-        currency: 'DH',
-        date: new Date().toISOString().substr(0, 10), // Today's date in YYYY-MM-DD format
+        date: new Date().toISOString().substr(0, 10), 
         sourceType: 'client',
         client: '',
         customSource: '',
-        status: 'Active',
-        frequency: 'One-Time',
-        description: ''
+        frequency: 'one-time',
       },
-      clients: [
-        { id: 1, name: 'Olivia Rhye', email: 'olivia@untitledui.com' },
-        { id: 2, name: 'Lana Steiner', email: 'lana@untitledui.com' },
-        { id: 3, name: 'Demi Wilkinson', email: 'demi@untitledui.com' },
-        { id: 4, name: 'Candice Wu', email: 'candice@untitledui.com' },
-        { id: 5, name: 'Natali Craig', email: 'natali@untitledui.com' },
-        { id: 6, name: 'Drew Cano', email: 'drew@untitledui.com' }
-      ]
+      clients: []
     }
   },
   computed: {
@@ -209,7 +202,7 @@ export default {
     }
   },
   methods: {
-    validateAndSubmit() {
+  async  validateAndSubmit() {
       // Reset errors
       this.errors = {};
       
@@ -238,77 +231,49 @@ export default {
         this.errors.frequency = 'Please select a frequency';
       }
       
-      // If there are errors, don't submit
       if (Object.keys(this.errors).length > 0) {
         return;
       }
       
-      // Show loading state
-      this.isSubmitting = true;
-      
-      // Generate a new income entry based on form data
       const newIncome = {
-        id: `#${Math.floor(1000 + Math.random() * 9000)}`, // Generate a random 4-digit ID
-        amount: parseFloat(this.form.amount),
-        currency: this.form.currency,
-        date: this.formatDate(this.form.date),
+        amount: this.form.amount,
+        date: this.form.date,
         source: this.form.sourceType === 'client' 
-          ? this.getClientName(this.form.client)
+          ? this.form.client
           : this.form.customSource,
-        email: this.form.sourceType === 'client' 
-          ? this.getClientEmail(this.form.client)
-          : null,
-        status: this.form.status,
         frequency: this.form.frequency,
-        description: this.form.description || null
       };
-      
-      // Simulate API call
-      setTimeout(() => {
-        // Here you would typically send the data to your API
+    
         console.log('New income entry:', newIncome);
+       api.post('/api/income/create',newIncome)
+        .then(Response => {
+
+        // Reset the form 
+         this.resetForm();
+
+        console.log(Response.data.message);
+        console.log(Response.data.income);
         
-        // Emit event to pass data to parent component
-        this.$emit('income-added', newIncome);
+
+        this.isSubmitting = true;
+        })
+        .catch(error =>{
+          console.log(error);
+        })
         
-        // Reset the form after submission
-        this.resetForm();
-        
-        // Hide loading state
-        this.isSubmitting = false;
-      }, 600);
     },
     
     resetForm() {
       this.form = {
         amount: '',
-        currency: 'DH',
         date: new Date().toISOString().substr(0, 10),
         sourceType: 'client',
         client: '',
         customSource: '',
-        status: 'Active',
         frequency: 'One-Time',
-        description: ''
       };
       this.errors = {};
     },
-    
-    formatDate(dateString) {
-      const date = new Date(dateString);
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-    },
-    
-    getClientName(clientId) {
-      const client = this.clients.find(c => c.id === parseInt(clientId));
-      return client ? client.name : '';
-    },
-    
-    getClientEmail(clientId) {
-      const client = this.clients.find(c => c.id === parseInt(clientId));
-      return client ? client.email : '';
-    }
   }
 }
 </script>
