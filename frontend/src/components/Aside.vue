@@ -2,7 +2,7 @@
     <div :class="{ '-translate-x-50': !open }"
         class="fixed aside bg-white shadow-[0px_12px_33px_rgba(0,0,0,0.07)] flex h-screen max-w-53 flex-col rounded-xl ">
         <!-- up logo -->
-        <div :class="{'-right-7' : !open}" class="absolute -right-4 top-3 z-20 cursor-pointer">
+        <div :class="{ '-right-7': !open }" class="absolute -right-4 top-3 z-20 cursor-pointer">
             <div @click="toggle_aside()"
                 class="aside_flesh bg-orange-500 shadow-md border border-gray-100 w-8 h-8 rounded-full flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -35,7 +35,7 @@
                                     <p class="font-medium  flex-1">Dashboard</p>
                                 </div>
 
-                            </div> 
+                            </div>
 
                         </div>
                     </router-link>
@@ -193,40 +193,58 @@
                     </ul>
                 </div>
                 <div>
-                <router-link to="/dashboard/notifications">
-                    <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
-                        <div class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
-                            <div class="flex w-full items-stretch gap-2 my-auto">
+                    <router-link to="/dashboard/notifications">
+                        <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
+                            <div
+                                class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
+                                <div class="flex w-full items-stretch gap-2 my-auto">
 
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="size-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-                                </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="size-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                                    </svg>
 
-                                <p class="font-medium flex-1">Notifications</p>
+                                    <p class="font-medium flex-1">Notifications</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </router-link>
+                    </router-link>
                 </div>
             </div>
+            <!-- user menue -->
+            <div v-if="isMenueShown" class="flex flex-col w-38 bg-[#0D1117] justify-center rounded absolute -right-38 bottom-6">
+                    <router-link to="/dashboard/ProfileSettings">
+                        <button
+                            class="flex items-center gap-1.5 bg-transparent border-0 p-2.5 text-white cursor-pointer rounded relative hover:bg-[#21262C] focus:bg-[#1A1F24] focus:outline-none group w-full">
+                            <span
+                                class="absolute top-1 -left-2.5 w-1.5 h-4/5 bg-orange-500 rounded opacity-0 group-focus:opacity-100"></span>
+                                <v-icon name="bi-person" />
+                            Public profile
+                        </button>
+                    </router-link>
+                    <button @click="logout"
+                        class="flex items-center gap-1.5 bg-transparent border-0 p-2.5 text-white cursor-pointer rounded relative hover:bg-[#21262C] focus:bg-[#1A1F24] focus:outline-none group w-full">
+                        <span
+                            class="absolute top-1 -left-2.5 w-1.5 h-4/5 bg-orange-500 rounded opacity-0 group-focus:opacity-100"></span>
+                       <v-icon name="ri-logout-circle-r-line" />
+                        Logout
+                    </button>
+            </div>
 
-            <div class="border-slate-200 flex w-full items-center gap-[9px] font-medium p-3 border-t">
-                <router-link to="/dashboard/ProfileSettings">
-                    <div class="self-stretch flex items-center gap-[9px] flex-1 shrink basis-[0%] my-auto">
-                        <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/45e57123962a8953bfb53bdd32aa95f39c12d072?placeholderIfAbsent=true"
-                            class="aspect-[1.03] object-contain w-[31px] self-stretch shrink-0 my-auto rounded-[75px]" />
-                        <div class="self-stretch flex-1 shrink basis-[0%] my-auto">
-                            <div class="text-slate-500 text-[9px] leading-[15px]">
-                                Welcome back 👋
-                            </div>
-                            <div class="text-[rgba(8,16,33,1)] text-[11px] leading-none">
-                                Johnathan
-                            </div>
+            <div @click="showMenue" class="cursor-pointer border-slate-200 flex w-full items-center gap-[9px] font-medium p-3 border-t">
+                <div class="self-stretch flex items-center gap-[9px] flex-1 shrink basis-[0%] my-auto">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/45e57123962a8953bfb53bdd32aa95f39c12d072?placeholderIfAbsent=true"
+                        class="aspect-[1.03] object-contain w-[31px] self-stretch shrink-0 my-auto rounded-[75px]" />
+                    <div class="self-stretch flex-1 shrink basis-[0%] my-auto">
+                        <div class="text-slate-500 text-[9px] leading-[15px]">
+                            Welcome back 👋
+                        </div>
+                        <div class="text-[rgba(8,16,33,1)] text-[11px] leading-none">
+                            Johnathan
                         </div>
                     </div>
-                </router-link>
+                </div>
                 <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/ba6d3376f1f0a8d99b416d6c40adcfa1cc9b51d0?placeholderIfAbsent=true"
                     class="aspect-[1] object-contain w-[15px] self-stretch shrink-0 my-auto" />
             </div>
@@ -235,6 +253,9 @@
 </template>
 
 <script>
+
+import auth from '../stores/auth';
+
 export default {
     name: 'Aside',
     props: {
@@ -245,7 +266,8 @@ export default {
     },
     data() {
         return {
-            open: true
+            open: true,
+            isMenueShown : false
         }
     },
     emits: ['toggle-aside'],
@@ -297,6 +319,16 @@ export default {
                 fleshIcon.classList.toggle('rotate-180');
             }
             this.$emit('toggle-aside', this.open);
+        },
+        
+       showMenue(){
+            if(this.isMenueShown){
+              return  this.isMenueShown = false;
+            }
+            return this.isMenueShown = true;
+       } ,
+        async logout() {
+            auth().logout();
         }
     },
     mounted() {
