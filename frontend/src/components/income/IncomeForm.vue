@@ -264,10 +264,10 @@ export default {
       this.form = {
         amount: '',
         date: new Date().toISOString().substr(0, 10),
-        sourceType: 'client',
+        sourceType: 'other',
         client: '',
         customSource: '',
-        frequency: 'One-Time',
+        frequency: '',
       };
       this.errors = {};
     },
