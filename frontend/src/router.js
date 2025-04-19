@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import api from './api'
 import auth from './stores/auth'
 const routes = [
   {
@@ -12,6 +11,7 @@ const routes = [
   {
     path: '/auth',
     name: 'Auth',
+    meta : {requiresLogout : true},
     component: () => import('./views/Auth.vue')
   },
   {
@@ -102,10 +102,11 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to,from,next) => {
+  const user = localStorage.getItem("user");
+      const token = localStorage.getItem("token");
   if(to.meta.requiresAuth){
     try{
-      const user = localStorage.getItem("user");
-      const token = localStorage.getItem("token");
+      
 
       if (!user && !token){
         throw new Error("no user");
@@ -118,7 +119,15 @@ router.beforeEach(async (to,from,next) => {
       next('/auth')
 
     }
-  }else{
+  }
+  else if(to.meta.requiresLogout){
+    if(user &&  token){
+      next('/dashboard');
+    }else{
+      next();
+    }
+  }
+  else{
     next()
   }
 })
