@@ -29,14 +29,7 @@
             <td class="p-3 text-sm text-gray-700">{{ item.date }}</td>
             <td class="p-3 text-sm">
               <div class="flex items-center">
-                <img v-if="item.image" :src="item.image" class="w-8 h-8 rounded-full mr-2" alt="Profile">
-                <div v-else class="w-8 h-8 rounded-full bg-gray-200 mr-2 flex items-center justify-center">
-                  <span class="text-gray-600 font-bold">{{item.source}}</span>
-                </div>
-                <div>
                   <div class="text-gray-700">{{ item.source }}</div>
-                  <div v-if="item.email" class="text-xs text-gray-500">{{ item.email }}</div>
-                </div>
               </div>
             </td>
             <td class="p-3">
@@ -47,7 +40,7 @@
             </td>
             <td class="p-3 text-sm text-gray-700">{{ item.frequency }}</td>
             <td class="p-3 text-sm text-gray-700">
-                <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
+                <v-icon @click="removeIncome(item.id)" name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
                 <v-icon name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
             </td>
           </tr>
@@ -84,10 +77,22 @@ import api from '../../api';
   export default {
     
     name : 'incomeTable',
+    props: {
+      incomes: {
+        type: Array,
+        default: () => []
+      }
+    },
+    emits : ['reload-incomes'],
     data() {
       return {
         selectAll: false,
-        incomeItems: []
+        incomeItems: this.incomes
+      }
+    },
+    watch: {
+      incomes(newIncomes) {
+        this.incomeItems = newIncomes;
       }
     },
     methods: {
@@ -96,19 +101,16 @@ import api from '../../api';
           item.selected = this.selectAll;
         });
       },
-      async fetchIncomes(){
-            api.get('api/income/index')
+      async removeIncome(id){
+            api.delete(`/api/income/remove/${id}`)
             .then(response => {
-                this.incomeItems = response.data.incomes
-                console.log(response.data.incomes);
+              console.log(response.data.message);
+              this.$emit('reload-incomes');
             })
-            .catch(error =>{
-                console.log(error);
+            .catch(error => {
+              console.log(error);
             })
-        }
-    },
-    created(){
-      this.fetchIncomes();
+      }
     }
   }
   </script>
