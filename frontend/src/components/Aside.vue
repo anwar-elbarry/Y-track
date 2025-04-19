@@ -232,7 +232,7 @@
                     </button>
             </div>
 
-            <div @click="showMenue" class="cursor-pointer border-slate-200 flex w-full items-center gap-[9px] font-medium p-3 border-t">
+            <div @click="showMenue" class="cursor-pointer border-slate-200 hover:bg-gray-100 flex w-full items-center gap-[9px] font-medium p-3 border-t">
                 <div class="self-stretch flex items-center gap-[9px] flex-1 shrink basis-[0%] my-auto">
                     <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/45e57123962a8953bfb53bdd32aa95f39c12d072?placeholderIfAbsent=true"
                         class="aspect-[1.03] object-contain w-[31px] self-stretch shrink-0 my-auto rounded-[75px]" />
@@ -245,8 +245,7 @@
                         </div>
                     </div>
                 </div>
-                <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/ba6d3376f1f0a8d99b416d6c40adcfa1cc9b51d0?placeholderIfAbsent=true"
-                    class="aspect-[1] object-contain w-[15px] self-stretch shrink-0 my-auto" />
+                    <v-icon name="bi-chevron-right" />
             </div>
         </div>
     </div>
