@@ -118,7 +118,7 @@ Make informed decisions and stay on top of your financial goals.</p>
     <div class="relative">
       <select v-model="singupCredentials.currency" id="currency" name="currency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-orange-600">
       <option value="#">Select your preffered Currency</option>
-        <option v-for="country in currencies" :value="code">{{ country.currency }}  :  {{ country.name }}</option>
+        <option v-for="country in currencies" :value="country.currency">{{ country.currency }}  :  {{ country.name }}</option>
       </select>
     </div>
   </div>
@@ -234,7 +234,7 @@ export default {
       .then(Response => {
         console.log(Response.data.user);
         console.log(Response.data.message);
-        this.singupCredentials.name = '';
+          this.singupCredentials.name = '';
           this.singupCredentials.email = '';
           this.singupCredentials.confirmPassword = '';
           this.singupCredentials.currency = '';
