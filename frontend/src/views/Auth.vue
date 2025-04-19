@@ -138,7 +138,7 @@ Make informed decisions and stay on top of your financial goals.</p>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-4">
-            <a href="#" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+            <a  @click="googleLogin()" href="#" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
               <i class="fa-brands fa-google text-xl text-gray-600 mr-2"></i>
               Google
             </a>
@@ -193,7 +193,6 @@ export default {
     toggleForm(formType) {
       this.activeForm = formType;
       
-      // For direct DOM manipulation if needed (though Vue's reactivity is preferred)
       const signinForm = document.getElementById('signin-form');
       const signupForm = document.getElementById('signup-form');
       const signinTab = document.getElementById('signin-tab');
@@ -248,7 +247,6 @@ export default {
    async getCurrencies() {
   axios.get('https://countriesnow.space/api/v0.1/countries/currency')
     .then(response => {
-      // Map the data to extract the country name and currency
       this.currencies = response.data.data.map(item => ({
         name: item.name,
         currency: item.currency
@@ -271,10 +269,39 @@ export default {
           console.log(error)
           this.loginError = error.response?.data?.message || 'Login failed'
         }
+    },
+    async googleLogin(){
+      try{
+      window.location.href = 'http://localhost:8000/api/auth/google';
+      }
+      catch(error) {
+        console.error('Google login Error',error);
+      }
+    },
+    handleGoogleCallback() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const userParam = urlParams.get('user');
+    const error = urlParams.get('error');
+
+    if (token && userParam) {
+      try {
+        const user = JSON.parse(decodeURIComponent(userParam));
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        
+        this.$router.push('/dashboard/dashboardHome');
+      } catch (e) {
+        console.error('Error parsing user', e);
+      }
+    } else if (error) {
+      this.loginError = error;
     }
+  },
   },
   created(){
     this.getCurrencies();
+    this.handleGoogleCallback();
   }
 }
 </script>
