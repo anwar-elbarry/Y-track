@@ -12,12 +12,16 @@ use Laravel\Socialite\Facades\Socialite;
 class GoogleAuthController extends Controller
 {
     public function redirect(){
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+        ->stateless()
+        ->redirect();
     }
 
     public function callback(){
         try{
-           $googleUser = Socialite::driver('google')->user();
+           $googleUser = Socialite::driver('google')
+           ->stateless()
+           ->user();
            $user = User::where('google_id',$googleUser->id)->first();
            
            if(!$user){
@@ -37,10 +41,14 @@ class GoogleAuthController extends Controller
             
            }
            Auth::login($user);
-           return to_route('dashboard');
+           $token = $user->createToken('API token')->plainTextToken;
+           return redirect('http://localhost:5173/auth?token=' . $token . '&user=' . urlencode(json_encode($user)));
         }catch(\Exception $e){
-            return to_route('auth')->with('error','Failed to authenticate with Google:' . $e->getMessage());
-            // dd($e->getMessage());
+
+            \Log::error('Google Auth Error: ' . $e->getMessage());        
+        
+        return redirect('http://localhost:5173/auth?error=' . urlencode($e->getMessage()));
+        
         }
     }
 }
