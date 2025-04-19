@@ -36,10 +36,17 @@ class FacebookAuthController extends Controller
             
            }
            Auth::login($user);
-           return to_route('dashboard');
+           $token = $user->createToken('API token')->plainTextToken;
+           return response()->json([
+            'message' => 'You loged successfully',
+            'user' => $user,
+            'token' => $token
+           ],200);
         }catch(\Exception $e){
-            return to_route('auth')->with('error','Failed to authenticate with facebook:' . $e->getMessage());
-            // dd($e->getMessage());
+            return response()->json([
+                'message' => 'Failed to authenticate with Google'
+            ],400);
+        
         }
     }
 }
