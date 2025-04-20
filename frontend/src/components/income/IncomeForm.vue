@@ -174,10 +174,15 @@
 <script>
 import api from '../../api';
 import auth from '../../stores/auth';
+import { useIncomeStore } from '../../stores/incomeStore';
 const useAuthStore = auth();
 export default {
   name: 'IncomeForm',
   emits: ['income-added', 'close'],
+  setup() {
+    const incomeStore = useIncomeStore()
+    return { incomeStore }
+  },
   data() {
     return {
       favCurrency :useAuthStore.user.currency,
@@ -246,15 +251,13 @@ export default {
         console.log('New income entry:', newIncome);
         try{
           this.isSubmitting = true;
-          const response = await api.post('/api/income/create',newIncome)
+          const response = await this.incomeStore.addIncome(newIncome)
 
         // Reset the form 
          this.resetForm();
-
-        console.log(response.data.message);
-        console.log(response.data.income);
         this.$emit('income-added');
-        this.isSubmitting = false;
+        this.$emit('close');
+        this.isSubmitting = fale;
       }catch(error){
        console.error('error create new income',error);
       }
