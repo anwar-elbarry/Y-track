@@ -6,33 +6,33 @@
         </div>
         
         <Income_table 
-            :incomes="incomes"
-            @reload-incomes="fetchIncomes()"
+            :incomes="incomeStore.incomes"
+            @reload-incomes="fetchIncomes"
             @selected-income="showSelectedIncomeToUpdate"
         />
         
         <IncomeForm 
             v-if="showForm" 
             @close="showForm = false"
-            @income-added="fetchIncomes()"
+            @income-added="fetchIncomes"
         />    
 
         <IncomeFormUpdate 
-          v-if="showUpdate"
-         :incomeToUpdate="selectedIncome"
-         @income-updated="handleIncomeUpdate"
-         @close="closeUpdateForm()"
-/>
+            v-if="showUpdate"
+            :incomeToUpdate="selectedIncome"
+            @income-updated="handleIncomeUpdate"
+            @close="closeUpdateForm"
+        />
     </div>
 </template>
 
 <script>
-import AddBtn from '../components/dashboard/addBtn.vue';
-import SearchBare from '../components/dashboard/searchBare.vue';
-import Income_table from '../components/income/income_table.vue';
-import IncomeForm from '../components/income/IncomeForm.vue';
-import api from '../api';
-import IncomeFormUpdate from '../components/income/incomeFormUpdate.vue';
+import { useIncomeStore } from '../stores/incomeStore'
+import AddBtn from '../components/dashboard/addBtn.vue'
+import SearchBare from '../components/dashboard/searchBare.vue'
+import Income_table from '../components/income/income_table.vue'
+import IncomeForm from '../components/income/IncomeForm.vue'
+import IncomeFormUpdate from '../components/income/incomeFormUpdate.vue'
 
 export default {
     name: 'Incomes',
@@ -47,33 +47,35 @@ export default {
         return {
             showForm: false,
             showUpdate: false,
-            incomes: []
+            selectedIncome: null
         }
+    },
+    setup() {
+        const incomeStore = useIncomeStore()
+        return { incomeStore }
     },
     methods: {
         handleIncomeSubmit() {
-            this.showForm = false;
+            this.showForm = false
         },
-        async fetchIncomes(){
-            api.get('api/income/index')
-            .then(response => {
-                this.incomes = response.data.incomes
-                console.log(response.data.incomes);
-            })
-            .catch(error =>{
-                console.log(error);
-            })
+        async fetchIncomes() {
+            await this.incomeStore.fetchIncomes()
         },
-        closeUpdateForm(){
-            this.showUpdate = false;
+        closeUpdateForm() {
+            this.showUpdate = false
+            this.selectedIncome = null
         },
-        showSelectedIncomeToUpdate(id){
-            this.selectedIncome = this.incomes.find(income => income.id === id);
-            this.showUpdate = true;
+        showSelectedIncomeToUpdate(id) {
+            this.selectedIncome = this.incomeStore.incomes.find(income => income.id === id)
+            this.showUpdate = true
+        },
+        async handleIncomeUpdate() {
+            await this.fetchIncomes()
+            this.closeUpdateForm()
         }
     },
-    created(){
-        this.fetchIncomes();
+    created() {
+        this.fetchIncomes()
     }
 }
 </script>
