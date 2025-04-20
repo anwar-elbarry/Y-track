@@ -29,7 +29,7 @@
             <td class="p-3 text-sm text-gray-700">{{ item.description }}</td>
             <td class="p-3 text-sm text-gray-700">
                 <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
-                <v-icon name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
+                <v-icon @click="sendUpdateExpense(item.id)" name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
             </td>
           </tr>
         </tbody>
@@ -74,6 +74,7 @@
         expenses: []
       }
     },
+    emits : ['selected-expense'],
     props : {
       expenses: {
         type: Array,
@@ -85,6 +86,9 @@
         this.expenses.forEach(item => {
           item.selected = this.selectAll;
         });
+      },
+      sendUpdateExpense(id){
+        this.$emit('selected-expense',id);
       }
     }
   }
