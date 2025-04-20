@@ -174,6 +174,7 @@
   <script>
   import api from '../../api';
   import auth from '../../stores/auth';
+  import {useIncomeStore} from '../../stores/incomeStore';
   const useAuthStore = auth();
   export default {
     name: 'IncomeFormUpdate',
@@ -182,6 +183,10 @@
         type: Object,
         required: true
       }
+    },
+    setup() {
+      const incomeStore = useIncomeStore()
+      return { incomeStore }
     },
     emits: ['income-updated', 'close'],
     data() {
@@ -270,10 +275,7 @@
       
         try {
           this.isSubmitting = true;
-          const response = await api.put(`/api/income/update/${this.incomeToUpdate.id}`, updatedIncome);
-  
-          console.log(response.data.message);
-          console.log(response.data.income);
+          const response = await this.incomeStore.updateIncome(this.incomeToUpdate.id, updatedIncome);
           
           this.$emit('income-updated');
           this.$emit('close');
