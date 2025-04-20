@@ -1,6 +1,7 @@
 <template>
 <div class="dashboard_container flex">
     <dash_Aside  
+    :user="user"
     :is-open="isAsideOpen"
     @toggle-aside="handleAsideToggle"
     />
@@ -19,9 +20,8 @@
 </template>
 
 <script>
-
+import auth from '../stores/auth';
 import dash_Aside from '../components/Aside.vue';
-
 export default {
     name : 'Dashboard',
     components : {
@@ -29,7 +29,8 @@ export default {
     },
     data(){
       return {
-        isAsideOpen : true
+        isAsideOpen : true,
+        user : auth().user
       }
     },
     methods : {
