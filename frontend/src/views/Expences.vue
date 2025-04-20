@@ -13,7 +13,7 @@
         <Expence_table 
         :expenses="expenses"
         @reload-expenses="fetchExpenses"
-        @selected-expense="openForm = true"
+        @selected-expense="showSelectedExpenseToUpdate"
         />
         <Expence_form 
         v-if="openForm"
@@ -23,9 +23,15 @@
         />
         <Expence_category_form 
         v-if="openCategoryForm"
-        @reload-categories=""
         @close="closeCategoryForm"
         
+        />
+        <Expense_update_form 
+        v-if="openUpdateForm"
+        :categories="categoryStore.categories"
+        :expenseToUpdate="selectedExpense"
+        @expense-updated="handleExpenseUpdate"
+        @close="closeUpdateForm"
         />
     </div>
 </template>
@@ -36,6 +42,7 @@ import SearchBare from '../components/dashboard/searchBare.vue';
 import Expence_category_form from '../components/expences/expence_category_form.vue';
 import Expence_form from '../components/expences/expence_form.vue';
 import Expence_table from '../components/expences/expence_table.vue';
+import Expense_update_form from '../components/expences/expense_update_form.vue';
 import { useCategoryStore } from '../stores/categoryStore';
 import { useExpenseStore } from '../stores/expenseStore';
 export default {
@@ -45,7 +52,8 @@ export default {
         SearchBare,
         Expence_table,
         Expence_form,
-        Expence_category_form
+        Expence_category_form,
+        Expense_update_form
     },
     setup(){
         const expenseStore = useExpenseStore()
@@ -56,6 +64,8 @@ export default {
         return {
             openForm : false,
             openCategoryForm : false,
+            openUpdateForm : false,
+            selectedExpense : null,
             expenses: [],
             categories: [],
         }
@@ -67,6 +77,14 @@ export default {
         closeCategoryForm(){
             this.openCategoryForm = false;
         },
+        closeUpdateForm(){
+            this.openUpdateForm = false;
+        },
+        showSelectedExpenseToUpdate(id) {
+            this.selectedExpense = this.expenseStore.expenses.find(expense => expense.id === id);
+            console.log(this.selectedExpense);
+            this.openUpdateForm = true;
+        },
         async fetchExpenses(){
             await this.expenseStore.fetchExpenses()
             this.expenses = this.expenseStore.expenses
@@ -76,6 +94,10 @@ export default {
         async fetchCategories(){
               await this.categoryStore.fetchCategories()
               this.categories = this.categoryStore.categories;
+        },
+        async handleExpenseUpdate() {
+            await this.fetchExpenses()  
+            this.closeUpdateForm()
         }
     },
     created(){
