@@ -72,10 +72,9 @@
   </template>
   
   <script>
-import api from '../../api';
+import { useIncomeStore } from '../../stores/incomeStore';
 
-  export default {
-    
+export default {
     name : 'incomeTable',
     props: {
       incomes: {
@@ -90,6 +89,10 @@ import api from '../../api';
         incomeItems: this.incomes
       }
     },
+    setup() {
+      const incomeStore = useIncomeStore()
+      return { incomeStore }
+    },
     watch: {
       incomes(newIncomes) {
         this.incomeItems = newIncomes;
@@ -102,18 +105,16 @@ import api from '../../api';
         });
       },
       async removeIncome(id){
-            api.delete(`/api/income/remove/${id}`)
-            .then(response => {
-              console.log(response.data.message);
-              this.$emit('reload-incomes');
-            })
-            .catch(error => {
-              console.log(error);
-            })
+        try{
+          await this.incomeStore.removeIncome(id)
+          this.$emit('reload-incomes');
+        }catch(error){
+          console.error('Error removing income:', error);
+        }
       },
       sendUpdateIncome(id){
         this.$emit('selected-income',id);
       }
     }
-  }
-  </script>
+}
+</script>
