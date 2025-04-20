@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category;
+use App\Models\User;
 
 class Expense extends Model
 {
@@ -19,9 +21,9 @@ class Expense extends Model
 
 
     public function User(){
-        $this->belongsTo(User::class);
+       return $this->belongsTo(User::class);
     }
     public function Category(){
-        $this->hasMany(Category::class);
+       return $this->belongsTo(Category::class);
     }
 }
