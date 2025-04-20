@@ -22,10 +22,10 @@ class ExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'numeric|min:0',
-            'date' => 'date',
+            'amount' => 'required|numeric|min:0',
+            'date' => 'required|date',
             'description' => 'string',
-            'Category_id' => 'in:categories,id'
+            'category_id' => 'required|exists:categories,id'
         ];
     }
 }
