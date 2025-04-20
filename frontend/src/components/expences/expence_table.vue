@@ -18,7 +18,7 @@
         
         <!-- Table Body -->
         <tbody>
-          <tr v-for="item in incomeItems" :key="item.id" class="border-b border-gray-200 hover:bg-gray-50">
+          <tr v-for="item in expenses" :key="item.id" class="border-b border-gray-200 hover:bg-gray-50">
             <td class="p-3">
               <input type="checkbox" class="rounded border-gray-300" v-model="item.selected">
             </td>
@@ -60,84 +60,29 @@
   </template>
   
   <script>
+
+  import { useExpenseStore } from '../../stores/expenseStore';
   export default {
-    
+    setup(){
+      const expenseStore = useExpenseStore()
+      return { expenseStore }
+    },
     name : 'incomeTable',
     data() {
       return {
         selectAll: false,
-        incomeItems: [
-          {
-            id: '#3066',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 6, 2025',
-            category: 'Olivia Rhye',
-            description: 'Active',
-            selected: false
-          },
-          {
-            id: '#3065',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 6, 2025',
-            category: 'Digital Product Sales',
-            description: 'Active',
-            selected: false
-          },
-          {
-            id: '#3064',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 6, 2025',
-            category: 'Lana Steiner',
-            email: 'lana@untitledui.com',
-            description: 'Active',
-            selected: false
-          },
-          {
-            id: '#3063',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 5, 2025',
-            category: 'Demi Wilkinson',
-            email: 'demi@untitledui.com',
-            description: 'Active',
-            selected: false
-          },
-          {
-            id: '#3062',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 5, 2025',
-            category: 'Candice Wu',
-            description: 'Active',
-            selected: false
-          },
-          {
-            id: '#3061',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 5, 2025',
-            category: 'Natali Craig',
-            description: 'Active',
-            selected: false
-          },
-          {
-            id: '#3060',
-            amount: 2000,
-            currency: 'DH',
-            date: 'Jan 4, 2025',
-            category: 'Drew Cano',
-            description: 'Active',
-            selected: false
-          }
-        ]
+        expenses: []
+      }
+    },
+    props : {
+      expenses: {
+        type: Array,
+        default: () => []
       }
     },
     methods: {
       toggleSelectAll() {
-        this.incomeItems.forEach(item => {
+        this.expenses.forEach(item => {
           item.selected = this.selectAll;
         });
       }
