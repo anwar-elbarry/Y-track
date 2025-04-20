@@ -18,6 +18,8 @@ export const useExpenseStore = defineStore('expense',{
         },
         async addExpense(expenseData){
             try{
+                console.log(expenseData);
+                
                 const response = await api.post('/api/expense/create',expenseData)
                 this.expenses.push(response.data.expense)
                 console.log(response.data.expense);
