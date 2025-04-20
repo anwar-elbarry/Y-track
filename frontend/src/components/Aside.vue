@@ -241,14 +241,14 @@
 
             <div @click="showMenue" class="cursor-pointer border-slate-200 hover:bg-gray-100 flex w-full items-center gap-[9px] font-medium p-3 border-t">
                 <div class="self-stretch flex items-center gap-[9px] flex-1 shrink basis-[0%] my-auto">
-                    <img src="https://cdn.builder.io/api/v1/image/assets/f0075fd21e26474ca5006c398c2a8c3a/45e57123962a8953bfb53bdd32aa95f39c12d072?placeholderIfAbsent=true"
+                    <img :src="`https://ui-avatars.com/api/?name=${ user.name }&background=random&color=fff&size=128`"
                         class="aspect-[1.03] object-contain w-[31px] self-stretch shrink-0 my-auto rounded-[75px]" />
                     <div class="self-stretch flex-1 shrink basis-[0%] my-auto">
                         <div class="text-slate-500 text-[9px] leading-[15px]">
                             Welcome back 👋
                         </div>
                         <div class="text-[rgba(8,16,33,1)] text-[11px] leading-none">
-                            Johnathan
+                            {{ user.name }}
                         </div>
                     </div>
                 </div>
@@ -261,13 +261,16 @@
 <script>
 
 import auth from '../stores/auth';
-
 export default {
     name: 'Aside',
     props: {
         isOpen: {
             type: Boolean,
             required: true
+        },
+        user: {
+            type : Object,
+            default : () => []
         }
     },
     data() {
