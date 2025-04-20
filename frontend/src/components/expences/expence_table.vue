@@ -28,7 +28,7 @@
             <td class="p-3 text-sm text-gray-700">{{ item.category ? item.category.name : 'No Category'}}</td>
             <td class="p-3 text-sm text-gray-700">{{ item.description }}</td>
             <td class="p-3 text-sm text-gray-700">
-                <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
+                <v-icon @click="removeExpense(item.id)" name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
                 <v-icon @click="sendUpdateExpense(item.id)" name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
             </td>
           </tr>
@@ -74,7 +74,7 @@
         expenses: []
       }
     },
-    emits : ['selected-expense'],
+    emits : ['selected-expense','reload-expenses'],
     props : {
       expenses: {
         type: Array,
@@ -89,6 +89,15 @@
       },
       sendUpdateExpense(id){
         this.$emit('selected-expense',id);
+      },
+      async removeExpense(id){
+        try{
+          await this.expenseStore.removeExpense(id);
+          this.$emit('reload-expenses');
+        }catch(error){
+          console.log('Error to remove Expense :',error);
+        }
+        
       }
     }
   }
