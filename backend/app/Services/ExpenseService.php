@@ -7,7 +7,7 @@ USE Illuminate\Support\Facades\DB;
 class ExpenseService {
 
    public function showAll(){
-        $Expenses = DB::table('expenses')->where('user_id',Auth::id())->get();
+        $Expenses = Expense::with('Category')->where('user_id',Auth::id())->get();
         return $Expenses;
     }
    public function show(int $ExpenseId){
