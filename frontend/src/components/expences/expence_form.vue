@@ -7,21 +7,6 @@
           </h2>
         
           <form @submit.prevent="validateAndSubmit" class="space-y-5">
-            <!-- Name Field -->
-            <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 mb-1">name*</label>
-              <div class="relative rounded-md shadow-sm">
-                <input 
-                  type="text" 
-                  id="name" 
-                  v-model="form.name" 
-                  class="block w-full pl-4 pr-8 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500"
-                  placeholder="cenima ...etc"
-                  :class="{'border-red-500': errors.name}"
-                />
-              </div>
-              <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
-            </div>
             <!-- Amount Field -->
             <div>
               <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Amount*</label>
@@ -80,30 +65,6 @@
               <p v-if="errors.category" class="mt-1 text-sm text-red-600">{{ errors.category }}</p>
             </div>
             
-            <!-- Frequency Field -->
-            <div>
-              <label for="frequency" class="block text-sm font-medium text-gray-700 mb-1">Frequency*</label>
-              <div class="relative">
-                <select 
-                  id="frequency" 
-                  v-model="form.frequency" 
-                  class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500 appearance-none"
-                  :class="{'border-red-500': errors.frequency}"
-                >
-                  <option selected value="One-Time">One-Time</option>
-                  <option value="Weekly">Weekly</option>
-                  <option value="Monthly">Monthly</option>
-                  <option value="Quarterly">Quarterly</option>
-                  <option value="Annually">Annually</option>
-                </select>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-              </div>
-              <p v-if="errors.frequency" class="mt-1 text-sm text-red-600">{{ errors.frequency }}</p>
-            </div>
             
             <!-- Description Field -->
             <div>
@@ -144,25 +105,30 @@
     </div>
   </template>
   
+
   <script>
+  import { useExpenseStore } from '../../stores/expenseStore';
+  import auth from '../../stores/auth';
+  const useAuthStore = auth();
   export default {
     name: 'ExpenseForm',
     emits: ['expense-added', 'close'],
+    setup(){
+      const expenseStore = useExpenseStore()
+      return { expenseStore }
+    },
     data() {
       return {
-        favCurrency : 'DH',
+        favCurrency : useAuthStore.user.currency,
         isSubmitting: false,
         errors: {},
         form: {
-          name: '',
           amount: '',
-          currency: 'DH',
           date: new Date().toISOString().substr(0, 10),
           category: '',
           description: ''
         },
         categories: [
-          'Rent',
           'Utilities',
           'Groceries',
           'Transportation',
@@ -171,21 +137,11 @@
         ]
       }
     },
-    computed: {
-      selectedVendorDetails() {
-        if (!this.form.vendor) return null;
-        return this.vendors.find(v => v === this.form.vendor);
-      }
-    },
     methods: {
-      validateAndSubmit() {
+    async  validateAndSubmit() {
         // Reset errors
         this.errors = {};
         
-        // Validate name
-        if (!this.form.name || parseFloat(this.form.name) <= 0) {
-          this.errors.name = 'Please enter a valid name';
-        }
         // Validate amount
         if (!this.form.amount || parseFloat(this.form.amount) <= 0) {
           this.errors.amount = 'Please enter a valid amount';
@@ -200,12 +156,7 @@
         if (!this.form.category) {
           this.errors.category = 'Please select a category';
         }
-        // Validate frequency
-        if (!this.form.frequency) {
-          this.errors.frequency = 'Please select a frequency';
-        }
-        
-        // If there are errors don't submit
+
         if (Object.keys(this.errors).length > 0) {
           return;
         }
@@ -216,44 +167,31 @@
         // Generate expense
         const newExpense = {
           amount: parseFloat(this.form.amount),
-          currency: this.form.currency,
-          date: this.formatDate(this.form.date),
+          date: this.form.date,
           category: this.form.category,
-          product: this.form.category === 'Other',
-          status: this.form.status,
-          frequency: this.form.frequency,
-          description: this.form.description || null
+          description: this.form.description || ''
         };
-        
-        setTimeout(() => {
-          console.log('New expense entry:', newExpense);
+        try{
+          await this.expenseStore.addExpense(newExpense);
           this.$emit('expense-added', newExpense);
+          this.$emit('close');
           this.resetForm();
-          // Hide loading state
+        }catch(error){
+          console.log(error);
           this.isSubmitting = false;
-        }, 600);
+        }
+        
       },
       
       resetForm() {
         this.form = {
           amount: '',
-          currency: 'DH',
           date: new Date().toISOString().substr(0, 10),
           category: '',
-          vendor: '',
-          customVendor: '',
-          status: 'Active',
-          frequency: 'One-Time',
           description: ''
         };
         this.errors = {};
       },
-      
-      formatDate(dateString) {
-        const date = new Date(dateString);
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-      }
     }
   }
   </script>
