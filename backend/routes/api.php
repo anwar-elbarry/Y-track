@@ -47,7 +47,7 @@ Route::prefix('/income')->group(function (){
         Route::delete('/remove/{id}',[IncomeController::class,'destroy']);
     });
 });
-Route::prefix('/expence')->group(function (){
+Route::prefix('/expense')->group(function (){
     Route::middleware('auth:sanctum')->group(function(){
         Route::get('/index',[ExpenseController::class,'index']);
         Route::post('/create',[ExpenseController::class,'store']);
