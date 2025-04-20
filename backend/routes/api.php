@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,5 +55,12 @@ Route::prefix('/expense')->group(function (){
         Route::put('/update/{id}',[ExpenseController::class,'update']);
         Route::post('/removeMultiple',[ExpenseController::class,'destroyMultiple']);
         Route::delete('/remove/{id}',[ExpenseController::class,'destroy']);
+    });
+});
+Route::prefix('/category')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[CategoryController::class,'index']);
+        Route::post('/create',[CategoryController::class,'store']);
+        Route::delete('/remove/{id}',[CategoryController::class,'destroy']);
     });
 });
