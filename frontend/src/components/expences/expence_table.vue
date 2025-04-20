@@ -25,7 +25,7 @@
             <td class="p-3 text-sm text-gray-700">{{ item.id }}</td>
             <td class="p-3 text-sm text-gray-700">{{ item.amount }} {{ item.currency }}</td>
             <td class="p-3 text-sm text-gray-700">{{ item.date }}</td>
-            <td class="p-3 text-sm text-gray-700">{{ item.category }}</td>
+            <td class="p-3 text-sm text-gray-700">{{ item.category ? item.category.name : 'No Category'}}</td>
             <td class="p-3 text-sm text-gray-700">{{ item.description }}</td>
             <td class="p-3 text-sm text-gray-700">
                 <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
