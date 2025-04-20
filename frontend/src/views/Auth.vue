@@ -238,7 +238,7 @@ export default {
           this.singupCredentials.confirmPassword = '';
           this.singupCredentials.currency = '';
           this.singupCredentials.password = '';
-            this.$router.push('/auth#signin-form')
+            this.toggleForm('signin');
       })
       .catch(error => {
         console.log('error' , error);
