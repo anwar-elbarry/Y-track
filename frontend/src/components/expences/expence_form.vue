@@ -47,7 +47,7 @@
               <div class="relative">
                 <select 
                   id="category" 
-                  v-model="form.category" 
+                  v-model="form.category_id" 
                   class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500 appearance-none"
                   :class="{'border-red-500': errors.category}"
                 >
@@ -131,7 +131,7 @@
         form: {
           amount: '',
           date: new Date().toISOString().substr(0, 10),
-          category: '',
+          category_id:'',
           description: ''
         },
   
@@ -153,8 +153,8 @@
         }
         
         // Validate category
-        if (!this.form.category) {
-          this.errors.category = 'Please select a category';
+        if (!this.form.category_id) {
+          this.errors.category_id = 'Please select a category';
         }
 
         if (Object.keys(this.errors).length > 0) {
@@ -168,10 +168,11 @@
         const newExpense = {
           amount: parseFloat(this.form.amount),
           date: this.form.date,
-          category: this.form.category,
+          category_id:this.form.category_id,
           description: this.form.description || ''
         };
         try{
+          
           await this.expenseStore.addExpense(newExpense);
           this.$emit('expense-added', newExpense);
           this.$emit('close');
@@ -187,7 +188,7 @@
         this.form = {
           amount: '',
           date: new Date().toISOString().substr(0, 10),
-          category: '',
+          category_id: '',
           description: ''
         };
         this.errors = {};
