@@ -52,8 +52,8 @@
                   :class="{'border-red-500': errors.category}"
                 >
                   <option selected value="" disabled>Select a category</option>
-                  <option v-for="category in categories" :key="category" :value="category">
-                    {{ category }}
+                  <option v-for="category in categories" :key="category.id" :value="category.id">
+                    {{ category.name }}
                   </option>
                 </select>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -117,6 +117,12 @@
       const expenseStore = useExpenseStore()
       return { expenseStore }
     },
+    props : {
+        categories :{
+            type : Array,
+            default : () => []
+        }
+    },
     data() {
       return {
         favCurrency : useAuthStore.user.currency,
@@ -128,13 +134,7 @@
           category: '',
           description: ''
         },
-        categories: [
-          'Utilities',
-          'Groceries',
-          'Transportation',
-          'Entertainment',
-          'Other'
-        ]
+  
       }
     },
     methods: {
