@@ -19,11 +19,11 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-            $expences = $this->expenseService->showAll();
-            if($expences){
+            $expenses = $this->expenseService->showAll();
+            if($expenses){
                 return response()->json([
-                    'message' => 'expences fetched successfully',
-                    'expences' => $expences
+                    'message' => 'expenses fetched successfully',
+                    'expenses' => $expenses
                 ],200);
             }
     }
@@ -37,17 +37,17 @@ class ExpenseController extends Controller
             $validateData = $request->validated();
             $validateData['user_id'] = Auth::id();
 
-            $expence = $this->expenseService->create($validateData);
+            $expense = $this->expenseService->create($validateData);
 
-            if($expence){
+            if($expense){
                 return response()->json([
-                    'message' => 'expence created successfully',
-                    'expence' => $expence
+                    'message' => 'expense created successfully',
+                    'expense' => $expense
                 ], 201);
             }
 
             return response()->json([
-                'message' => 'Failed to create expence',
+                'message' => 'Failed to create expense',
                 'user_id' => Auth::id()
             ], 422);
     }
@@ -55,36 +55,36 @@ class ExpenseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $expenceId)
+    public function show(int $expenseId)
     {
-            $expence = $this->expenseService->show($expenceId);
-            if($expence){
+            $expense = $this->expenseService->show($expenseId);
+            if($expense){
                 return response()->json([
-                    'message' => 'expence fetched seccussfully'
+                    'message' => 'expense fetched seccussfully'
                 ],200);
             }
 
             return response()->json([
-                'message' => 'faild to fetch expence'
+                'message' => 'faild to fetch expense'
             ],400);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ExpenseRequest $request,int $expenceId)
+    public function update(ExpenseRequest $request,int $expenseId)
     {
             $validateData = $request->validated();
-            $expence = $this->expenseService->update($expenceId,$validateData);
-            if($expence){
+            $expense = $this->expenseService->update($expenseId,$validateData);
+            if($expense){
                 return response()->json([
-                    'message' => 'expence Updated seccussfully',
-                    'Updated expence' => $expence
+                    'message' => 'expense Updated seccussfully',
+                    'Updated expense' => $expense
                 ],200);
             }
 
             return response()->json([
-                'message' => 'faild to Update expence'
+                'message' => 'faild to Update expense'
             ],422);
 
     }
@@ -92,34 +92,34 @@ class ExpenseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $expenceId)
+    public function destroy(int $expenseId)
     {
-            $isDeleted = $this->expenseService->remove($expenceId);
+            $isDeleted = $this->expenseService->remove($expenseId);
             if($isDeleted){
                 return response()->json([
-                    'message' => 'expence Deleted seccussfully'
+                    'message' => 'expense Deleted seccussfully'
                 ],200);
             }
 
 
             return response()->json([
-                'message' => 'faild to Delete expence'
+                'message' => 'faild to Delete expense'
             ],400);
 
     }
-    public function destroyMultiple(array $expencesId)
+    public function destroyMultiple(array $expensesId)
     {
 
-            $expencesCount = count($expencesId);
-            $isDeleted = $this->expenseService->removeMultiple($expencesId);
+            $expensesCount = count($expensesId);
+            $isDeleted = $this->expenseService->removeMultiple($expensesId);
             if($isDeleted){
                 return response()->json([
-                    'message' => "{$expencesCount} expence Deleted seccussfully"
+                    'message' => "{$expensesCount} expense Deleted seccussfully"
                 ],200);
             }
 
             return response()->json([
-                'message' => 'faild to Delete expence'
+                'message' => 'faild to Delete expense'
             ],400);
     }
 }
