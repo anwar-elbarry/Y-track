@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,9 +33,7 @@ Route::prefix('/auth')->group(function(){
     Route::get('/facebook/callback',[FacebookAuthController::class,'callback']);
     // logoutAuth
     Route::middleware('auth:sanctum')->group(function(){
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        });
+        Route::get('/user', [AuthController::class,'getUser']);
         Route::post('/logout',[AuthController::class,'logOut'])->name('logout');
     });    
 });
@@ -62,5 +61,14 @@ Route::prefix('/category')->group(function (){
         Route::get('/index',[CategoryController::class,'index']);
         Route::post('/create',[CategoryController::class,'store']);
         Route::delete('/remove/{id}',[CategoryController::class,'destroy']);
+    });
+});
+
+Route::prefix('/client')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[ClientController::class,'index']);
+        Route::post('/create',[ClientController::class,'store']);
+        Route::put('/update/{id}',[ClientController::class,'update']);
+        Route::delete('/remove/{id}',[ClientController::class,'destroy']);
     });
 });
