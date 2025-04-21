@@ -5,7 +5,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BillsCategoryController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\BillController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,11 +58,20 @@ Route::prefix('/expense')->group(function (){
         Route::delete('/remove/{id}',[ExpenseController::class,'destroy']);
     });
 });
+
 Route::prefix('/category')->group(function (){
     Route::middleware('auth:sanctum')->group(function(){
         Route::get('/index',[CategoryController::class,'index']);
         Route::post('/create',[CategoryController::class,'store']);
         Route::delete('/remove/{id}',[CategoryController::class,'destroy']);
+    });
+});
+
+Route::prefix('/bills-category')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[BillsCategoryController::class,'index']);
+        Route::post('/create',[BillsCategoryController::class,'store']);
+        Route::delete('/remove/{id}',[BillsCategoryController::class,'destroy']);
     });
 });
 
@@ -70,5 +81,15 @@ Route::prefix('/client')->group(function (){
         Route::post('/create',[ClientController::class,'store']);
         Route::put('/update/{id}',[ClientController::class,'update']);
         Route::delete('/remove/{id}',[ClientController::class,'destroy']);
+    });
+});
+
+Route::prefix('/bill')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[BillController::class,'index']);
+        Route::post('/create',[BillController::class,'store']);
+        Route::put('/update/{id}',[BillController::class,'update']);
+        Route::delete('/remove/{id}',[BillController::class,'destroy']);
+        Route::post('/removeMultiple',[BillController::class,'destroyMultiple']);
     });
 });
