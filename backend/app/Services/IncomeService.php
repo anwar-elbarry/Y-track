@@ -7,7 +7,7 @@ USE Illuminate\Support\Facades\DB;
 class IncomeService {
 
    public function showAll(){
-        $incomes = DB::table('incomes')->where('user_id',Auth::id())->get();
+        $incomes = Income::with('client')->where('user_id',Auth::id())->get();
         return $incomes;
     }
    public function show(int $incomeId){
