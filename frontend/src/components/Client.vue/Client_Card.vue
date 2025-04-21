@@ -4,14 +4,10 @@
         <!-- Profile Card -->
         <div class="p-5">
           <!-- Top Section with Profile Image and Icons -->
-          <div class="flex justify-between items-start mb-4">
+          <div class="flex justify-between mb-4">
             <!-- Profile Image -->
-            <div class="relative w-16 h-16">
-              <img 
-                src="#" 
-                alt="Profile Picture" 
-                class="rounded-full border-2 border-white shadow-md"
-              />
+            <div class="relative w-3/2 h-24 flex justify-center items-center">
+              <img class="rounded-full" :src="`https://ui-avatars.com/api/?name=${ name }&background=random&color=fff`" :alt="name">            
             </div>
             
             <!-- Icons Column -->
@@ -38,7 +34,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              {{number}}
+              {{phone}}
             </div>
             
             <!-- Address -->
@@ -85,8 +81,8 @@
             default : 'ellbarryanouar@gmail.come',
             required: true
         },
-        number : {
-            type : Number,
+        phone : {
+            type : String,
             default : '+212 663547463',
             required: true
         },
