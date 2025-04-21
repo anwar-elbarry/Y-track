@@ -24,6 +24,7 @@ class ClientRequest extends FormRequest
         return [
             'name' => 'required|string|unique:clients,name',
             'email' => 'email|unique:clients,email',
+            'address' => 'required|string',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:clients,phone'
         ];
     }
