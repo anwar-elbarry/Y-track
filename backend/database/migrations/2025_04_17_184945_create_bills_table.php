@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('nom');
+            $table->string('name');
             $table->decimal('amount', 10, 2);
-            $table->string('bills_category');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->enum('frequency', ['one-time', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly'])->default('monthly');
             $table->date('due_date');
             $table->date('last_payment')->nullable();
