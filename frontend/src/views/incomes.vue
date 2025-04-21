@@ -11,7 +11,7 @@
             @selected-income="showSelectedIncomeToUpdate"
         />
         
-        <IncomeForm 
+        <IncomeForm
             v-if="showForm" 
             @close="showForm = false"
             @income-added="fetchIncomes"

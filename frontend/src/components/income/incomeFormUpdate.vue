@@ -144,7 +144,41 @@
               </div>
               <p v-if="errors.frequency" class="mt-1 text-sm text-red-600">{{ errors.frequency }}</p>
             </div>
-            
+            <div>
+  <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+  <div class="grid grid-cols-2 gap-4">
+    <div 
+      @click="form.status = 'inactive'" 
+      class="flex items-center p-3 border rounded-md cursor-pointer"
+      :class="[form.status === 'inactive' ? 'border-red-500 bg-red-50' : 'border-gray-300']"
+    >
+      <div class="h-5 w-5 mr-2">
+        <div v-if="form.status === 'inactive'" class="h-full w-full rounded-full bg-red-500 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div v-else class="h-full w-full rounded-full border-2 border-gray-300"></div>
+      </div>
+      <span class="text-sm font-medium">Inactive</span>
+    </div>
+    <div 
+      @click="form.status = 'active'" 
+      class="flex items-center p-3 border rounded-md cursor-pointer"
+      :class="[form.status === 'active' ? 'border-green-500 bg-green-50' : 'border-gray-300']"
+    >
+      <div class="h-5 w-5 mr-2">
+        <div v-if="form.status === 'active'" class="h-full w-full rounded-full bg-green-500 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div v-else class="h-full w-full rounded-full border-2 border-gray-300"></div>
+      </div>
+      <span class="text-sm font-medium">Active</span>
+    </div>
+  </div>
+</div>
             <!-- Form  -->
             <div class="flex items-center justify-end space-x-3 pt-2">
               <button 
@@ -175,6 +209,7 @@
   import api from '../../api';
   import auth from '../../stores/auth';
   import {useIncomeStore} from '../../stores/incomeStore';
+  import {useClientStore} from '../../stores/clientStore';
   const useAuthStore = auth();
   export default {
     name: 'IncomeFormUpdate',
@@ -186,7 +221,8 @@
     },
     setup() {
       const incomeStore = useIncomeStore()
-      return { incomeStore }
+      const clientStore = useClientStore()
+      return { incomeStore, clientStore }
     },
     emits: ['income-updated', 'close'],
     data() {
@@ -197,7 +233,8 @@
         form: {
           amount: '',
           date: '',
-          sourceType: 'other',
+          sourceType: '',
+          status: '',
           client: '',
           customSource: '',
           frequency: '',
@@ -206,8 +243,8 @@
       }
     },
     created() {
-     
       this.initializeForm();
+      this.getClients();
     },
     computed: {
       selectedClientDetails() {
@@ -217,39 +254,33 @@
     },
     methods: {
       initializeForm() {
-    
-        if (this.incomeToUpdate.source_type === 'client') {
+        if (this.incomeToUpdate.client) {
           this.form.sourceType = 'client';
-          this.form.client = this.incomeToUpdate.source;
+          this.form.client = this.incomeToUpdate.client.id;
         } else {
           this.form.sourceType = 'other';
           this.form.customSource = this.incomeToUpdate.source;
         }
-
         
         this.form.amount = this.incomeToUpdate.amount.toString();
         this.form.date = this.incomeToUpdate.date;
         this.form.frequency = this.incomeToUpdate.frequency;
+        this.form.status = this.incomeToUpdate.status;
       },
       async validateAndSubmit() {
-        
         this.errors = {};
         
-       
         if (!this.form.amount || parseFloat(this.form.amount) <= 0) {
           this.errors.amount = 'Please enter a valid amount';
         }
-        
 
         if (!this.form.date) {
           this.errors.date = 'Please select a date';
         }
         
-       
         if (this.form.sourceType === 'client' && !this.form.client) {
           this.errors.client = 'Please select a client';
         }
-        
         
         if (this.form.sourceType === 'other' && !this.form.customSource) {
           this.errors.customSource = 'Please enter a source name';
@@ -271,6 +302,7 @@
             ? this.form.client
             : this.form.customSource,
           frequency: this.form.frequency,
+          status: this.form.status,
         };
       
         try {
@@ -290,6 +322,15 @@
       resetForm() {
         this.initializeForm();
         this.errors = {};
+      },
+      async getClients(){
+        try {
+          await this.clientStore.fetchClients()
+          this.clients = this.clientStore.clients;
+          console.log('Fetched clients:', this.clients);
+        } catch (error) {
+          console.error('Error fetching clients:', error);
+        }
       },
     }
   }

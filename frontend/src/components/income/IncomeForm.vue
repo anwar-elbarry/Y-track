@@ -99,11 +99,6 @@
                 </svg>
               </div>
             </div>
-            <p v-if="errors.client" class="mt-1 text-sm text-red-600">{{ errors.client }}</p>
-            
-            <div v-if="selectedClientDetails" class="mt-2 bg-gray-50 p-3 rounded-md border border-gray-200">
-              <p class="text-sm text-gray-600">{{ selectedClientDetails.email }}</p>
-            </div>
           </div>
           
           <!-- Custom Source (when sourceType is other) -->
@@ -172,21 +167,23 @@
 </template>
 
 <script>
-import api from '../../api';
 import auth from '../../stores/auth';
 import { useIncomeStore } from '../../stores/incomeStore';
+import { useClientStore } from '../../stores/clientStore';
 const useAuthStore = auth();
 export default {
   name: 'IncomeForm',
   emits: ['income-added', 'close'],
   setup() {
-    const incomeStore = useIncomeStore()
-    return { incomeStore }
+    const incomeStore = useIncomeStore();
+    const clientStore = useClientStore();
+    return { incomeStore ,clientStore}
   },
   data() {
     return {
       favCurrency :useAuthStore.user.currency,
       isSubmitting: false,
+      clients: [],
       errors: {},
       form: {
         amount: '',
@@ -195,18 +192,11 @@ export default {
         client: '',
         customSource: '',
         frequency: 'one-time',
-      },
-      clients: []
-    }
-  },
-  computed: {
-    selectedClientDetails() {
-      if (!this.form.client) return null;
-      return this.clients.find(c => c.id === parseInt(this.form.client));
+      }
     }
   },
   methods: {
-  async  validateAndSubmit() {
+    async validateAndSubmit() {
       // Reset errors
       this.errors = {};
       
@@ -242,27 +232,34 @@ export default {
       const newIncome = {
         amount: this.form.amount,
         date: this.form.date,
-        source: this.form.sourceType === 'client' 
-          ? this.form.client
-          : this.form.customSource,
+        source: this.form.sourceType === 'client' ? null : this.form.customSource,
         frequency: this.form.frequency,
+        client_id: this.sourceType === 'other' ? null : this.form.client,
       };
     
-        console.log('New income entry:', newIncome);
-        try{
-          this.isSubmitting = true;
-          const response = await this.incomeStore.addIncome(newIncome)
+      console.log('New income entry:', newIncome);
+      try{
+        this.isSubmitting = true;
+        const response = await this.incomeStore.addIncome(newIncome)
 
         // Reset the form 
-         this.resetForm();
+        this.resetForm();
         this.$emit('income-added');
         this.$emit('close');
-        this.isSubmitting = fale;
+        this.isSubmitting = false;
       }catch(error){
-       console.error('error create new income',error);
+        console.error('error create new income',error);
       }
     },
-    
+    async getClients(){
+      try {
+        await this.clientStore.fetchClients()
+        this.clients = this.clientStore.clients;
+        console.log('Fetched clients:', this.clients);
+      } catch (error) {
+        console.error('Error fetching clients:', error);
+      }
+    },
     resetForm() {
       this.form = {
         amount: '',
@@ -274,6 +271,9 @@ export default {
       };
       this.errors = {};
     },
+  },
+  created(){
+    this.getClients();
   }
 }
 </script>
