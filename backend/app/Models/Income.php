@@ -17,7 +17,8 @@ class Income extends Model
         'amount',
         'source',
         'date',
-        'frequency'
+        'frequency',
+        'status',
     ];
 
     // Relationship with User
@@ -29,6 +30,6 @@ class Income extends Model
     // Relationship with Client
     public function client()
     {
-        return $this->belongsTo(Client::class)->nullable();
+        return $this->belongsTo(Client::class, 'client_id');
     }
 }
