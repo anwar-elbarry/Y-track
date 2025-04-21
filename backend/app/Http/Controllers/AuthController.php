@@ -97,4 +97,9 @@ class AuthController extends Controller
           'message' => 'user logged out seccussfully'
         ],200);
     }
+
+    public function getUser(){
+          $user = User::where('id',Auth::id())->get();
+          return response()->json([$user]);
+    }
 }
