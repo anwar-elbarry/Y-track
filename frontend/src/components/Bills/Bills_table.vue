@@ -44,7 +44,7 @@
                 {{ item.status }}
               </span>
             </td>
-            <td class="p-3 text-sm text-gray-700">{{ item.category }}</td>
+            <td class="p-3 text-sm text-gray-700">{{ item.category.name }}</td>
             <td class="p-3 text-sm text-gray-700">{{ item.frequency }}</td>
             <td class="p-3 text-sm text-gray-700">
                 <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
@@ -85,87 +85,12 @@
     data() {
       return {
         selectAll: false,
-        BillItems: [
-          {
-            id: '#3066',
-            amount: 2000,
-            currency: 'DH',
-            due_date: 'Jan 6, 2025',
-            name: 'Olivia Rhye',
-            status: 'unpaid',
-            category: 'internet',
-            frequency: 'Monthly',
-            selected: false
-          },
-          {
-            id: '#3065',
-            amount: 2000,
-            currency: 'DH',
-            due_date: 'Jan 6, 2025',
-            image: '/Y-track/frontend/src/assets/bills_icons/Google_Ads.png',
-            name: 'Digital Product Sales',
-            status: 'Paid',
-            category: 'internet',
-            frequency: 'One-Time',
-            selected: false
-          },
-          {
-            id: '#3064',
-            amount: 2000,
-            currency: 'DH',
-            due_date: 'Jan 6, 2025',
-            name: 'Lana Steiner',
-            email: 'lana@untitledui.com',
-            status: 'Paid',
-            category: 'internet',
-            frequency: 'Monthly',
-            selected: false
-          },
-          {
-            id: '#3063',
-            amount: 2000,
-            currency: 'DH',
-            due_date: 'Jan 5, 2025',
-            name: 'Demi Wilkinson',
-            status: 'Paid',
-            category: 'internet',
-            frequency: 'Annually',
-            selected: false
-          },
-          {
-            id: '#3062',
-            amount: 2000,
-            currency: 'DH',
-            due_date: 'Jan 5, 2025',
-            name: 'Candice Wu',
-            status: 'Paid',
-            category: 'internet',
-            frequency: 'Weekly',
-            selected: false
-          },
-          {
-            id: '#3061',
-            amount: 2000,
-            currency: 'DH',
-            due_date: 'Jan 5, 2025',
-            name: 'Natali Craig',
-            status: 'Paid',
-            category: 'internet',
-            frequency: 'Weekly',
-            selected: false
-          },
-          {
-            id: '#3060',
-            amount: 2000,
-            currency: 'DH',
-            due_date: 'Jan 4, 2025',
-            name: 'Drew Cano',
-            status: 'Paid',
-            category: 'internet',
-            frequency: 'Weekly',
-            selected: false
-          }
-        ]
+      }
+    },
+    props : {
+      BillItems: {
+        type : Array,
+        default : ()=> []
       }
     },
     methods: {
