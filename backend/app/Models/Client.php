@@ -17,7 +17,10 @@ class Client extends Model
         'name', 
         'email', 
         'phone',
-        'address'
+        'address',
+        'linkedin',
+        'instagram',
+        'other_website'
     ];
 
     // Relationship with User
