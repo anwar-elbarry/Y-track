@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->decimal('amount', 10, 2);
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('bills_categories')->onDelete('cascade');
             $table->enum('frequency', ['one-time', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly'])->default('monthly');
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
             $table->date('due_date');
             $table->date('last_payment')->nullable();
             $table->boolean('is_recurred')->default(false);
