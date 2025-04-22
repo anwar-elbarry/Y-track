@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\BillRequest;
 use App\Services\BillService;
+use App\Services\TransactionService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class BillController extends Controller
 {
     protected $billService;
+    protected $transactionService;
 
-    public function __construct(BillService $billService){
+    public function __construct(BillService $billService,TransactionService $transactionService){
         $this->billService = $billService;
+        $this->transactionService = $transactionService;
     }
     /**
      * Display a listing of the resource.
@@ -59,11 +62,13 @@ class BillController extends Controller
         $validateData['user_id'] = Auth::id();
         
         $bill = $this->billService->create($validateData);
+        $transaction = $this->transactionService->create($validateData,'bill');
         
         if ($bill) {
             return response()->json([
                 'message' => 'bill created successfully',
                 'bill' => $bill,
+                'transaction' => $transaction,
                 'logo' => $validateData['logo'] ?? null
             ], 201);
         }

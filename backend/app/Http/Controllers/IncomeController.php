@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IncomeRequest;
 use App\Services\IncomeService;
+use App\Services\TransactionService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -11,8 +12,10 @@ class IncomeController extends Controller
 {
 
     protected $incomeService;
-    public function __construct(IncomeService $incomeService){
+    protected $transactionService;
+    public function __construct(IncomeService $incomeService,TransactionService $transactionService){
         $this->incomeService = $incomeService;
+        $this->transactionService = $transactionService;
     }
     /**
      * Display a listing of the resource.
@@ -38,11 +41,13 @@ class IncomeController extends Controller
             $validateData['user_id'] = Auth::id();
 
             $income = $this->incomeService->create($validateData);
+            $transaction = $this->transactionService->create($validateData,'income');
 
             if($income){
                 return response()->json([
                     'message' => 'Income created successfully',
-                    'income' => $income
+                    'income' => $income,
+                    'transaction' => $transaction,
                 ], 201);
             }
 

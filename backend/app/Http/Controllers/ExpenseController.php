@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ExpenseRequest;
 use App\Services\ExpenseService;
+use App\Services\TransactionService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -11,8 +12,10 @@ class ExpenseController extends Controller
 {
 
     protected $expenseService;
-    public function __construct(ExpenseService $expenseService){
+    protected $transactionService;
+    public function __construct(ExpenseService $expenseService,TransactionService $transactionService){
         $this->expenseService = $expenseService;
+        $this->transactionService = $transactionService;
     }
     /**
      * Display a listing of the resource.
@@ -38,11 +41,13 @@ class ExpenseController extends Controller
             $validateData['user_id'] = Auth::id();
 
             $expense = $this->expenseService->create($validateData);
+            $transaction = $this->transactionService->create($validateData,'expense');
 
             if($expense){
                 return response()->json([
                     'message' => 'expense created successfully',
-                    'expense' => $expense
+                    'expense' => $expense,
+                    'transaction' => $transaction,
                 ], 201);
             }
 
@@ -76,6 +81,7 @@ class ExpenseController extends Controller
     {
             $validateData = $request->validated();
             $expense = $this->expenseService->update($expenseId,$validateData);
+
             if($expense){
                 return response()->json([
                     'message' => 'expense Updated seccussfully',
