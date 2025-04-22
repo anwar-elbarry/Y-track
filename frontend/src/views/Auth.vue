@@ -70,7 +70,7 @@ Make informed decisions and stay on top of your financial goals.</p>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-4">
-            <a href="#" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+            <a @click="googleLogin()" class="cursor-pointer flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
               <i class="fa-brands fa-google text-xl text-gray-600 mr-2"></i>
               Google
             </a>
