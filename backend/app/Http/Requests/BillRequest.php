@@ -27,9 +27,9 @@ class BillRequest extends FormRequest
             'amount' => 'required|numeric|min:0',
             'frequency' => 'required|string|max:255',
             'due_date' => 'required|date',
-            'last_payment' => 'required|date',
-            'is_recurred' => 'required|boolean',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'is_recurred' => 'boolean',
+            'status' => 'string|in:active,inactive',
+            'logo' => 'nullable',
         ];
     }
 }
