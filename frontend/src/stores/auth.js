@@ -20,7 +20,7 @@ export default defineStore('auth', {
 
     },
     async fetchUser() {
-      const response = await api.get('/user');
+      const response = await api.get('api/auth/user');
       this.user = response.data;
     },
     async logout() {
