@@ -3,14 +3,14 @@ import api from '../api';
 
 export const useBillStore = defineStore('bill',{
     state:()=>({
-        Bills:[]
+        bills:[]
     }),
     actions:{
         async fetchBills(){
             try{
                 const response = await api.get('/api/bill/index')
-                this.Bills = response.data.Bills
-                console.log(response.data.Bills);
+                this.bills = response.data.bills
+                console.log(response.data.bills);
                 console.log(response.data.message);
             }catch(error){
                 console.error('Error fetching bills:', error);
