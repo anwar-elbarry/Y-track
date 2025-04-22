@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->decimal('target_amount',10,2);
             $table->decimal('saved_amount',10,2)->default(0);
+            $table->date('due_date');
             $table->enum('status',['completed','in_progress'])->default('in_progress');
             $table->timestamps();
         });
