@@ -20,7 +20,8 @@ class Client extends Model
         'address',
         'linkedin',
         'instagram',
-        'other_website'
+        'other_website',
+        'linked_incomes',
     ];
 
     // Relationship with User
