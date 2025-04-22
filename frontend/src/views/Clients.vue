@@ -13,7 +13,11 @@
               :phone="client.phone"
               :instagram="client.instagram"
               :linkedin="client.linkedin"
-              :social="client.social"/>
+              :other_website="client.other_website"
+              :incomes="client.incomes"
+              :id="client.id"
+              @remove-client="removeClientFromList"
+              />
         </div>
         <Client_form  
         v-if="isOpen"
@@ -58,6 +62,14 @@ export default {
        async fetchClients(){
             await this.clientStore.fetchClients();
             this.clients = this.clientStore.clients;
+        },
+        async removeClientFromList(clientId) {
+            try {
+                await this.clientStore.removeclient(clientId);
+                this.clients = this.clients.filter(client => client.id !== clientId);
+            } catch(error) {
+                console.error('Error removing client:', error);
+            }
         }
     },
     created(){
