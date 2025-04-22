@@ -202,7 +202,7 @@ png,image/jpg,image/gif,image/svg+xml"
           frequency: '',
           due_date: new Date().toISOString().split('T')[0],
           logo: null,
-          status: 'active',
+          status: 'unpaid',
           is_recurred: false,
         }
       };
