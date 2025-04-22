@@ -25,7 +25,10 @@ class ClientRequest extends FormRequest
             'name' => 'required|string|unique:clients,name',
             'email' => 'email|unique:clients,email',
             'address' => 'required|string',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:clients,phone'
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:clients,phone',
+            'linkedin' => 'nullable|url',
+            'instagram' => 'nullable|url',
+            'other_website' => 'nullable|url'
         ];
     }
 }
