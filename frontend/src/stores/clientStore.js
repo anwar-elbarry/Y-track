@@ -40,7 +40,7 @@ export const useClientStore = defineStore('client',{
         
         async removeclient(id) {
           try {
-            await api.delete(`/api/client/remove/${id}`)
+            const response = await api.delete(`/api/client/remove/${id}`)
             this.clients = this.clients.filter(client => client.id !== id)
             console.log(this.clients);
             console.log(response.data.message);
