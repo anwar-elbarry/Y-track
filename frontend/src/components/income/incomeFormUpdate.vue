@@ -299,7 +299,7 @@
           amount: this.form.amount,
           date: this.form.date,
           source: this.form.sourceType === 'client' 
-            ? this.form.client
+            ? this.selectedClientDetails.name
             : this.form.customSource,
           frequency: this.form.frequency,
           status: this.form.status,
