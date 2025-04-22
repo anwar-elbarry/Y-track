@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Auth;
 class ClientService {
 
    public function showAll(){
-        $Clients = Client::where('user_id',Auth::id())->get();
+        $Clients = Client::with('incomes')->where('user_id',Auth::id())->get();
         return $Clients;
     }
    public function show(int $ClientId){
-        $Client = Client::findOrFail($ClientId);
+        $Client = Client::with('incomes')->findOrFail($ClientId);
         return $Client;
     }
    public  function create(array $ClientData){
