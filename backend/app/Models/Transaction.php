@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
     protected $casts = [
-        'created_at' => 'date:Y-m-d', // Only show date
+        'created_at' => 'date:Y-m-d',
     ];
     protected $fillable = [
         'user_id',
