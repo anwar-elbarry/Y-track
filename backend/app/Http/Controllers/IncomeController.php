@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IncomeRequest;
 use App\Services\IncomeService;
 use App\Services\TransactionService;
+use App\Services\ClientService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -13,9 +14,11 @@ class IncomeController extends Controller
 
     protected $incomeService;
     protected $transactionService;
-    public function __construct(IncomeService $incomeService,TransactionService $transactionService){
+    protected $clientService;
+    public function __construct(IncomeService $incomeService,TransactionService $transactionService,ClientService $clientService){
         $this->incomeService = $incomeService;
         $this->transactionService = $transactionService;
+        $this->clientService = $clientService;
     }
     /**
      * Display a listing of the resource.
@@ -42,12 +45,14 @@ class IncomeController extends Controller
 
             $income = $this->incomeService->create($validateData);
             $transaction = $this->transactionService->create($validateData,'income');
+            $clinet_incomes = $this->clientService->update_Linked_Incomes($validateData['client_id'],$validateData['amount']);
 
             if($income){
                 return response()->json([
                     'message' => 'Income created successfully',
                     'income' => $income,
                     'transaction' => $transaction,
+                    'clinet_incomes' => $clinet_incomes,
                 ], 201);
             }
 
