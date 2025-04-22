@@ -206,7 +206,6 @@
   </template>
   
   <script>
-  import api from '../../api';
   import auth from '../../stores/auth';
   import {useIncomeStore} from '../../stores/incomeStore';
   import {useClientStore} from '../../stores/clientStore';
@@ -298,9 +297,8 @@
           id: this.incomeToUpdate.id,
           amount: this.form.amount,
           date: this.form.date,
-          source: this.form.sourceType === 'client' 
-            ? this.selectedClientDetails.name
-            : this.form.customSource,
+          source: this.form.sourceType === 'other' ? this.form.customSource : null,
+          client_id: this.form.sourceType === 'client' ? this.form.client : null ,
           frequency: this.form.frequency,
           status: this.form.status,
         };
