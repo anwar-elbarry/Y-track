@@ -26,6 +26,7 @@ class GoalRequest extends FormRequest
             'target_amount' => 'numeric|min:0',
             'saved_amount' => 'numeric|min:0',
             'status' => 'in|max:20|in:completed,in_progress',
+            'due_date' => 'date',
         ];
     }
 }

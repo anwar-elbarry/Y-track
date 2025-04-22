@@ -14,7 +14,8 @@ class Goal extends Model
         'title',
         'target_amount',
         'saved_amount',
-        'status'
+        'status',
+        'due_date',
     ];
 
     public function user(){
