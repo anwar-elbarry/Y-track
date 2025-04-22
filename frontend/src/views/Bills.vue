@@ -7,7 +7,9 @@
         </div>
         
         <Bills_table 
-        :BillItems="bills"/>
+        :BillItems="bills"
+        @removed-bill="removeBill"
+        @updated-bill="payBill"/>
         <BillForm 
         v-if="showForm"
         :billsCategories="billCategories"
@@ -60,7 +62,6 @@ export default {
       async fetchBills(){
             await this.billStore.fetchBills();
             this.bills = this.billStore.bills;
-            await this.fetchBillCategories();
         },
         async fetchBillCategories(){
             await this.billCategoryStore.fetchCategories();
@@ -76,7 +77,15 @@ export default {
         },
         openCategoryForm(){
             this.showCategoryForm = true;
-        }
+        },
+       async removeBill(billId){
+            await this.billStore.removebill(billId);
+            this.bills = this.bills.filter(client => client.id !== billId);
+        },
+       async payBill(id,billData){
+            await this.billStore.updatebill(id,billData);
+            await this.fetchBills();
+        },
     },
     created(){
         this.fetchBills();
