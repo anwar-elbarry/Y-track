@@ -22,13 +22,13 @@ class BillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'category_id' => 'required|exists:bills_categories,id',
-            'amount' => 'required|numeric|min:0',
-            'frequency' => 'required|string|max:255',
-            'due_date' => 'required|date',
+            'name' => 'string|max:255',
+            'category_id' => 'exists:bills_categories,id',
+            'amount' => 'numeric|min:0',
+            'frequency' => 'string|max:255',
+            'due_date' => 'date',
             'is_recurred' => 'boolean',
-            'status' => 'string|in:active,inactive',
+            'status' => 'string|in:paid,unpaid',
             'logo' => 'nullable',
         ];
     }

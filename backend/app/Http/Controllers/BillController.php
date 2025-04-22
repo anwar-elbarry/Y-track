@@ -39,20 +39,20 @@ class BillController extends Controller
         
         $validateData = $request->validated();
         
-        // Check if logo is uploaded
+        
         if ($request->hasFile('logo')) {
-            // Make sure the directory exists
+           
             if (!file_exists(storage_path('app/public/bills_logo'))) {
                 mkdir(storage_path('app/public/bills_logo'), 0755, true);
             }
             
-            // Store the file and get the path as a string
+         
             $path = $request->file('logo')->store('bills_logo', 'public');
-            $validateData['logo'] = $path; // This should be a string like "bills_logo/filename.jpg"
+            $validateData['logo'] = $path; 
             
             Log::info('Logo path saved:', ['path' => $path]);
         } else {
-            // Ensure logo is null if no file was uploaded
+            
             $validateData['logo'] = null;
         }
         
