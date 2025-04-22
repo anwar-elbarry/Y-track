@@ -6,6 +6,7 @@
           <!-- Top Section with Profile Image and Icons -->
           <div class="flex justify-between mb-4">
             <!-- Profile Image -->
+            <v-icon @click="removeClient(id)" name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
             <div class="relative w-3/2 h-24 flex justify-center items-center">
               <img class="rounded-full" :src="`https://ui-avatars.com/api/?name=${ name }&background=random&color=fff`" :alt="name">            
             </div>
@@ -17,7 +18,7 @@
               
                 <a :href="linkedin" target="_blank" rel="noopener noreferrer"><v-icon name="bi-linkedin" /></a> 
               
-                <a :href="social" target="_blank" rel="noopener noreferrer"><v-icon name="fa-globe" /></a> 
+                <a :href="other_website" target="_blank" rel="noopener noreferrer"><v-icon name="fa-globe" /></a> 
             
             </div>
           </div>
@@ -54,7 +55,7 @@
             LINKED INCOME
           </div>
           <div class="text-center text-green-500 font-semibold">
-            {{ income }} DH
+            {{ incomes ? getIncome() : 0 }} DH
           </div>
         </div>
       </div>
@@ -62,7 +63,7 @@
   </template>
   
   <script>
-
+  import { useClientStore } from '../../stores/clientStore';
   export default {
     name: 'Client_Card',
     data(){
@@ -70,7 +71,16 @@
             currency : 'DH'
         }
     },
+    setup(){
+      const clientStore = useClientStore();
+      return {clientStore}
+    },
+    emits : ['remove-client'],
         props : {
+        id : {
+            type : Number,
+            required: true
+        },
         name : {
             type : String,
             default : 'Anouar el barry',
@@ -84,11 +94,6 @@
         phone : {
             type : String,
             default : '+212 663547463',
-            required: true
-        },
-        income : {
-            type : Number,
-            default : 5000,
             required: true
         },
         address : {
@@ -106,11 +111,28 @@
             default : 'morocco',
             required: true
         },
-        social : {
+        other_website : {
             type : String,
             default : 'morocco',
             required: true
         },
+        incomes : {
+            type : Array,
+            default : [],
+            required: true
+        },
+    },
+    methods : {
+        getIncome(){
+            return this.incomes.reduce((acc, income) => acc + income.amount, 0);
+        },
+        async removeClient(id){
+        try{
+          this.$emit('remove-client', id);
+        }catch(error){
+          console.error('Error removing client:', error);
+        }
+      },
     }
   }
   </script>

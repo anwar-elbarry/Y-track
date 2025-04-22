@@ -48,6 +48,45 @@
               />
               <p v-if="errors.phone" class="mt-1 text-sm text-red-600">{{ errors.phone }}</p>
             </div>
+            <!-- linkedin -->
+            <div class="transition-all duration-300">
+              <label for="linkedin" class="block text-sm font-medium text-gray-700 mb-1">Linkedin</label>
+              <input 
+              type="url" 
+                id="linkedin" 
+                v-model="form.linkedin" 
+                class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500"
+                placeholder="https://www.linkedin.com/in/Y-track/"
+                :class="{'border-red-500': errors.linkedin}"
+              />
+              <p v-if="errors.linkedin" class="mt-1 text-sm text-red-600">{{ errors.linkedin }}</p>
+            </div>
+            <!-- instagram -->
+            <div class="transition-all duration-300">
+              <label for="instagram" class="block text-sm font-medium text-gray-700 mb-1">Instagram</label>
+              <input 
+              type="url" 
+                id="instagram" 
+                v-model="form.instagram" 
+                class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500"
+                placeholder="https://www.instagram.com/Y-track/"
+                :class="{'border-red-500': errors.instagram}"
+              />
+              <p v-if="errors.instagram" class="mt-1 text-sm text-red-600">{{ errors.instagram }}</p>
+            </div>
+            <!-- other website -->
+            <div class="transition-all duration-300">
+              <label for="other_website" class="block text-sm font-medium text-gray-700 mb-1">Other Website</label>
+              <input 
+                type="url" 
+                id="other_website" 
+                v-model="form.other_website" 
+                class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500"
+                placeholder="https://www.Y-track.com/"
+                :class="{'border-red-500': errors.other_website}"
+              />
+              <p v-if="errors.linkedin" class="mt-1 text-sm text-red-600">{{ errors.linkedin }}</p>
+            </div>
             <!-- address -->
             <div>
               <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Country*</label>
@@ -142,7 +181,10 @@
           name: '',
           email: '',
           phone: '',
-          address: ''
+          address: '',
+          linkedin: null,
+          instagram: null,
+          other_website: null,
         },
       }
     },
@@ -185,7 +227,10 @@
           name: this.form.name,
           email: this.form.email,
           phone: this.form.phone,
-          address: this.form.address
+          address: this.form.address,
+          linkedin: this.form.linkedin,
+          instagram: this.form.instagram,
+          other_website: this.form.other_website
         };
       
         console.log('New income entry:', newClient);
@@ -207,7 +252,10 @@
           name: '',
           email: '',
           phone: '',
-          address: ''
+          address: '',
+          linkedin: null,
+          instagram: null,
+          other_website: null,
         };
         this.errors = {};
       },
