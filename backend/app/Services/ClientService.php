@@ -25,6 +25,18 @@ class ClientService {
         }
         return false;
     }
+   public  function update_Linked_Incomes(int $ClientId ,float $income){
+        $Client = Client::findOrFail($ClientId);
+        if($Client['linked_incomes'] > 0){
+                $income += $Client['linked_incomes'];
+        }
+        if($Client->update([
+            'linked_incomes' => $income
+        ])){
+            return $income;
+        }
+        return false;
+    }
 
     public function remove(int $ClientId){
         $Client = Client::findOrFail($ClientId);
