@@ -55,7 +55,7 @@
             LINKED INCOME
           </div>
           <div class="text-center text-green-500 font-semibold">
-            {{ incomes ? getIncome() : 0 }} DH
+            {{ incomes }} DH
           </div>
         </div>
       </div>
@@ -123,9 +123,6 @@
         },
     },
     methods : {
-        getIncome(){
-            return this.incomes.reduce((acc, income) => acc + income.amount, 0);
-        },
         async removeClient(id){
         try{
           this.$emit('remove-client', id);

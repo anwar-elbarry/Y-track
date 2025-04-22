@@ -14,7 +14,7 @@
               :instagram="client.instagram"
               :linkedin="client.linkedin"
               :other_website="client.other_website"
-              :incomes="client.incomes"
+              :incomes="client.linked_incomes"
               :id="client.id"
               @remove-client="removeClientFromList"
               />

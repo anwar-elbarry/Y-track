@@ -97,6 +97,7 @@ export default {
         },
         async handleExpenseUpdate() {
             await this.fetchExpenses()  
+            this.expenses = this.expenseStore.expenses
             this.closeUpdateForm()
         }
     },

@@ -89,6 +89,7 @@ export default {
     },
     created(){
         this.fetchBills();
+        this.fetchBillCategories();
     }
 }
 </script>
