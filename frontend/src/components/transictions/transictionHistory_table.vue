@@ -8,10 +8,8 @@
               <input type="checkbox" class="rounded border-gray-300" @change="toggleSelectAll" v-model="selectAll">
             </th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">id</th>
-            <th class="p-3 text-left text-sm font-medium text-gray-500">name</th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">Date</th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">Type</th>
-            <th class="p-3 text-left text-sm font-medium text-gray-500">Category/Source</th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">Amount</th>
             <th class="p-3 text-left text-sm font-medium text-gray-500">Actions</th>
           </tr>
@@ -24,10 +22,8 @@
               <input type="checkbox" class="rounded border-gray-300" v-model="item.selected">
             </td>
             <td class="p-3 text-sm text-gray-700">{{ item.id }}</td>
-            <td class="p-3 text-sm text-gray-700">{{ item.name }} {{ item.currency }}</td>
-            <td class="p-3 text-sm text-gray-700">{{ item.date }}</td>
+            <td class="p-3 text-sm text-gray-700">  {{ item.created_at}}</td>
             <td class="p-3 text-sm text-gray-700">{{ item.type }}</td>
-            <td class="p-3 text-sm text-gray-700">{{ item.category }}</td>
             <td class="p-3 text-sm "
                 :class="{'text-green-500' : item.type == 'income' , 'text-red-500' : item.type != 'income'}"        
             >
@@ -38,7 +34,7 @@
                 +    
             </span>    
                 {{ item.amount }}
-                {{ item.currency }}
+                {{ currency }}
             
             </td>
             <td class="p-3 text-sm text-gray-700">
@@ -74,84 +70,22 @@
   </template>
   
   <script>
+  import auth from '../../stores/auth';
+  const authStore = auth();
   export default {
     name : 'transictionHistory_table',
     data() {
       return {
         selectAll: false,
-        transacrionItems: [
-          {
-            id: '#3066',
-            name: 2000,
-            currency: 'DH',
-            date: 'Jan 6, 2025',
-            category: 'Olivia Rhye',
-            type: 'expence',
-            amount: 3999,
-            selected: false
-          },
-          {
-            id: '#3065',
-            name: 2000,
-            currency: 'DH',
-            date: 'Jan 6, 2025',
-            category: 'Digital Product Sales',
-            type: 'tax',
-            amount: 3999,
-            selected: false
-          },
-          {
-            id: '#3064',
-            name: 2000,
-            currency: 'DH',
-            date: 'Jan 6, 2025',
-            category: 'Lana Steiner',
-            type: 'income',
-            amount: 3999,
-            selected: false
-          },
-          {
-            id: '#3063',
-            name: 2000,
-            currency: 'DH',
-            date: 'Jan 5, 2025',
-            category: 'Demi Wilkinson',
-            type: 'income',
-            amount: 3999,
-            selected: false
-          },
-          {
-            id: '#3062',
-            name: 2000,
-            currency: 'DH',
-            date: 'Jan 5, 2025',
-            category: 'Candice Wu',
-            type: 'expence',
-            amount: 3999,
-            selected: false
-          },
-          {
-            id: '#3061',
-            name: 'freelince',
-            currency: 'DH',
-            date: 'Jan 5, 2025',
-            category: 'Natali Craig',
-            type: 'bill',
-            amount: 3999,
-            selected: false
-          },
-          {
-            id: '#3060',
-            name: 2000,
-            currency: 'DH',
-            date: 'Jan 4, 2025',
-            category: 'Drew Cano',
-            type: 'bill',
-            amount: 3999,
-            selected: false
-          }
-        ]
+        currency : authStore.user.currency
+        }
+    },
+    props : {
+      transacrionItems : {
+        type: Array,
+        required : true
       }
     }
-  }
+    }
+
   </script>
