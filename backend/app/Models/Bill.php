@@ -14,6 +14,7 @@ class Bill extends Model
         'amount',
         'category_id',
         'frequency',
+        'status',
         'due_date',
         'last_payment',
         'is_recurred',
