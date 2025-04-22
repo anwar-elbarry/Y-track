@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BillsCategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -91,5 +92,13 @@ Route::prefix('/bill')->group(function (){
         Route::put('/update/{id}',[BillController::class,'update']);
         Route::delete('/remove/{id}',[BillController::class,'destroy']);
         Route::post('/removeMultiple',[BillController::class,'destroyMultiple']);
+    });
+});
+
+Route::prefix('/transaction')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[TransactionController::class,'index']);
+        Route::delete('/remove/{id}',[TransactionController::class,'destroy']);
+        Route::post('/removeMultiple',[TransactionController::class,'destroyMultiple']);
     });
 });
