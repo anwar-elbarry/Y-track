@@ -14,11 +14,11 @@
             <!-- Icons Column -->
             <div class="flex flex-col space-y-2">
              
-                <a :href="instagram" target="_blank" rel="noopener noreferrer"><v-icon name="bi-instagram" /></a> 
+                <a v-if="instagram" :href="instagram" target="_blank" rel="noopener noreferrer"><v-icon name="bi-instagram" /></a> 
               
-                <a :href="linkedin" target="_blank" rel="noopener noreferrer"><v-icon name="bi-linkedin" /></a> 
+                <a v-if="linkedin" :href="linkedin" target="_blank" rel="noopener noreferrer"><v-icon name="bi-linkedin" /></a> 
               
-                <a :href="other_website" target="_blank" rel="noopener noreferrer"><v-icon name="fa-globe" /></a> 
+                <a v-if="other_website" :href="other_website" target="_blank" rel="noopener noreferrer"><v-icon name="fa-globe" /></a> 
             
             </div>
           </div>
