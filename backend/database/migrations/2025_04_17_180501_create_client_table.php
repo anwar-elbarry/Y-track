@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('linkedin')->nullable();
             $table->string('instagram')->nullable();
             $table->string('other_website')->nullable();
+            $table->float('linked_incomes',10,2)->default(0);
             $table->timestamps();
         });
     }
