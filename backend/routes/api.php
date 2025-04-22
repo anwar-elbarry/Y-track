@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BillsCategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -100,5 +101,15 @@ Route::prefix('/transaction')->group(function (){
         Route::get('/index',[TransactionController::class,'index']);
         Route::delete('/remove/{id}',[TransactionController::class,'destroy']);
         Route::post('/removeMultiple',[TransactionController::class,'destroyMultiple']);
+    });
+});
+
+
+Route::prefix('/goal')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[GoalController::class,'index']);
+        Route::post('/create',[GoalController::class,'store']);
+        Route::delete('/remove/{id}',[GoalController::class,'destroy']);
+        Route::put('/update/{id}',[GoalController::class,'update']);
     });
 });
