@@ -25,7 +25,7 @@
               <input type="checkbox" class="rounded border-gray-300" v-model="item.selected">
             </td>
             <td class="p-3 text-sm text-gray-700">{{ item.id }}</td>
-            <td class="p-3 text-sm text-gray-700">{{ item.amount }} {{ item.currency }}</td>
+            <td class="p-3 text-sm text-gray-700">{{ item.amount }} <span class="text-sm font-bold text-gray-600">{{ currency }}</span></td>
             <td class="p-3 text-sm text-gray-700">{{ item.due_date }}</td>
             <td class="p-3 text-sm">
               <div class="flex items-center">
@@ -79,12 +79,15 @@
   </template>
   
   <script>
+  import auth from '../../stores/auth';
+  const useAuthStore = auth();
   export default {
     
     name : 'BillTable',
     data() {
       return {
         selectAll: false,
+        currency: useAuthStore.user.currency,
       }
     },
     props : {
