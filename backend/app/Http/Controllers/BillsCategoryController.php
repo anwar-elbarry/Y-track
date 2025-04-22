@@ -18,7 +18,7 @@ class BillsCategoryController extends Controller
      */
     public function index()
     {
-            $categories = $this->BillsCategoryService->getAll();
+            $categories = $this->BillsCategoryService->showAll();
             if($categories){
                 return response()->json([
                     'message' => 'categories fetched successfully',

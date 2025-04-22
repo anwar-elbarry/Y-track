@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BillRequest;
 use App\Services\BillService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class BillController extends Controller
 {
@@ -31,25 +32,47 @@ class BillController extends Controller
      */
     public function store(BillRequest $request)
     {
-
-            $validateData = $request->validated();
-            $validateData['user_id'] = Auth::id();
-
-            $bill = $this->billService->create($validateData);
-
-            if($bill){
-                return response()->json([
-                    'message' => 'bill created successfully',
-                    'bill' => $bill
-                ], 201);
+        Log::info('Bill Creation Request Data:', [
+            'all_data' => $request->all(),
+            'validated_data' => $request->validated()
+        ]);
+        
+        $validateData = $request->validated();
+        
+        // Check if logo is uploaded
+        if ($request->hasFile('logo')) {
+            // Make sure the directory exists
+            if (!file_exists(storage_path('app/public/bills_logo'))) {
+                mkdir(storage_path('app/public/bills_logo'), 0755, true);
             }
-
+            
+            // Store the file and get the path as a string
+            $path = $request->file('logo')->store('bills_logo', 'public');
+            $validateData['logo'] = $path; // This should be a string like "bills_logo/filename.jpg"
+            
+            Log::info('Logo path saved:', ['path' => $path]);
+        } else {
+            // Ensure logo is null if no file was uploaded
+            $validateData['logo'] = null;
+        }
+        
+        $validateData['user_id'] = Auth::id();
+        
+        $bill = $this->billService->create($validateData);
+        
+        if ($bill) {
             return response()->json([
-                'message' => 'Failed to create bill',
-                'user_id' => Auth::id()
-            ], 422);
+                'message' => 'bill created successfully',
+                'bill' => $bill,
+                'logo' => $validateData['logo'] ?? null
+            ], 201);
+        }
+        
+        return response()->json([
+            'message' => 'Failed to create bill',
+            'user_id' => Auth::id()
+        ], 422);
     }
-
     /**
      * Display the specified resource.
      */
