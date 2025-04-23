@@ -41,84 +41,6 @@
               <p v-if="errors.date" class="mt-1 text-sm text-red-600">{{ errors.date }}</p>
             </div>
             
-            <!-- Source Type -->
-            <div>
-              <label for="sourceType" class="block text-sm font-medium text-gray-700 mb-1">Source Type*</label>
-              <div class="grid grid-cols-2 gap-4">
-                <div 
-                  @click="form.sourceType = 'client'" 
-                  class="flex items-center p-3 border rounded-md cursor-pointer"
-                  :class="[form.sourceType === 'client' ? 'border-orange-500 bg-orange-50' : 'border-gray-300']"
-                >
-                  <div class="h-5 w-5 mr-2">
-                    <div v-if="form.sourceType === 'client'" class="h-full w-full rounded-full bg-orange-500 flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                      </svg>
-                    </div>
-                    <div v-else class="h-full w-full rounded-full border-2 border-gray-300"></div>
-                  </div>
-                  <span class="text-sm font-medium">Client</span>
-                </div>
-                <div 
-                  @click="form.sourceType = 'other'" 
-                  class="flex items-center p-3 border rounded-md cursor-pointer"
-                  :class="[form.sourceType === 'other' ? 'border-orange-500 bg-orange-50' : 'border-gray-300']"
-                >
-                  <div class="h-5 w-5 mr-2">
-                    <div v-if="form.sourceType === 'other'" class="h-full w-full rounded-full bg-orange-500 flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                      </svg>
-                    </div>
-                    <div v-else class="h-full w-full rounded-full border-2 border-gray-300"></div>
-                  </div>
-                  <span class="text-sm font-medium">Other</span>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Client Selection  -->
-            <div v-if="form.sourceType === 'client'" class="transition-all duration-300">
-              <label for="client" class="block text-sm font-medium text-gray-700 mb-1">Client*</label>
-              <div class="relative">
-                <select 
-                  id="client" 
-                  v-model="form.client" 
-                  class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500 appearance-none"
-                  :class="{'border-red-500': errors.client}"
-                >
-                  <option value="" disabled>Select a client</option>
-                  <option v-for="client in clients" :key="client.id" :value="client.id">
-                    {{ client.name }}
-                  </option>
-                </select>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-              </div>
-              <p v-if="errors.client" class="mt-1 text-sm text-red-600">{{ errors.client }}</p>
-              
-              <div v-if="selectedClientDetails" class="mt-2 bg-gray-50 p-3 rounded-md border border-gray-200">
-                <p class="text-sm text-gray-600">{{ selectedClientDetails.email }}</p>
-              </div>
-            </div>
-            
-            <!-- Custom Source  -->
-            <div v-if="form.sourceType === 'other'" class="transition-all duration-300">
-              <label for="customSource" class="block text-sm font-medium text-gray-700 mb-1">Source Name*</label>
-              <input 
-                type="text" 
-                id="customSource" 
-                v-model="form.customSource" 
-                class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500"
-                placeholder="e.g., Digital Product Sales"
-                :class="{'border-red-500': errors.customSource}"
-              />
-              <p v-if="errors.customSource" class="mt-1 text-sm text-red-600">{{ errors.customSource }}</p>
-            </div>
             
             <!-- Frequency -->
             <div>
@@ -145,39 +67,6 @@
               <p v-if="errors.frequency" class="mt-1 text-sm text-red-600">{{ errors.frequency }}</p>
             </div>
             <div>
-  <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
-  <div class="grid grid-cols-2 gap-4">
-    <div 
-      @click="form.status = 'inactive'" 
-      class="flex items-center p-3 border rounded-md cursor-pointer"
-      :class="[form.status === 'inactive' ? 'border-red-500 bg-red-50' : 'border-gray-300']"
-    >
-      <div class="h-5 w-5 mr-2">
-        <div v-if="form.status === 'inactive'" class="h-full w-full rounded-full bg-red-500 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-        </div>
-        <div v-else class="h-full w-full rounded-full border-2 border-gray-300"></div>
-      </div>
-      <span class="text-sm font-medium">Inactive</span>
-    </div>
-    <div 
-      @click="form.status = 'active'" 
-      class="flex items-center p-3 border rounded-md cursor-pointer"
-      :class="[form.status === 'active' ? 'border-green-500 bg-green-50' : 'border-gray-300']"
-    >
-      <div class="h-5 w-5 mr-2">
-        <div v-if="form.status === 'active'" class="h-full w-full rounded-full bg-green-500 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-        </div>
-        <div v-else class="h-full w-full rounded-full border-2 border-gray-300"></div>
-      </div>
-      <span class="text-sm font-medium">Active</span>
-    </div>
-  </div>
 </div>
             <!-- Form  -->
             <div class="flex items-center justify-end space-x-3 pt-2">
@@ -208,7 +97,6 @@
   <script>
   import auth from '../../stores/auth';
   import {useIncomeStore} from '../../stores/incomeStore';
-  import {useClientStore} from '../../stores/clientStore';
   const useAuthStore = auth();
   export default {
     name: 'IncomeFormUpdate',
@@ -220,8 +108,7 @@
     },
     setup() {
       const incomeStore = useIncomeStore()
-      const clientStore = useClientStore()
-      return { incomeStore, clientStore }
+      return { incomeStore}
     },
     emits: ['income-updated', 'close'],
     data() {
@@ -232,39 +119,18 @@
         form: {
           amount: '',
           date: '',
-          sourceType: '',
-          status: '',
-          client: '',
-          customSource: '',
           frequency: '',
         },
-        clients: []
       }
     },
     created() {
       this.initializeForm();
-      this.getClients();
-    },
-    computed: {
-      selectedClientDetails() {
-        if (!this.form.client) return null;
-        return this.clients.find(c => c.id === parseInt(this.form.client));
-      }
     },
     methods: {
       initializeForm() {
-        if (this.incomeToUpdate.client) {
-          this.form.sourceType = 'client';
-          this.form.client = this.incomeToUpdate.client.id;
-        } else {
-          this.form.sourceType = 'other';
-          this.form.customSource = this.incomeToUpdate.source;
-        }
-        
         this.form.amount = this.incomeToUpdate.amount.toString();
         this.form.date = this.incomeToUpdate.date;
         this.form.frequency = this.incomeToUpdate.frequency;
-        this.form.status = this.incomeToUpdate.status;
       },
       async validateAndSubmit() {
         this.errors = {};
@@ -275,14 +141,6 @@
 
         if (!this.form.date) {
           this.errors.date = 'Please select a date';
-        }
-        
-        if (this.form.sourceType === 'client' && !this.form.client) {
-          this.errors.client = 'Please select a client';
-        }
-        
-        if (this.form.sourceType === 'other' && !this.form.customSource) {
-          this.errors.customSource = 'Please enter a source name';
         }
         
         if (!this.form.frequency) {
@@ -297,10 +155,7 @@
           id: this.incomeToUpdate.id,
           amount: this.form.amount,
           date: this.form.date,
-          source: this.form.sourceType === 'other' ? this.form.customSource : null,
-          client_id: this.form.sourceType === 'client' ? this.form.client : null ,
           frequency: this.form.frequency,
-          status: this.form.status,
         };
       
         try {
@@ -320,16 +175,7 @@
       resetForm() {
         this.initializeForm();
         this.errors = {};
-      },
-      async getClients(){
-        try {
-          await this.clientStore.fetchClients()
-          this.clients = this.clientStore.clients;
-          console.log('Fetched clients:', this.clients);
-        } catch (error) {
-          console.error('Error fetching clients:', error);
-        }
-      },
+      }
     }
   }
   </script>

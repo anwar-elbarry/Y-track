@@ -20,11 +20,11 @@
         <!-- Table Body -->
          
         <tbody>
-          <tr v-for="item in incomeItems" :key="item.id"  class="border-b border-gray-200 hover:bg-gray-50">
+          <tr v-for="(item, index) in incomeItems" :key="item.id"  class="border-b border-gray-200 hover:bg-gray-50">
             <td class="p-3">
               <input type="checkbox" class="rounded border-gray-300" v-model="item.selected">
             </td>
-            <td class="p-3 text-left text-sm text-gray-700">#{{ item.id }}</td>
+            <td class="p-3 text-left text-sm text-gray-700">#{{ incrementCounter(index) }}</td>
             <td class="p-3 text-left text-sm text-gray-700">{{ item.amount }} <span class="text-sm font-bold text-gray-600">{{ currency }}</span></td>
             <td class="p-3 text-left text-sm text-gray-700">{{ item.date }}</td>
             <td class="p-3 text-left text-sm">
@@ -54,10 +54,13 @@
               </div>
             </td>
             <td class="text-left p-3">
-              <span class="px-2 py-1 text-xs rounded-full" :class="{ 'bg-green-100 text-green-800': item.status === 'active', 'bg-red-100 text-red-800': item.status === 'inactive' }">
+              <button v-if="item.frequency !== 'one-time'" @click="updateIncomeStatus(item.status,item.id)" class="cursor-pointer px-2 py-1 text-xs rounded-full" :class="{ 'bg-green-100 text-green-800': item.status === 'active', 'bg-red-100 text-red-800': item.status === 'inactive' }">
                 <span class="inline-block w-2 h-2 rounded-full mr-1" :class="{ 'bg-green-900': item.status === 'active', 'bg-red-500': item.status === 'inactive' }"></span>
                 {{ item.status }}
-              </span>
+              </button>
+              <button v-if="item.frequency === 'one-time'" class="px-2 py-1 text-xs rounded-full bg-gray-100">
+                NULL
+              </button>
             </td>
             <td class="p-3 text-left text-sm text-gray-700">{{ item.frequency }}</td>
             <td class="p-3 text-left text-sm text-gray-700">
@@ -109,7 +112,8 @@ export default {
       return {
         selectAll: false,
         currency: useAuthStore.user.currency,
-        incomeItems: this.incomes
+        incomeItems: this.incomes,
+        counter: 1,
       }
     },
     setup() {
@@ -129,7 +133,7 @@ export default {
       },
       async removeIncome(id){
         try{
-          await this.incomeStore.removeIncome(id)
+          await this.incomeStore.removeIncome(id);
           this.$emit('reload-incomes');
         }catch(error){
           console.error('Error removing income:', error);
@@ -137,6 +141,25 @@ export default {
       },
       sendUpdateIncome(id){
         this.$emit('selected-income',id);
+      },
+      async updateIncomeStatus(status, incomeId) {
+        const newStatus = status === 'active' ? 'inactive' : 'active';
+        
+        try {
+            const data = {
+                status: newStatus
+            };
+            
+            if (incomeId) {
+                await this.incomeStore.updateIncome(incomeId, data);
+                this.$emit('reload-incomes');
+            }
+        } catch (error) {
+            console.error('Error updating income status:', error);
+        }
+      },
+      incrementCounter(index) {
+        return this.counter + index;
       }
     }
 }
