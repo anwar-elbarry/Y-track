@@ -27,6 +27,7 @@ class IncomeRequest extends FormRequest
             'source' => 'nullable|string|max:255',
             'date' => 'date',
             'frequency' => 'in:one-time,daily,weekly,monthly,yearly',
+            'status' => 'in:active,inactive',
         ];
     }
 
