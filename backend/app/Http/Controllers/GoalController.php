@@ -88,7 +88,7 @@ class GoalController extends Controller
        
         if ($totalSavedAmount > $targetAmount) {
             return response()->json([
-                'error' => 'Total saved amount cannot exceed target amount'
+                'message' => 'Total saved amount cannot exceed target amount'
             ], 400); 
         }
         
