@@ -7,12 +7,15 @@
                 </h3>
                 <div class="flex items-center gap-2 mt-4">
                     <v-icon name="gi-archery-target" class="text-black"/>
-                    <p class="text-gray-500">Target: {{ target }}</p> 
+                    <p class="text-gray-500">Target: {{ target }} {{ currency }}</p> 
                 </div>
                 <div class="flex items-center gap-2 mt-3">
                     <v-icon name="md-timer-outlined" />
                     <span class="text-gray-500 text-sm">
-                        {{ daysRemaining }} days remaining
+                      {{ daysRemaining === 'Overdue' ? 'Deadline passed' : 
+                         daysRemaining === 'Due today' ? 'Due today' : 
+                         daysRemaining === 'Due tomorrow' ? 'Due tomorrow' : 
+                         `${daysRemaining}` }}
                     </span>
                 </div>
             </div>
@@ -23,8 +26,7 @@
             <div class="bg-gray-200 rounded-full h-2">
                 <div 
                     class="bg-slate-500 h-2 rounded-full" 
-                    :style="{ width: `${percentage}%` }"
-                />
+                    :style="{ width: `${percentage}%` }"   />
             </div>
             <div class="flex justify-between mt-2 text-sm">
                 <span class="text-gray-600">{{ saved }} saved</span>
@@ -35,6 +37,8 @@
 </template>
 
 <script>
+import auth from '../../stores/auth';
+const authStore = auth();
 export default {
     name: 'GoalCard',
     props: {
@@ -47,7 +51,7 @@ export default {
             required: true
         },
         daysRemaining: {
-            type: Number,
+            type: String,
             required: true
         },
         iconSrc: {
@@ -60,7 +64,13 @@ export default {
         },
         percentage: {
             type: Number,
+            default: 23,
             required: true
+        }
+    },
+    data(){
+        return {
+            currency : authStore.user.currency
         }
     }
 }
