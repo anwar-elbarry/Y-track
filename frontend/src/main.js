@@ -7,8 +7,8 @@ import router from './router';
 
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaWallet, BiChevronRight,RiLogoutCircleRLine,BiPerson,BiLinkedin,IoTrendingDownOutline,IoTrendingUpOutline ,FaGlobe,IoArrowForwardCircleOutline,FaFileInvoiceDollar, BiCashCoin,BiInstagram ,GiArcheryTarget,MdTimerOutlined, BiCalendarCheckFill,BiPlusSquareDotted ,LaEditSolid,OiTrash, BiEyeFill,RiLineChartLine , GiOnTarget , RiFileTextFill , BiArrowLeft , BiArrowRight} from "oh-vue-icons/icons";
-addIcons(FaWallet, BiChevronRight,RiLogoutCircleRLine,BiPerson,BiLinkedin,IoTrendingDownOutline,IoTrendingUpOutline,FaGlobe ,IoArrowForwardCircleOutline,FaFileInvoiceDollar, BiCashCoin ,BiInstagram,GiArcheryTarget,MdTimerOutlined,BiCalendarCheckFill ,BiPlusSquareDotted,LaEditSolid,OiTrash,BiEyeFill, RiLineChartLine , GiOnTarget , RiFileTextFill , BiArrowLeft, BiArrowRight);
+import { FaWallet,OiX, BiChevronRight,RiLogoutCircleRLine,BiPerson,BiLinkedin,IoTrendingDownOutline,IoTrendingUpOutline ,FaGlobe,IoArrowForwardCircleOutline,FaFileInvoiceDollar, BiCashCoin,BiInstagram ,GiArcheryTarget,MdTimerOutlined, BiCalendarCheckFill,BiPlusSquareDotted ,LaEditSolid,OiTrash, BiEyeFill,RiLineChartLine , GiOnTarget , RiFileTextFill , BiArrowLeft , BiArrowRight} from "oh-vue-icons/icons";
+addIcons(FaWallet,OiX, BiChevronRight,RiLogoutCircleRLine,BiPerson,BiLinkedin,IoTrendingDownOutline,IoTrendingUpOutline,FaGlobe ,IoArrowForwardCircleOutline,FaFileInvoiceDollar, BiCashCoin ,BiInstagram,GiArcheryTarget,MdTimerOutlined,BiCalendarCheckFill ,BiPlusSquareDotted,LaEditSolid,OiTrash,BiEyeFill, RiLineChartLine , GiOnTarget , RiFileTextFill , BiArrowLeft, BiArrowRight);
 
 
 const app = createApp(App);
