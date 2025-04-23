@@ -23,6 +23,7 @@
         />
         <Expence_category_form 
         v-if="openCategoryForm"
+        :categories="categoryStore.categories"
         @close="closeCategoryForm"
         
         />
