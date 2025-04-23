@@ -15,6 +15,7 @@
         :saved="goal.saved_amount"
         :percentage="Math.round((goal.saved_amount / goal.target_amount) * 100)"
         @goal-to-update="sendSelectedGoal"
+        @goal-to-remove="removeGoal"
         />
     
       <EmptyCard @click="showCreateGoalForm = true"/>
@@ -79,6 +80,10 @@ export default {
    async handleUpdateGoal(){
         await  this.fetchGoals();
         this.showUpdateGoalForm = false;
+    },
+   async removeGoal(id){
+        await this.goalStore.removegoal(id);
+        this.goals = this.goalStore.goals.filter(goal => goal.id !== id);
     }
   },
   created(){
