@@ -7,12 +7,15 @@
     </div>
     <div class="goals_cards flex flex-wrap justify-evenly gap-4">
       <goal-card v-for="goal in goals"
+      :id="goal.id"
       :title="goal.title"
        :target="goal.target_amount" 
        :days-remaining="goal.formatted_deadline"
         icon-src="/icons/vacation.svg"
         :saved="goal.saved_amount"
-        :percentage="Math.round((goal.saved_amount / goal.target_amount) * 100)" />
+        :percentage="Math.round((goal.saved_amount / goal.target_amount) * 100)"
+        @goal-to-update="sendSelectedGoal"
+        />
     
       <EmptyCard @click="showCreateGoalForm = true"/>
     </div>
@@ -20,6 +23,12 @@
     v-if="showCreateGoalForm" 
     @create-goal="fetchGoals"
       @close="showCreateGoalForm = false"
+    />
+    <UpdateGoal 
+    v-if="showUpdateGoalForm"
+    @close="showUpdateGoalForm = false"
+    @update-goal="handleUpdateGoal"
+    :goalToUpdate="selectedGoal"
     />
   </div>
 
@@ -31,6 +40,7 @@ import SearchBare from '../components/dashboard/searchBare.vue';
 import CreateGoal from '../components/goals/CreateGoal.vue';
 import EmptyCard from '../components/goals/emptyCard.vue';
 import GoalCard from '../components/goals/goalCard.vue';
+import UpdateGoal from '../components/goals/UpdateGoal.vue';
 import { useGoalStore } from '../stores/goalStore';
 export default {
   name: 'Goals',
@@ -39,12 +49,15 @@ export default {
     EmptyCard,
     AddBtn,
     SearchBare,
-    CreateGoal
+    CreateGoal,
+    UpdateGoal
   },
   data(){
     return {
       showCreateGoalForm: false,
-      goals : []
+      showUpdateGoalForm: false,
+      goals : [],
+      selectedGoal : null
     }
   },
   setup(){
@@ -59,6 +72,14 @@ export default {
       await this.goalStore.fetchgoals();
       this.goals = this.goalStore.goals;
     },
+    sendSelectedGoal(id){
+        this.selectedGoal = this.goalStore.goals.find(goal => goal.id === id);
+        this.showUpdateGoalForm = true;
+    },
+   async handleUpdateGoal(){
+        await  this.fetchGoals();
+        this.showUpdateGoalForm = false;
+    }
   },
   created(){
     this.fetchGoals();
