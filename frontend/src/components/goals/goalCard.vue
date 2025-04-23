@@ -19,7 +19,7 @@
                     </span>
                 </div>
             </div>
-            <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500"/>
+            <v-icon @click="removeGoal(id)" name="oi-trash" class="cursor-pointer hover:text-red-500"/>
             <v-icon @click="sendUpdateGoal(id)" name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
         </div>
         <div class="mt-6">
@@ -41,7 +41,7 @@ import auth from '../../stores/auth';
 const authStore = auth();
 export default {
     name: 'GoalCard',
-    emits : ['goal-to-update'],
+    emits : ['goal-to-update','goal-to-remove'],
     props: {
         id: {
             type: Number,
@@ -81,6 +81,9 @@ export default {
     methods : {
         sendUpdateGoal(id){
             this.$emit('goal-to-update',id);
+        },
+        removeGoal(id){
+            this.$emit('goal-to-remove',id);
         }
     }
 }
