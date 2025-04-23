@@ -3,7 +3,8 @@ import api from '../api';
 
 export const useGoalStore = defineStore('goal',{
     state:()=>({
-        goals:[]
+        goals:[],
+        message : ''
     }),
     actions:{
         async fetchgoals(){
@@ -46,6 +47,7 @@ export const useGoalStore = defineStore('goal',{
                 }
                 console.log(response.data.goal);
                 console.log(response.data.message);
+                this.message = response.data.message;
             }catch(error){
                 console.error('Error updating goal:', error);
             }
