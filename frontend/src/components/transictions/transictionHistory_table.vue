@@ -38,8 +38,7 @@
             
             </td>
             <td class="p-3 text-sm text-gray-700">
-                <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
-                <v-icon name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
+                <v-icon name="oi-trash" class="cursor-pointer hover:text-red-500"/>
             </td>
           </tr>
         </tbody>
