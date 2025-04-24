@@ -8,7 +8,7 @@
         
         <Bills_table 
         :BillItems="bills"
-        @removed-bill="removeBill"
+        @removed-bill="removeBill" 
         @updated-bill="payBill"/>
         <BillForm 
         v-if="showForm"
