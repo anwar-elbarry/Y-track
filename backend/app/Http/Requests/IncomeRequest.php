@@ -25,9 +25,9 @@ class IncomeRequest extends FormRequest
             'client_id' => 'nullable|exists:clients,id',
             'amount' => 'numeric|min:0',
             'source' => 'nullable|string|max:255',
-            'date' => 'date',
             'frequency' => 'in:one-time,daily,weekly,monthly,yearly',
             'status' => 'in:active,inactive',
+            'start_at' => 'date',
         ];
     }
 
