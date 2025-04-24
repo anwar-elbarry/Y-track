@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
-            $table->foreignId('income_id')->nullable()->constrained('incomes')->onDelete('cascade');
-            $table->foreignId('expense_id')->nullable()->constrained('expenses')->onDelete('cascade');
-            $table->foreignId('bill_id')->nullable()->constrained('bills')->onDelete('cascade');
+            $table->foreignId('income_id')->nullable()->default(null)->constrained('incomes')->onDelete('cascade');
+            $table->foreignId('expense_id')->nullable()->default(null)->constrained('expenses')->onDelete('cascade');
+            $table->foreignId('bill_id')->nullable()->default(null)->constrained('bills')->onDelete('cascade');
             $table->enum('type', [
                 'income', 
                 'expense', 
