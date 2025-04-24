@@ -17,8 +17,9 @@ return new class extends Migration
             $table->foreignId('client_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('amount', 10, 2);
             $table->string('source')->nullable();
-            $table->date('date');
             $table->enum('frequency', ['one-time', 'daily', 'weekly', 'monthly', 'yearly'])->default('one-time');
+            $table->date('start_at');
+            $table->date('next_run_at');
             $table->enum('status',['active','inactive'])->default('active');
             $table->timestamps();
         });
