@@ -45,7 +45,9 @@ class IncomeController extends Controller
 
             $income = $this->incomeService->create($validateData);
             $transaction = $this->transactionService->create($validateData,'income');
-            $clinet_incomes = $this->clientService->update_Linked_Incomes($validateData['client_id'],$validateData['amount']);
+            if($validateData['client_id'] !== NULL){
+                $clinet_incomes = $this->clientService->update_Linked_Incomes($validateData['client_id'],$validateData['amount']);
+            }
 
             if($income){
                 return response()->json([

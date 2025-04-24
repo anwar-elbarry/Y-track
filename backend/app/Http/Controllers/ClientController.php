@@ -63,14 +63,14 @@ class ClientController extends Controller
                     'message' => 'client fetched seccussfully'
                 ],200);
             }
-            Log::warning('Failed to fetch client', [
+            \Log::warning('Failed to fetch client', [
                 'client_id' => $clientId
             ]);
             return response()->json([
                 'message' => 'faild to fetch client'
             ],400);
         } catch (\Exception $e) {
-            Log::error('client Show Error', [
+            \Log::error('client Show Error', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
                 'client_id' => $clientId
