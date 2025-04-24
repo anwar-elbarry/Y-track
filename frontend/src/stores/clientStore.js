@@ -6,7 +6,6 @@ export const useClientStore = defineStore('client',{
         clients : [],
         loading : false,
         error : null
-        
     }),
     actions: {
         async fetchClients() {
