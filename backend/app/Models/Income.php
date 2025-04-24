@@ -16,8 +16,9 @@ class Income extends Model
         'client_id',
         'amount',
         'source',
-        'date',
         'frequency',
+        'start_at',
+        'next_run_at',
         'status',
     ];
 
