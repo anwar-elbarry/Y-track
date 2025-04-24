@@ -6,6 +6,7 @@ use App\Http\Requests\IncomeRequest;
 use App\Services\IncomeService;
 use App\Services\TransactionService;
 use App\Services\ClientService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -40,8 +41,13 @@ class IncomeController extends Controller
     public function store(IncomeRequest $request)
     {
 
+            $firstRun = Carbon::parse($request->start_date);
+
             $validateData = $request->validated();
             $validateData['user_id'] = Auth::id();
+
+            $validateData['start_date'] = $firstRun->toDateString();
+            $validateData['next_run_at'] = $firstRun->toDateString();
 
             $income = $this->incomeService->create($validateData);
             $transaction = $this->transactionService->create($validateData,'income');
@@ -54,7 +60,7 @@ class IncomeController extends Controller
                     'message' => 'Income created successfully',
                     'income' => $income,
                     'transaction' => $transaction,
-                    'clinet_incomes' => $clinet_incomes,
+                    'clinet_incomes' => $clinet_incomes ?? 'no clien',
                 ], 201);
             }
 
