@@ -11,6 +11,11 @@ class Income extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'start_date'  => 'date',
+        'next_run_at' => 'date',
+        'end_date'    => 'date',
+    ];
     protected $fillable = [
         'user_id',
         'client_id',
