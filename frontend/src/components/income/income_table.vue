@@ -26,7 +26,7 @@
             </td>
             <td class="p-3 text-left text-sm text-gray-700">#{{ incrementCounter(index) }}</td>
             <td class="p-3 text-left text-sm text-gray-700">{{ item.amount }} <span class="text-sm font-bold text-gray-600">{{ currency }}</span></td>
-            <td class="p-3 text-left text-sm text-gray-700">{{ item.date }}</td>
+            <td class="p-3 text-left text-sm text-gray-700">{{ formatDate( item.created_at)}}</td>
             <td class="p-3 text-left text-sm">
               <div class="flex items-center space-x-3">
                 <!-- Client Avatar and Info -->
@@ -160,6 +160,15 @@ export default {
       },
       incrementCounter(index) {
         return this.counter + index;
+      },
+      formatDate($date){
+        if (!$date) return '';
+        const date = new Date($date);
+        return date.toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
       }
     }
 }

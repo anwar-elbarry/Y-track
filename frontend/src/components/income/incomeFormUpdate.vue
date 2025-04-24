@@ -28,17 +28,17 @@
               <p v-if="errors.amount" class="mt-1 text-sm text-red-600">{{ errors.amount }}</p>
             </div>
             
-            <!-- Date  -->
+            <!-- start_at  -->
             <div>
-              <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date*</label>
+              <label for="date" class="block text-sm font-medium text-gray-700 mb-1">start_at*</label>
               <input 
                 type="date" 
-                id="date" 
-                v-model="form.date" 
+                id="start_at" 
+                v-model="form.start_at" 
                 class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-orange-500 focus:border-orange-500"
-                :class="{'border-red-500': errors.date}"
+                :class="{'border-red-500': errors.start_at}"
               />
-              <p v-if="errors.date" class="mt-1 text-sm text-red-600">{{ errors.date }}</p>
+              <p v-if="errors.start_at" class="mt-1 text-sm text-red-600">{{ errors.start_at }}</p>
             </div>
             
             
@@ -118,7 +118,7 @@
         errors: {},
         form: {
           amount: '',
-          date: '',
+          start_at: '',
           frequency: '',
         },
       }
@@ -129,7 +129,7 @@
     methods: {
       initializeForm() {
         this.form.amount = this.incomeToUpdate.amount.toString();
-        this.form.date = this.incomeToUpdate.date;
+        this.form.start_at = this.incomeToUpdate.start_at;
         this.form.frequency = this.incomeToUpdate.frequency;
       },
       async validateAndSubmit() {
@@ -139,8 +139,8 @@
           this.errors.amount = 'Please enter a valid amount';
         }
 
-        if (!this.form.date) {
-          this.errors.date = 'Please select a date';
+        if (!this.form.start_at) {
+          this.errors.start_at = 'Please select a start_at';
         }
         
         if (!this.form.frequency) {
@@ -154,7 +154,7 @@
         const updatedIncome = {
           id: this.incomeToUpdate.id,
           amount: this.form.amount,
-          date: this.form.date,
+          start_at: this.form.start_at,
           frequency: this.form.frequency,
         };
       
