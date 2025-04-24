@@ -90,7 +90,7 @@
           console.log(newCategory);
           
           await this.BillCategoryStore.addCategory(newCategory);
-          this.$emit('reload-categories');
+          this.$emit('category-added');
           this.$emit('close');
           this.resetForm();
         }catch(error){
