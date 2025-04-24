@@ -199,7 +199,9 @@ export default {
     async validateAndSubmit() {
       // Reset errors
       this.errors = {};
-      
+      const startDate = new Date(this.form.start_at);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
       // Validate amount
       if (!this.form.amount || parseFloat(this.form.amount) <= 0) {
         this.errors.amount = 'Please enter a valid amount';
@@ -208,6 +210,8 @@ export default {
       // Validate date
       if (!this.form.start_at) {
         this.errors.start_at = 'Please select a start_at';
+      }else if(startDate < today){
+        this.errors.start_at = "you can't select passed date";
       }
       
       // Validate client if sourceType is client
