@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\IncomeRequest;
+use App\Jobs\GenerateTransactionJob;
 use App\Services\IncomeService;
 use App\Services\TransactionService;
 use App\Services\ClientService;
@@ -41,26 +42,28 @@ class IncomeController extends Controller
     public function store(IncomeRequest $request)
     {
 
-            $firstRun = Carbon::parse($request->start_date);
+            // $firstRun = Carbon::parse($request->start_date);
 
             $validateData = $request->validated();
             $validateData['user_id'] = Auth::id();
 
-            $validateData['start_date'] = $firstRun->toDateString();
-            $validateData['next_run_at'] = $firstRun->toDateString();
+            $validateData['next_run_at'] = $request->start_at;
 
             $income = $this->incomeService->create($validateData);
-            $transaction = $this->transactionService->create($validateData,'income');
+            // $transaction = $this->transactionService->create($validateData,'income');
             if($validateData['client_id'] !== NULL){
                 $clinet_incomes = $this->clientService->update_Linked_Incomes($validateData['client_id'],$validateData['amount']);
             }
+
+            $firstRun = Carbon::parse($income->start_at);
+            GenerateTransactionJob::dispatch($income->id)
+                                    ->delay($firstRun->startOfDay());
 
             if($income){
                 return response()->json([
                     'message' => 'Income created successfully',
                     'income' => $income,
-                    'transaction' => $transaction,
-                    'clinet_incomes' => $clinet_incomes ?? 'no clien',
+                    'clinet_incomes' => $clinet_incomes ?? 'no client linked',
                 ], 201);
             }
 
