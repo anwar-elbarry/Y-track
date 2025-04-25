@@ -3,7 +3,8 @@ import api from '../api';
 
 export const useBillStore = defineStore('bill',{
     state:()=>({
-        bills:[]
+        bills:[],
+        upcomingBills:[]
     }),
     actions:{
         async fetchBills(){
@@ -48,6 +49,32 @@ export const useBillStore = defineStore('bill',{
                 console.log(response.data.message);
             }catch(error){
                 console.error('Error updating bill:', error);
+            }
+        }
+        ,
+        async paybill(id){
+            try{
+                await api.post(`/api/upcoming-bill/${id}/pay`)
+                console.log(response.data.message);
+            }catch(error){
+                console.error('Error paying bill:', error);
+            }
+        },
+        async fetchUpcomingBills(){
+            try{
+                const response = await api.get('/api/upcoming-bill/index')
+                this.upcomingBills = response.data.upcoming_bills
+                console.log(response.data.upcoming_bills);
+                console.log(response.data.message);
+            }catch(error){
+                console.error('Error fetching upcoming bills:', error);
+            }
+        },
+        async removeUpcomingBill(id){
+            try{
+                await api.delete(`/api/upcoming-bill/remove/${id}`)
+            }catch(error){
+                console.error('Error removing upcoming bill:', error);
             }
         }
     }
