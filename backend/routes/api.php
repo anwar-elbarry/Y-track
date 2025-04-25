@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BillsCategoryController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\Upcoming_BillsController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
@@ -93,6 +94,7 @@ Route::prefix('/bill')->group(function (){
         Route::put('/update/{id}',[BillController::class,'update']);
         Route::delete('/remove/{id}',[BillController::class,'destroy']);
         Route::post('/removeMultiple',[BillController::class,'destroyMultiple']);
+        Route::post('/{billId}/pay', [BillController::class, 'pay']);
     });
 });
 
@@ -111,5 +113,15 @@ Route::prefix('/goal')->group(function (){
         Route::post('/create',[GoalController::class,'store']);
         Route::delete('/remove/{id}',[GoalController::class,'destroy']);
         Route::put('/update/{id}',[GoalController::class,'update']);
+    });
+});
+
+Route::prefix('/upcoming-bill')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[Upcoming_BillsController::class,'index']);
+        Route::post('/create',[Upcoming_BillsController::class,'store']);
+        Route::delete('/remove/{id}',[Upcoming_BillsController::class,'destroy']);
+        Route::put('/update/{id}',[Upcoming_BillsController::class,'update']);
+        Route::post('/{upcoming_billId}/pay', [Upcoming_BillsController::class, 'pay']);
     });
 });
