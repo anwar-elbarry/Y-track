@@ -28,7 +28,7 @@ class BillRequest extends FormRequest
             'frequency' => 'string|max:255',
             'due_date' => 'date',
             'is_recurred' => 'boolean',
-            'status' => 'string|in:paid,unpaid',
+            'status' => 'string|in:active,inactive',
             'logo' => 'nullable',
         ];
     }
