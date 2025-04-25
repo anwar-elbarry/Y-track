@@ -45,14 +45,11 @@ class BillController extends Controller
         
         $validateData = $request->validated();
         
-        
         if ($request->hasFile('logo')) {
-           
             if (!file_exists(storage_path('app/public/bills_logo'))) {
                 mkdir(storage_path('app/public/bills_logo'), 0755, true);
             }
             
-         
             $path = $request->file('logo')->store('bills_logo', 'public');
             $validateData['logo'] = $path; 
             
@@ -61,16 +58,16 @@ class BillController extends Controller
             
             $validateData['logo'] = null;
         }
-        $dueDate = Carbon::parse($validateData['due_date']);
-        
-        $validateData['status'] = $dueDate->isPast() ? 'unpaid' : 'pending';
         
         $validateData['user_id'] = Auth::id();
-       
+        $validateData['status'] = 'active'; 
         
         $bill = $this->billService->create($validateData);
         
         if ($bill) {
+           
+            GenerateBillTransactionJob::dispatch($bill->id)->onQueue('default');
+            
             return response()->json([
                 'message' => 'Bill created successfully',
                 'bill' => $bill,
