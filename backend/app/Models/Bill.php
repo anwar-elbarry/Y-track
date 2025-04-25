@@ -29,4 +29,8 @@ class Bill extends Model
     {
         return $this->belongsTo(BillsCategory::class);
     }
+    public function upcoming_bill()
+    {
+        return $this->hasOne(upcoming_bill::class);
+    }
 }
