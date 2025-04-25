@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\BillRequest;
+use App\Jobs\GenerateBillTransactionJob;
 use App\Services\BillService;
 use App\Services\TransactionService;
+use Date;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class BillController extends Controller
 {
@@ -24,7 +27,7 @@ class BillController extends Controller
             $bills = $this->billService->showAll();
             if($bills){
                 return response()->json([
-                    'message' => 'bills fetched successfully',
+                    'message' => 'Bills fetched successfully',
                     'bills' => $bills
                 ],200);
             }
@@ -58,17 +61,19 @@ class BillController extends Controller
             
             $validateData['logo'] = null;
         }
+        $dueDate = Carbon::parse($validateData['due_date']);
+        
+        $validateData['status'] = $dueDate->isPast() ? 'unpaid' : 'pending';
         
         $validateData['user_id'] = Auth::id();
+       
         
         $bill = $this->billService->create($validateData);
-        $transaction = $this->transactionService->create($validateData,'bill');
         
         if ($bill) {
             return response()->json([
-                'message' => 'bill created successfully',
+                'message' => 'Bill created successfully',
                 'bill' => $bill,
-                'transaction' => $transaction,
                 'logo' => $validateData['logo'] ?? null
             ], 201);
         }
@@ -78,6 +83,50 @@ class BillController extends Controller
             'user_id' => Auth::id()
         ], 422);
     }
+
+    public function pay(int $billId)
+    {
+        $bill = $this->billService->show($billId);
+        
+        if (!$bill) {
+            return response()->json([
+                'message' => 'Bill not found'
+            ], 404);
+        }
+
+        if ($bill->status === 'paid') {
+            return response()->json([
+                'message' => 'Bill is already paid'
+            ], 422);
+        }
+
+        $transaction = $this->transactionService->create([
+            'user_id' => Auth::id(),
+            'bill_id' => $bill->id,
+            'amount' => $bill->amount,
+            'type' => 'bill',
+            'category' => $bill->category,
+            'date' => now()
+        ],'bill');
+
+        if ($transaction) {
+            $bill->status = 'paid';
+            $bill->save();
+
+            
+            GenerateBillTransactionJob::dispatch($bill->id);
+
+            return response()->json([
+                'message' => 'Bill paid successfully',
+                'transaction' => $transaction,
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Failed to process payment'
+        ], 422);
+    }
+
     /**
      * Display the specified resource.
      */
@@ -86,13 +135,14 @@ class BillController extends Controller
             $bill = $this->billService->show($billId);
             if($bill){
                 return response()->json([
-                    'message' => 'bill fetched seccussfully'
+                    'message' => 'Bill fetched successfully',
+                    'bill' => $bill
                 ],200);
             }
 
             return response()->json([
-                'message' => 'faild to fetch bill'
-            ],400);
+                'message' => 'Bill not found'
+            ],404);
     }
 
     /**
@@ -104,13 +154,13 @@ class BillController extends Controller
             $bill = $this->billService->update($billId,$validateData);
             if($bill){
                 return response()->json([
-                    'message' => 'bill Updated seccussfully',
-                    'Updated bill' => $bill
+                    'message' => 'Bill updated successfully',
+                    'bill' => $bill
                 ],200);
             }
 
             return response()->json([
-                'message' => 'faild to Update bill'
+                'message' => 'Failed to update bill'
             ],422);
 
     }
@@ -123,13 +173,13 @@ class BillController extends Controller
             $isDeleted = $this->billService->remove($billId);
             if($isDeleted){
                 return response()->json([
-                    'message' => 'bill Deleted seccussfully'
+                    'message' => 'Bill deleted successfully'
                 ],200);
             }
 
 
             return response()->json([
-                'message' => 'faild to Delete bill'
+                'message' => 'Failed to delete bill'
             ],400);
 
     }
@@ -140,12 +190,12 @@ class BillController extends Controller
             $isDeleted = $this->billService->removeMultiple($billsId);
             if($isDeleted){
                 return response()->json([
-                    'message' => "{$billsCount} bill Deleted seccussfully"
+                    'message' => "{$billsCount} bills deleted successfully"
                 ],200);
             }
 
             return response()->json([
-                'message' => 'faild to Delete bill'
+                'message' => 'Failed to delete bills'
             ],400);
     }
 }
