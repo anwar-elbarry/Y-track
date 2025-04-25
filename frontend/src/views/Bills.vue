@@ -4,23 +4,34 @@
             <SearchBare title="Bills" />
             <AddBtn name="Add Bills" @click="showForm = true"/>
             <AddBtn name="Add Category" @click="showCategoryForm = true"/>
+            <AddBtn 
+                :name="showUpcomingBills ? 'Regular Bills' : 'Upcoming Bills'" 
+                @click="showUpcomingBills = !showUpcomingBills"
+            />
         </div>
         
         <Bills_table 
-        :BillItems="bills"
-        @removed-bill="removeBill" 
-        @updated-bill="payBill"/>
+            v-if="!showUpcomingBills"
+            :BillItems="bills"
+            @removed-bill="removeBill" 
+        />
         <BillForm 
-        v-if="showForm"
-        :billsCategories="billCategories"
-        @close="closeForm"
-        @bill-added="fetchBills"
+            v-if="showForm"
+            :billsCategories="billCategories"
+            @close="closeForm"
+            @bill-added="fetchBills"
         />
         <Bills_category_form 
-        v-if="showCategoryForm"
-        @close="closeCategoryForm"
-        @category-added="fetchBillCategories"
+            v-if="showCategoryForm"
+            @close="closeCategoryForm"
+            @category-added="fetchBillCategories"
         />        
+        <Upcoming_Bills_table
+            v-if="showUpcomingBills"
+            :upcomingBillItems="upcomingBills"
+            @removed-upcoming-bill="removeUpcomingBill"
+            @paid-upcoming-bill="payUpcomingBill"
+        />
     </div>
 </template>
 
@@ -32,6 +43,7 @@ import BillForm from '../components/Bills/Bills_Form.vue';
 import Bills_category_form from '../components/Bills/Bills_category_form.vue';
 import { useBillStore } from '../stores/billsStore';
 import { useBillCategoryStore } from '../stores/billsCategoryStore';
+import Upcoming_Bills_table from '../components/Bills/Upcoming_Bills_table.vue';
 
 export default {
     name: 'Billss',
@@ -41,6 +53,8 @@ export default {
             billCategories:[],
             bills:[],
             showCategoryForm : false,
+            showUpcomingBills:false,
+            upcomingBills:[],
         }
     },
     setup(){
@@ -53,7 +67,8 @@ export default {
         SearchBare,
         Bills_table,
         BillForm,
-        Bills_category_form
+        Bills_category_form,
+        Upcoming_Bills_table
     },
     mounted(){
         this.fetchBills()
@@ -66,6 +81,11 @@ export default {
         async fetchBillCategories(){
             await this.billCategoryStore.fetchCategories();
             this.billCategories = this.billCategoryStore.categories;
+        },
+        async fetchUpcomingBills(){
+            await this.billStore.fetchUpcomingBills();
+            this.upcomingBills = this.billStore.upcomingBills;
+            console.log('upcomingBills',this.upcomingBills);
         },
         closeForm(){
             this.showForm = false;
@@ -82,14 +102,28 @@ export default {
             await this.billStore.removebill(billId);
             this.bills = this.bills.filter(client => client.id !== billId);
         },
-       async payBill(id,billData){
-            await this.billStore.updatebill(id,billData);
-            await this.fetchBills();
+       async payUpcomingBill(id){
+            await this.billStore.paybill(id);
+            await this.fetchUpcomingBills();
+        },
+        async removeUpcomingBill(id){
+            await this.billStore.removeUpcomingBill(id);
+            this.upcomingBills = this.upcomingBills.filter(upcomingBill => upcomingBill.id !== id);
         },
     },
     created(){
         this.fetchBills();
         this.fetchBillCategories();
+        this.fetchUpcomingBills();
+    },
+    watch: {
+        showUpcomingBills(newVal) {
+            if (newVal) {
+                this.fetchUpcomingBills();
+            } else {
+                this.fetchBills();
+            }
+        }
     }
 }
 </script>
