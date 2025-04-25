@@ -39,8 +39,8 @@
               </div>
             </td>
             <td class="p-3">
-              <span class="px-2 py-1 border border-gray-500 text-xs rounded-full bg-white" :class="{ ' text-green-800': item.status === 'Paid', ' text-red-800': item.status === 'unpaid' }">
-                <span class="inline-block w-2 h-2 rounded-full mr-1" :class="{ 'bg-green-500': item.status === 'paid', 'bg-red-500': item.status === 'unpaid' }"></span>
+              <span class="px-2 py-1 border border-gray-500 text-xs rounded-full bg-white" :class="{ ' text-green-800': item.status === 'Paid', ' text-red-800': item.status === 'unpaid', ' text-orange-800': item.status === 'pending' }">
+                <span class="inline-block w-2 h-2 rounded-full mr-1" :class="{ 'bg-green-500': item.status === 'paid', 'bg-red-500': item.status === 'unpaid', 'bg-orange-500': item.status === 'pending' }"></span>
                 {{ item.status }}
               </span>
             </td>
@@ -48,19 +48,7 @@
             <td class="p-3 text-sm text-gray-700">{{ item.frequency }}</td>
             <td class="p-3 text-sm text-gray-700">
                 <v-icon @click="removeBill(item.id)" name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
-                <button 
-                  v-if="item.status === 'unpaid'" 
-                  @click="payBill(item.id)" 
-                  class="px-2 py-1 bg-green-500 text-white text-xs rounded hover:bg-green-600 transition-colors"
-                >
-                  Pay
-                </button>
-                <span 
-                  v-else 
-                  class="px-2 py-1 bg-gray-200 text-green-800 text-xs rounded"
-                >
-                  Paid
-                </span>
+
             </td>
           </tr>
         </tbody>
@@ -103,7 +91,7 @@
         currency: useAuthStore.user.currency,
       }
     },
-    emits : ['removed-bill','updated-bill'],
+    emits : ['removed-bill'],
     setup(){
       const billStore = useBillStore();
       return {billStore}
@@ -132,12 +120,6 @@
       removeBill(id) {
         this.$emit('removed-bill',id);
       },
-      payBill(id) {
-       const billData = {
-            'status' : 'paid'
-        };
-        this.$emit('updated-bill',id,billData);
-      }
     }
   }
   </script>
