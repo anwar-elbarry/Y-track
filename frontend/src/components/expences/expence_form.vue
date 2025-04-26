@@ -141,6 +141,9 @@
     async  validateAndSubmit() {
         // Reset errors
         this.errors = {};
+        const expenseDate = new Date(this.form.date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
         
         // Validate amount
         if (!this.form.amount || parseFloat(this.form.amount) <= 0) {
@@ -150,6 +153,8 @@
         // Validate date
         if (!this.form.date) {
           this.errors.date = 'Please select a date';
+        }else if(expenseDate > today){
+          this.errors.date = "Expense date cannot be in the future.";
         }
         
         // Validate category
