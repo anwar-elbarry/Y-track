@@ -139,14 +139,14 @@
             <div class="flex items-center justify-end space-x-3 pt-2">
               <button 
                 type="button" 
-                class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                class="cursor-pointer px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
                 @click="$emit('close')"
               >
                 Cancel
               </button>
               <button 
                 type="submit" 
-                class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200 flex items-center"
+                class="cursor-pointer px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200 flex items-center"
               >
                 <svg v-if="isSubmitting" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -171,6 +171,12 @@
     setup() {
       const clientStore = useClientStore()
       return { clientStore }
+    },
+    props : {
+        clients : {
+          type : Array,
+          required : true
+        }
     },
     data() {
       return {
@@ -202,16 +208,22 @@
         // Validate name
         if (!this.form.name) {
           this.errors.name = 'Please select a name';
+        }else if(this.clients.find(client => client.name === this.form.name)){
+          this.errors.name = 'This name is already taken';
         }
         
         // Validate email
         if (!this.form.email) {
           this.errors.email = 'Please select a Email';
+        }else if(this.clients.find(client => client.email === this.form.email)){
+          this.errors.email = 'This email is already taken';
         }
         
         // Validate Phone
         if (!this.form.phone) {
           this.errors.phone = 'Please select a Phone Number';
+        }else if(this.clients.find(client => client.phone === this.form.phone)){
+          this.errors.phone = 'This name is already taken';
         }
         
         // Validate address
