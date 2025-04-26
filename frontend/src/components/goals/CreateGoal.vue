@@ -13,6 +13,7 @@
             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
+          <p v-if="errors.title" class="mt-1 text-sm text-red-600">{{ errors.title }}</p>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
@@ -25,6 +26,7 @@
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
+            <p v-if="errors.target" class="mt-1 text-sm text-red-600">{{ errors.target }}</p>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Target Date</label>
@@ -34,6 +36,7 @@
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
+            <p v-if="errors.due_date" class="mt-1 text-sm text-red-600">{{ errors.due_date }}</p>
           </div>
         </div>
 
@@ -73,6 +76,7 @@ export default {
         target: null,
         due_date: null,
       },
+      errors : {},
       isSubmitting: false,
     }
   },
@@ -80,20 +84,42 @@ export default {
     const goalStore = useGoalStore();
     return { goalStore }
   },
+  props : {
+    goals :{
+      type : Array,
+      required : true
+    }
+  },
   emits : ['create-goal','close'],
   methods: {
     async submitGoal() {
-      
-      if (!this.goal.title || !this.goal.target || !this.goal.due_date) {
+          const today =  new Date();
+          today.setHours(0,0,0,0);
+          const due_date = new Date(this.goal.due_date);
+
+
+      if (!this.goal.title && !this.goal.target && !this.goal.due_date) {
         alert('Please fill in all fields');
         return;
       }
+      if (!this.goal.title) {
+          this.errors.title = 'Please enter a valid title';
+      }else if(this.goals.find(goal => goal.title === this.goal.title)){
+        this.errors.title = 'this title is alredy taken';
+      }
+      if (!this.goal.due_date) {
+          this.errors.title = 'Please enter a valid title';
+      }else if(due_date < today){
+        this.errors.due_date = "you can't select passed date";
+      }
+      if (!this.goal.target || parseFloat(this.goal.target) <= 0) {
+          this.errors.target = 'Please enter a valid amount';
+        }
+
+      if(Object.keys(this.errors).length > 0){
+        return;
+      }
       this.isSubmitting = true;
-
-      const due_date = new Date(this.goal.due_date);
-      const today = new Date();
-      const daysRemaining = Math.ceil((due_date - today) / (1000 * 60 * 60 * 24));
-
       const newGoal = {
         'title':this.goal.title,
         'due_date': this.goal.due_date,
