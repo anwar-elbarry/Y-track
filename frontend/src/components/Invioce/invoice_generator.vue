@@ -79,81 +79,50 @@
                 type="email" 
                 class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
+            <div>
+            <label class="block text-sm font-medium mb-2">Service Description</label>
+            <input 
+              v-model="invoice.service_description" 
+              type="text" 
+              class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Service Price</label>
+            <input 
+              v-model="invoice.service_price" 
+              type="number" 
+              min="0"
+              step="0.01"
+              class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Service Name</label>
+            <input 
+              v-model="invoice.service_name" 
+              type="text" 
+              class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
           </div>
         </div>
         
         <!-- Client -->
         <div class="bg-white p-6 rounded-lg shadow-sm">
           <h2 class="text-xl font-semibold mb-4">Client</h2>
-          
-          <div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
             <label class="block text-sm font-medium mb-2">Select Client</label>
-            <input 
-              v-model="invoice.to.name" 
+            <select 
+              v-model="invoice.to.name"
               type="text" 
               class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option v-for="client in clients" :key="client.id" :value="client.name">{{ client.name }}</option>
+            </select>
+          </div>
+         
           </div>
         </div>
         
-        <!-- Invoice Items -->
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold">Invoice Items</h2>
-            <button 
-              @click="addItem" 
-              class="bg-white border border-gray-300 rounded-md p-2 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <span class="font-medium text-sm">+</span> Add Item
-            </button>
-          </div>
-          
-          <div 
-            v-for="(item, index) in invoice.items" 
-            :key="index" 
-            class="grid grid-cols-12 gap-4 mb-4">
-            <div class="col-span-5">
-              <label v-if="index === 0" class="block text-sm font-medium mb-2">Description</label>
-              <input 
-                v-model="item.description" 
-                type="text" 
-                class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
-            </div>
-            
-            <div class="col-span-2">
-              <label v-if="index === 0" class="block text-sm font-medium mb-2">Quantity</label>
-              <input 
-                v-model.number="item.quantity" 
-                type="number" 
-                min="1" 
-                class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
-            </div>
-            
-            <div class="col-span-3">
-              <label v-if="index === 0" class="block text-sm font-medium mb-2">Unit Price</label>
-              <input 
-                v-model.number="item.unitPrice" 
-                type="number" 
-                min="0" 
-                step="0.01" 
-                class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
-            </div>
-            
-            <div class="col-span-1">
-              <label v-if="index === 0" class="block text-sm font-medium mb-2">&nbsp;</label>
-              <button 
-                @click="removeItem(index)" 
-                class="p-2 text-red-500 hover:text-red-700 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          
-          <div class="text-right pt-4 border-t">
-            <p class="font-medium">Total: ${{ totalAmount.toFixed(2) }}</p>
-          </div>
-        </div>
-        
+    
         <!-- Additional Information -->
         <div class="bg-white p-6 rounded-lg shadow-sm">
           <h2 class="text-xl font-semibold mb-4">Additional Information</h2>
@@ -185,7 +154,7 @@
               Print
             </span>
           </button>
-          <button class="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button @click="sendInvoice()" class="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <span class="flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -200,7 +169,6 @@
       <div v-if="activeTab === 'preview'" class="bg-white rounded-lg shadow-sm overflow-hidden">
         <div class="bg-gray-100 p-8">
           <div class="text-4xl font-bold mb-1">INVOICE</div>
-          <div class="text-gray-600">#{{ invoice.number }}</div>
         </div>
         
         <div class="p-8">
@@ -214,18 +182,19 @@
             <div class="mb-4 md:mb-0">
               <div class="text-gray-500 mb-1">BILL TO</div>
               <div class="font-medium">{{ invoice.to.name || 'Client Name' }}</div>
+              <div>{{ getClientEmail() || 'client@email.com' }}</div>
             </div>
             
             <div>
               <div class="grid grid-cols-2 gap-x-20 gap-y-2">
                 <div class="text-gray-500">INVOICE DATE</div>
-                <div class="text-right">{{ formatDate(invoice.date) }}</div>
+                <div class="text-right">{{ invoice.date }}</div>
                 
                 <div class="text-gray-500">DUE DATE</div>
-                <div class="text-right">{{ formatDate(invoice.dueDate) }}</div>
+                <div class="text-right">{{ invoice.dueDate }}</div>
                 
                 <div class="text-gray-500">AMOUNT DUE</div>
-                <div class="text-right">${{ totalAmount.toFixed(2) }}</div>
+                <div class="text-right">${{ invoice.service_price }}</div>
               </div>
             </div>
           </div>
@@ -233,38 +202,21 @@
           <table class="w-full mb-8">
             <thead>
               <tr class="border-b">
-                <th class="text-left py-2 pl-2">DESCRIPTION</th>
-                <th class="text-center py-2">QUANTITY</th>
-                <th class="text-right py-2">UNIT PRICE</th>
+                <th class="text-left py-2 pl-2">SERVICE NAME</th>
+                <th class="text-center py-2">SERVICE DESCRIPTION</th>
+                <th class="text-right py-2">SERVICE PRICE</th>
                 <th class="text-right py-2 pr-2">AMOUNT</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in invoice.items" :key="index" class="border-b">
-                <td class="py-4 pl-2">{{ item.description || 'Item description' }}</td>
-                <td class="py-4 text-center">{{ item.quantity }}</td>
-                <td class="py-4 text-right">${{ item.unitPrice.toFixed(2) }}</td>
-                <td class="py-4 text-right pr-2">${{ (item.unitPrice * item.quantity).toFixed(2) }}</td>
+              <tr class="border-b">
+                <td class="py-4 pl-2">{{ invoice.service_name || 'Item description' }}</td>
+                <td class="py-4 text-center">{{ invoice.service_description }}</td>
+                <td class="py-4 text-right">${{ invoice.service_price }}</td>
+                <td class="py-4 text-right pr-2">${{ (invoice.service_price) }}</td>
               </tr>
             </tbody>
           </table>
-          
-          <div class="flex justify-end mb-8">
-            <div class="w-80">
-              <div class="flex justify-between py-2">
-                <div class="text-gray-600">Subtotal:</div>
-                <div>${{ totalAmount.toFixed(2) }}</div>
-              </div>
-              <div class="flex justify-between py-2">
-                <div class="text-gray-600">Tax (0%):</div>
-                <div>$0.00</div>
-              </div>
-              <div class="flex justify-between py-2 font-medium">
-                <div>Total:</div>
-                <div>${{ totalAmount.toFixed(2) }}</div>
-              </div>
-            </div>
-          </div>
           
           <div class="border-t pt-8">
             <div class="mb-4">
@@ -301,33 +253,42 @@
 </template>
   
   <script>
+import auth from '../../stores/auth';
+import { useInvoiceStore } from '../../stores/invoiceStore';
+  const authStore = auth();
   export default {
     name: 'InvoiceGenerator',
-    data() {
+    setup(){
+      const invoiceStore = useInvoiceStore();
+      return {invoiceStore};
+    } ,
+     data() {
       return {
         activeTab: 'edit',
         invoice: {
-          number: 'INV-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.floor(Math.random() * 1000),
           date: new Date().toISOString().slice(0, 10),
           dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10),
           from: {
-            company: '',
-            email: ''
+            company: authStore.user.name,
+            email: authStore.user.email,
           },
           to: {
-            name: ''
+            name: '',
+            email: '',
           },
-          items: [
-            {
-              description: '',
-              quantity: 1,
-              unitPrice: 0
-            }
-          ],
+          service_name: '',
+          service_description: '',
+          service_price: 0,
           notes: '',
           terms: 'Payment due within 30 days'
         }
       };
+    },
+    props : {
+      clients : {
+        type : Array,
+        required : true,
+      }
     },
     computed: {
       totalAmount() {
@@ -337,25 +298,37 @@
       }
     },
     methods: {
-      addItem() {
-        this.invoice.items.push({
-          description: '',
-          quantity: 1,
-          unitPrice: 0
-        });
+     async sendInvoice(){
+            try {
+                const client = this.clients.find(client => client.name === this.invoice.to.name);
+                if (!client) {
+                    throw new Error('Please select a client');
+                }
+
+                const newInvoice = {
+                    'total_amount' : this.invoice.service_price,
+                    'due_date' : this.invoice.dueDate,
+                    'status' : 'draft',
+                    'client_id' : client.id,
+                    'user_id' : authStore.user.id,
+                    'service_name' : this.invoice.service_name,
+                    'service_description' : this.invoice.service_description,
+                    'service_price' : this.invoice.service_price,
+                    'notes' : this.invoice.notes,
+                    'terms' : this.invoice.terms
+                };
+                
+                console.log('Creating invoice:', newInvoice);
+                const response = await this.invoiceStore.addInvoice(newInvoice);
+                console.log('Invoice created successfully:', response);
+            } catch (error) {
+                console.error('Error creating invoice:', error);
+            }
       },
-      removeItem(index) {
-        if (this.invoice.items.length > 1) {
-          this.invoice.items.splice(index, 1);
-        }
-      },
-      formatDate(dateString) {
-        if (!dateString) return '';
-        
-        const date = new Date(dateString);
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return date.toLocaleDateString('en-US', options);
+      getClientEmail(){
+        const client = this.clients.find(client => client.name === this.invoice.to.name);
+        return client.email;
       }
     }
   };
-  </script>
+  </script>       
