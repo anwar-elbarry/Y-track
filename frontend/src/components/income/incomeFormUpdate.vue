@@ -72,14 +72,14 @@
             <div class="flex items-center justify-end space-x-3 pt-2">
               <button 
                 type="button" 
-                class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
+                class="cursor-pointer px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200"
                 @click="$emit('close')"
               >
                 Cancel
               </button>
               <button 
                 type="submit" 
-                class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200 flex items-center"
+                class="cursor-pointer px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200 flex items-center"
               >
                 <svg v-if="isSubmitting" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -134,13 +134,18 @@
       },
       async validateAndSubmit() {
         this.errors = {};
-        
+        const startDate = new Date(this.form.start_at);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+    
         if (!this.form.amount || parseFloat(this.form.amount) <= 0) {
           this.errors.amount = 'Please enter a valid amount';
         }
 
         if (!this.form.start_at) {
           this.errors.start_at = 'Please select a start_at';
+        }else if (startDate < today){
+          this.errors.start_at = "you can't select passed date";
         }
         
         if (!this.form.frequency) {
