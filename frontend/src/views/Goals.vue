@@ -22,6 +22,7 @@
     </div>
     <CreateGoal 
     v-if="showCreateGoalForm" 
+    :goals="goals"
     @create-goal="fetchGoals"
       @close="showCreateGoalForm = false"
     />

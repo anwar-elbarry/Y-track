@@ -21,6 +21,7 @@
         </div>
         <Client_form  
         v-if="isOpen"
+        :clients="clients"
         @close="closeForm"
         @client-added="fetchClients"
         />
