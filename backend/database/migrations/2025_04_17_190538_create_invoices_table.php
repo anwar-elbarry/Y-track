@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
-            $table->decimal('total_amount', 10, 2);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
+            $table->decimal('service_price', 10, 2);
             $table->string('invoice_path')->nullable();
-            $table->enum('status', ['draft', 'sent', 'paid', 'overdue'])->default('draft');
             $table->date('due_date');
+            $table->string('service_name');
+            $table->string('service_description');
             $table->timestamps();
         });
     }
