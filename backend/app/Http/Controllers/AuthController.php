@@ -7,9 +7,6 @@ use App\Services\UserService;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-use Spatie\FlareClient\Api;
 use App\Http\Requests\UserRequest;
 class AuthController extends Controller
 {
@@ -113,16 +110,34 @@ class AuthController extends Controller
                   if($newPassword){
                     return response()->json([
                       'message' => 'password Updated Successfully',
-                    ]);
+                      'isUpdated' => true
+                    ],200);
                   }
 
                   return response()->json([
-                    'message' => 'The provided password does not match your current password.'
-                  ]);
+                    'message' => 'The provided password does not match your current password.',
+                    'isUpdated' => false
+                  ],400);
 
 
     }
 
+    public function  updateUser(UserRequest $request){
+                    $validate = $request->validated();
+                    $newUser  = $this->userService->updateUser($validate);
+                    if ($newUser) {
+                      return response()->json([
+                          'message' => 'User profile updated successfully',
+                          'user' => $newUser,
+                          'isUpdated' => true
+                      ], 200);
+                  }
+                  
+                  return response()->json([
+                      'message' => 'Failed to update user profile',
+                      'isUpdated' => false
+                  ], 400);
+              }
     public function getUser(){
           $user = User::where('id',Auth::id())->get();
           return response()->json([$user]);
