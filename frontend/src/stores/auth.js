@@ -33,6 +33,25 @@ export default defineStore('auth', {
       localStorage.setItem('token', token);
       this.user = user;
       this.token = token;
-    }
+    },
+   async changePassword(data){
+      const response  = await api.put('/api/auth/changePassword',data);
+      console.log(response.data.message);
+      if(response.data.isUpdated){
+        return this.message = 'password Updated successfully';
+      }
+      return this.message = 'faill to update password'
+    },
+   async updateUser(data){
+      const response  = await api.put('/api/auth/updateUser',data);
+      console.log(response.data.message);
+      if(response.data.isUpdated){
+        localStorage.removeItem("user");
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+
+        return this.message = 'user Updated successfully';
+      }
+      return this.message = 'faill to update user'
+    },
   },
 });
