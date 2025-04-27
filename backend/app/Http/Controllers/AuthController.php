@@ -3,14 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\UserService;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use Spatie\FlareClient\Api;
+use App\Http\Requests\UserRequest;
 class AuthController extends Controller
 {
+
+    protected $userService;
+
+    public function __construct(UserService $userService){
+            $this->userService = $userService;
+    }
     public function index(){
         $currencies = $this->CurrenciesApi();
         return response()->json([
@@ -96,6 +104,23 @@ class AuthController extends Controller
         return response()->json([
           'message' => 'user logged out seccussfully'
         ],200);
+    }
+
+    public function changePassword(UserRequest $request){
+                   $validated = $request->validated();
+                   $newPassword  =  $this->userService->ChangePassword($validated['oldPassword'],$validated['newPassword']);
+
+                  if($newPassword){
+                    return response()->json([
+                      'message' => 'password Updated Successfully',
+                    ]);
+                  }
+
+                  return response()->json([
+                    'message' => 'The provided password does not match your current password.'
+                  ]);
+
+
     }
 
     public function getUser(){
