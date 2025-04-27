@@ -64,36 +64,17 @@
                 type="text" 
                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
+              <p v-if="errors.fullName" class="mt-1 text-sm text-red-600">{{ errors.fullName }}</p>
             </div>
-            
-            <div class="mb-4">
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-              <input 
-                id="email" 
-                v-model="personalInfo.email" 
-                type="email" 
-                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            
-            <div class="mb-4">
-              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-              <input 
-                id="phone" 
-                v-model="personalInfo.phone" 
-                type="tel" 
-                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            
+        
             <div class="mb-6">
               <label for="currency" class="block text-sm font-medium text-gray-700 mb-1">Preferred Currency</label>
-              <input 
-                id="currency" 
-                v-model="personalInfo.currency" 
-                type="text" 
-                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
+              <select  id="currency" 
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              v-model="personalInfo.currency" >
+              <option v-for="country in currencies" :value="country.currency">{{ country.currency }} :  {{ country.name }}</option>
+            </select>
+              <p v-if="errors.currency" class="mt-1 text-sm text-red-600">{{ errors.currency }}</p>
             </div>
             
             <div class="flex justify-end">
@@ -101,6 +82,10 @@
                 type="submit" 
                 class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
               >
+              <svg v-if="isSubmittingUser" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
                 Save Changes
               </button>
             </div>
@@ -132,6 +117,7 @@
               type="password" 
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+            <p v-if="errors.currentPassword" class="mt-1 text-sm text-red-600">{{ errors.currentPassword }}</p>
           </div>
           
           <div class="mb-4">
@@ -142,6 +128,7 @@
               type="password" 
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+            <p v-if="errors.newPassword" class="mt-1 text-sm text-red-600">{{ errors.newPassword }}</p>
           </div>
           
           <div class="mb-6">
@@ -152,6 +139,7 @@
               type="password" 
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+            <p v-if="errors.confirmPassword" class="mt-1 text-sm text-red-600">{{ errors.confirmPassword }}</p>
           </div>
           
           <div class="mb-8">
@@ -159,89 +147,129 @@
               type="submit" 
               class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
+            <svg v-if="isSubmittingPassword" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
               Update Password
             </button>
           </div>
         </form>
-      </div>
-
-      <div>
-        <h3 class="text-lg font-medium text-gray-800 mb-4">Connected Accounts</h3>
-        <p class="text-gray-600 mb-4">Connect your account with these services for easier login</p>
-        
-        <div class="space-y-4">
-          <div class="flex items-center justify-between p-4 border border-gray-200 rounded-md">
-            <div class="flex items-center">
-              <div class="bg-red-100 text-red-500 p-2 rounded-full mr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" />
-                </svg>
-              </div>
-              <div>
-                <div class="font-medium">Google</div>
-                <div class="text-sm text-gray-500">john.doe@gmail.com</div>
-              </div>
-            </div>
-            <button class="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50">Disconnect</button>
-          </div>
-          
-          <div class="flex items-center justify-between p-4 border border-gray-200 rounded-md">
-            <div class="flex items-center">
-              <div class="bg-blue-100 text-blue-500 p-2 rounded-full mr-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" />
-                </svg>
-              </div>
-              <div>
-                <div class="font-medium">Facebook</div>
-                <div class="text-sm text-gray-500">Not connected</div>
-              </div>
-            </div>
-            <button class="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50">Connect</button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import auth from '../../stores/auth';
+const  authStore = auth();
 export default {
   name: 'ProfileSettings',
   data() {
     return {
       activeTab: 'personal',
       personalInfo: {
-        fullName: 'John Doe',
-        email: 'john.doe@example.com',
-        phone: '+1 (555) 123-4567',
-        currency: 'USD ($)'
+        fullName:authStore.user.name,
+        currency: authStore.user.currency
       },
       securityInfo: {
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
-      }
+      },
+      errors : {},
+      currencies : [],
+      isSubmittingPassword : false,
+      isSubmittingUser : false,
     }
   },
   methods: {
-    savePersonalInfo() {
-      console.log('Saving personal info:', this.personalInfo)
-      alert('Personal information saved successfully!')
+   async savePersonalInfo() {
+      this.isSubmittingUser = true;
+      if(!this.personalInfo.fullName){
+    this.errors.fullName = "name is required"
+    
+  }
+
+
+  if(!this.personalInfo.currency){
+    this.errors.currency = "Currency is required"
+    
+  }
+
+  if (Object.keys(this.errors).length > 0) {
+    return;
+  }
+
+  const userData = {
+    'name': this.personalInfo.fullName,
+    'currency': this.personalInfo.currency
+  };
+
+
+try{
+  await authStore.updateUser(userData);
+  this.isSubmittingUser = false;
+}catch(error){
+     console.log(error);
+     this.isSubmittingUser = false;
+}
+  
     },
-    updatePassword() {
+  async  updatePassword() {
+      this.isSubmittingPassword = true;
       // Validation
       if (this.securityInfo.newPassword !== this.securityInfo.confirmPassword) {
-        alert('New passwords do not match!')
-        return
-      }
-      
+    alert('New passwords do not match!')
+    
+  }
+  
+  if(!this.securityInfo.currentPassword){
+    this.errors.currentPassword = "Current password is required"
+    
+  }
+
+  if(!this.securityInfo.newPassword){
+    this.errors.newPassword = "New password is required"
+    
+  }
+
+  if(this.securityInfo.newPassword.length < 8){
+    this.errors.newPassword = "Password must be at least 8 characters"
+  }
+if(Object.keys(this.errors).length > 0){
+  return this.isSubmitting = false;
+}
+      const data = {
+        'oldPassword' : this.securityInfo.currentPassword,
+        'newPassword' : this.securityInfo.confirmPassword,
+      };
+      await authStore.changePassword(data);
+      console.log(authStore.message);
       
       // Reset form
       this.securityInfo.currentPassword = ''
       this.securityInfo.newPassword = ''
       this.securityInfo.confirmPassword = ''
-    }
+      this.isSubmittingPassword = false;
+    },
+    async getCurrencies() {
+      axios.get('https://countriesnow.space/api/v0.1/countries/currency')
+    .then(response => {
+      this.currencies = response.data.data.map(item => ({
+        name: item.name,
+        currency: item.currency
+      }));
+      console.log(this.currencies);
+    })
+    .catch(error => {
+      console.log('error', error);
+    });
+}
+  },
+  created(){
+    this.getCurrencies();
   }
 }
 </script>
