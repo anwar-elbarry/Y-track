@@ -22,8 +22,11 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'newPassword' => 'required|min:8',
-            'oldPassword' => 'required|min:8',
+            'newPassword' => 'min:8',
+            'oldPassword' => 'min:8',
+            'email' => 'email',
+            'name' => 'string|max:255',
+            'currency' => 'string',
         ];
     }
 }
