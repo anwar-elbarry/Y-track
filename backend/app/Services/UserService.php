@@ -15,4 +15,14 @@ class UserService {
                    $user->save();
                    return $user->password;
     }
+    public function updateUser(array $userData){
+                    $user = Auth::user();
+                   $user->update($userData);
+                   $user = User::where('id',$user->id)->first();
+                   if($user){
+                    return $user;
+                   }
+                   return false;
+    }
+
 }
