@@ -5,11 +5,13 @@ namespace App\Jobs;
 use Carbon\Carbon;
 use App\Models\Income;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class GenerateTransactionJob implements ShouldQueue
 {
@@ -40,12 +42,18 @@ class GenerateTransactionJob implements ShouldQueue
             return;
         }
 
-        Transaction::create([
+        $transaction = Transaction::create([
             'user_id'   => $income->user_id,
             'income_id' => $income->id,
             'amount'    => $income->amount,
             'type'    => 'income',
         ]);
+        $user = User::find($transaction->user_id);
+    
+        if ($user) {
+            $user->balance += $transaction->amount;
+            $user->save();
+        }
 
         $next = match($income->frequency){
             'daily'    => Carbon::parse($income->next_run_at)->addDay(),
@@ -59,7 +67,7 @@ class GenerateTransactionJob implements ShouldQueue
         if($next !== null){
             $income->next_run_at = $next;
             $income->save();
-        
+
             self::dispatch($income->id)
             ->delay($next->startOfDay());
         }else {

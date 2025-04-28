@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\Bill;
 use Carbon\Carbon;
 use App\Models\upcoming_bill;
-use App\Models\Transaction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -110,10 +109,9 @@ class GenerateBillTransactionJob implements ShouldQueue
                     $bill->due_date = $nextDueDate;
                     $bill->save();
                     \Log::info('Updated bill with new due date', ['bill_id' => $bill->id]);
-    
-                    // Schedule the next check
+                    
                     self::dispatch($bill->id)
-                        ->delay($nextDueDate);
+                        ->delay($nextDueDate);      
                     \Log::info('Scheduled next bill check', [
                         'bill_id' => $bill->id,
                         'next_due_date' => $nextDueDate
