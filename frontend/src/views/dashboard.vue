@@ -30,13 +30,20 @@ export default {
     data(){
       return {
         isAsideOpen : true,
-        user : auth().user
+        user : null
       }
     },
     methods : {
       handleAsideToggle(isOpen){
         this.isAsideOpen = isOpen;
+      },
+      async getUser(){
+        await auth().fetchUser();
+        this.user = auth().user;
       }
+    },
+    created(){
+      this.getUser();
     }
 }
 </script>
