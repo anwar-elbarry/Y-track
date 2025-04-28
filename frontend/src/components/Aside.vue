@@ -21,7 +21,7 @@
             <div class="buttons flex flex-col gap-2 py-4">
 
                 <div>
-                    <router-link to="/dashboard/DashboardHome">
+                    <router-link :to="{name : 'DashboardHome'}">
                         <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
                             <div
                                 class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
@@ -161,9 +161,10 @@
 
                     </ul>
                 </div>
-                <div>
-                    <router-link to="/dashboard/notifications">
+                
+                    
                         <div class="toggle_button self-center flex h-fit max-w-full w-50 flex-col items-stretch ">
+                            <router-link :to="{name : 'Notifications'}">
                             <div
                                 class="up-btn flex w-full items-center gap-2 overflow-hidden px-3 py-[9px] rounded-[75px]">
                                 <div class="flex w-full items-stretch gap-2 my-auto">
@@ -177,9 +178,10 @@
                                     <p class="font-medium flex-1">Notifications</p>
                                 </div>
                             </div>
+                        </router-link>
                         </div>
-                    </router-link>
-                </div>
+                
+              
             </div>
             <!-- user menue -->
             <div v-if="isMenueShown" class="flex flex-col w-38 bg-[#0D1117] justify-center rounded absolute -right-38 bottom-6">
