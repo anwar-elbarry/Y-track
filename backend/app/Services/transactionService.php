@@ -2,7 +2,7 @@
 
 namespace App\Services;
 use App\Models\Transaction;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 class TransactionService {
 
    public function showAll(){
@@ -11,11 +11,20 @@ class TransactionService {
     }
     public function create(array $transaction,string $type)
     {
-        return Transaction::create([
+        $transaction = Transaction::create([
             'user_id' => Auth::id(),
             'type' => $type,
             'amount' => $transaction['amount']
         ]);
+        $user = Auth::user();
+         if($type == 'income'){
+            $user->balance += $transaction['amount'];
+            $user->save();
+         }else{
+            $user->balance -= $transaction['amount'];
+            $user->save();
+         }
+         return $transaction;
     }
 
 
