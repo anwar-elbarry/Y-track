@@ -6,14 +6,18 @@ use App\Http\Requests\GoalRequest;;
 use App\Services\GoalService;
 use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Transaction;
+use App\Services\TransactionService;
 
 class GoalController extends Controller
 {
 
     protected $goalService;
+    protected $transactionService;
 
-    public function __construct(GoalService $goalService){
+    public function __construct(GoalService $goalService,TransactionService $transactionService){
         $this->goalService = $goalService;
+        $this->transactionService = $transactionService;
     }
     /**
      * Display a listing of the resource.
@@ -103,6 +107,10 @@ class GoalController extends Controller
         }
         
         $goal = $this->goalService->update($goalId, $validateData);
+        $this->transactionService->create([
+            'amount' => $newSavedAmount,
+            'goal_id' => $goal->id,
+        ],'goal');
         
         if ($goal) {
             return response()->json([
