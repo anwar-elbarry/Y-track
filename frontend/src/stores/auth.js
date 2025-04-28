@@ -7,7 +7,7 @@ export default defineStore('auth', {
   state() {
     return {
       token: localStorage.getItem("token" || null),
-      user: JSON.parse(localStorage.getItem("user") || null) ,
+      user : {},
       message: null,
     };
   },
@@ -15,23 +15,19 @@ export default defineStore('auth', {
     async login(credentials) {
       const response = await api.post('/api/auth/signin', credentials);
       this.message = response.data.message;
-
-      this.setAuth(response.data.user, response.data.token);
+      this.setAuth(response.data.token);
 
     },
     async fetchUser() {
       const response = await api.get('api/auth/user');
-      this.user = response.data;
+      this.user = response.data.user;
     },
     async logout() {
-      localStorage.removeItem("user");
       localStorage.removeItem("token");
       router.push('/auth');
     },
-    setAuth(user, token) {
-      localStorage.setItem('user', JSON.stringify(user));
+    setAuth(token) {
       localStorage.setItem('token', token);
-      this.user = user;
       this.token = token;
     },
    async changePassword(data){
@@ -46,8 +42,7 @@ export default defineStore('auth', {
       const response  = await api.put('/api/auth/updateUser',data);
       console.log(response.data.message);
       if(response.data.isUpdated){
-        localStorage.removeItem("user");
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+        this.user = response.data.user;
 
         return this.message = 'user Updated successfully';
       }
