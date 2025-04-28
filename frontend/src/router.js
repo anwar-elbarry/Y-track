@@ -21,7 +21,7 @@ const routes = [
     component : () => import('./views/dashboard.vue'),
     children : [
       {
-        path : 'DashboardHome',
+        path : '',
         name : 'DashboardHome',
         component : () => import('./views/DashboardHome.vue')
       },
@@ -72,8 +72,13 @@ const routes = [
       },
       {
         path : 'notifications',
-        name : 'notifications',
+        name : 'Notifications',
         component : () => import('./views/notifications.vue')
+      },
+      {
+        path : 'BudgetAllocation',
+        name : 'BudgetAllocation',
+        component : () => import('./views/BudgetAllocation.vue')
       },
     ]
   }
