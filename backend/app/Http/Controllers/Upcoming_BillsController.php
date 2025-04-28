@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Services\Upcoming_BillsService;
 use App\Services\TransactionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Upcoming_BillsController extends Controller
 {
@@ -72,6 +73,11 @@ class Upcoming_BillsController extends Controller
             'date' => now(),
             'type' => 'bill',
         ],'bill');
+
+                    $user = Auth::user();
+                    $user->balance -= $upcoming_bill->amount;
+                    $user->save();
+
         return response()->json([
             'message' => 'Upcoming bill paid successfully',
             'upcoming_bill' => $upcoming_bill,
