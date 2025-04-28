@@ -3,8 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use App\Models\invoice;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Models\Invoice;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Attachment;
@@ -22,7 +21,7 @@ class InvoiceMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(invoice $invoice)
+    public function __construct(Invoice $invoice)
     {
         $this->invoice = Invoice::with(['client', 'user'])->find($invoice->id);
     }
