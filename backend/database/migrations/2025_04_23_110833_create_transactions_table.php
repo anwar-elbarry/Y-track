@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('income_id')->nullable()->default(null)->constrained('incomes')->onDelete('cascade');
+            $table->foreignId('goal_id')->nullable()->default(null)->constrained('goals')->onDelete('cascade');
             $table->foreignId('expense_id')->nullable()->default(null)->constrained('expenses')->onDelete('cascade');
             $table->foreignId('bill_id')->nullable()->default(null)->constrained('bills')->onDelete('cascade');
             $table->enum('type', [
                 'income', 
                 'expense', 
-                'bill'
+                'bill',
+                'goal',
             ]);
             $table->decimal('amount', 10, 2);
             $table->timestamps();
