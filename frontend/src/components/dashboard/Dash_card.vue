@@ -1,19 +1,14 @@
 <template>
     
-    <div class="w-52 h-28 bg-white rounded-lg shadow-md border border-gray-200 flex flex-col p-4">
-            <div class="flex items-center  text-gray-500 mb-4">
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                    <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 100-12 6 6 0 000 12z"
-                        clip-rule="evenodd" />
-                </svg>
-                <span class="text-lg">{{ title }}</span>
-            </div>
-            <div class="text-3xl font-bold text-black">
-                {{ formattedValue }}
-            </div>
+    <div class="w-54 h-32 bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 flex flex-col p-5">
+    <div class="flex items-center gap-3 text-gray-600 mb-4">
+        <v-icon :name="icon" class="text-xl" />
+        <span class="text-lg font-medium">{{ title }}</span>
     </div>
+    <p class="text-2xl font-bold text-gray-800">
+        {{ value }}
+    </p>
+</div>
 </template>
 
 <script>
@@ -27,14 +22,11 @@ props: {
     },
     title : {
         type: String,
+        default: 'md-accountbalancewallet'
+    },
+    icon : {
+        type: String,
         default: 'Net Income'
-    }
-},
-computed: {
-    formattedValue() {
-        return this.value >= 1000
-            ? `${(this.value / 1000).toFixed(1)}K`
-            : this.value.toString();
     }
 }
 }

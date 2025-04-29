@@ -2,23 +2,26 @@
         <div class="cards gap-10 flex flex-wrap justify-center w-full">
           <Dash_card 
            :value="balance"
+           icon="md-accountbalancewallet"
            title="Balance"
+          />
+          <Dash_card 
+           :value="3000"
+           title="Expenses"
+           icon="io-trending-down-outline"
            
           />
           <Dash_card 
            :value="3000"
-           title="Income"
+           title="Bills"
+           icon="bi-calendar-check-fill"
            
           />
           <Dash_card 
            :value="3000"
-           title="Income"
-           
-          />
-          <Dash_card 
-           :value="3000"
-           title="Income"
-           
+           title="Total incomes"
+           icon="io-trending-up-outline"
+
           />
         </div>
 </template>
