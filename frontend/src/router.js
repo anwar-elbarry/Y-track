@@ -5,7 +5,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () => import('./views/Home.vue'),
-    // Add scrollBehavior to handle hash navigation
     meta: { scrollToTop: true }
   },
   {
@@ -74,11 +73,6 @@ const routes = [
         path : 'notifications',
         name : 'Notifications',
         component : () => import('./views/notifications.vue')
-      },
-      {
-        path : 'BudgetAllocation',
-        name : 'BudgetAllocation',
-        component : () => import('./views/BudgetAllocation.vue')
       },
     ]
   }
