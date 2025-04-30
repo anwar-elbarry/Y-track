@@ -43,9 +43,7 @@ class GenerateBillTransactionJob implements ShouldQueue
             'is_future_or_today' => $dueDate->greaterThanOrEqualTo($now->startOfDay())
         ]);
     
-        // Modify condition to include today's date
         if ($dueDate->greaterThanOrEqualTo($now->startOfDay()) && $daysUntilDue <= 7) {
-            // Check if an upcoming bill already exists for this due date
             $existingUpcomingBill = upcoming_bill::where('original_bill_id', $bill->id)
                 ->where('due_date', $bill->due_date)
                 ->first();
@@ -84,7 +82,6 @@ class GenerateBillTransactionJob implements ShouldQueue
             ]);
         }
     
-        // Recurring bill logic remains the same
         if ($bill->is_recurred && $bill->frequency !== 'one-time') {
             \Log::info('Processing recurring bill', [
                 'bill_id' => $bill->id,
