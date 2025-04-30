@@ -8,6 +8,7 @@ export default defineStore('auth', {
     return {
       token: localStorage.getItem("token" || null),
       user : {},
+      statistics : {},
       message: null,
     };
   },
@@ -48,5 +49,9 @@ export default defineStore('auth', {
       }
       return this.message = 'faill to update user'
     },
+    async getStatistics(){
+        const response = await api.get('api/statistics/index');
+        this.statistics = response.data.statistics
+    }
   },
 });
