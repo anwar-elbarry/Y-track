@@ -69,6 +69,7 @@ Route::prefix('/expense')->group(function (){
 Route::prefix('/category')->group(function (){
     Route::middleware('auth:sanctum')->group(function(){
         Route::get('/index',[CategoryController::class,'index']);
+        Route::get('/statistics',[CategoryController::class,'getCategoryWithAmount']);
         Route::post('/create',[CategoryController::class,'store']);
         Route::delete('/remove/{id}',[CategoryController::class,'destroy']);
     });
