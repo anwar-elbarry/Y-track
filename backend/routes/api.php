@@ -12,6 +12,7 @@ use App\Http\Controllers\Upcoming_BillsController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\StatisticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -136,5 +137,11 @@ Route::prefix('/invoice')->group(function (){
         Route::put('/update/{id}',[InvoiceController::class,'update']);
         Route::delete('/remove/{id}',[InvoiceController::class,'destroy']);
         Route::get('/{id}',[InvoiceController::class,'show']);
+    });
+});
+
+Route::prefix('/statistics')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[StatisticsController::class,'index']);
     });
 });
