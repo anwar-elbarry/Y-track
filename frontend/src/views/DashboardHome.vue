@@ -22,30 +22,43 @@
            :value="statistics.totalIncomes"
            title="Total incomes"
            icon="io-trending-up-outline"
-
           />
+          <Dash_card 
+           :value="statistics.totalClients"
+           title="Clients"
+           icon="la-user-friends-solid"
+          /> 
         </div>
-        <charts :transactions="transactions" />
+        <transactionsChart :transactions="transactions" />
+        <categoryChart :expensecategories="expenseCategories" />
     </div>
 </template>
 
 <script>
 import transaction from '../services/transaction';
 import Dash_card from '../components/dashboard/Dash_card.vue';
-import charts from '../components/dashboard/charts.vue';
+import transactionsChart from '../components/dashboard/transactionsChart.vue';
+import categoryChart from '../components/dashboard/expense_Category_Chart.vue';
+import { useCategoryStore } from '../stores/categoryStore';
 import auth from '../stores/auth';
 const authStore = auth();
 export default {
     name: 'DashboardHome',
     components : {
         Dash_card,
-        charts
+        transactionsChart,
+        categoryChart
+    },
+    setup(){
+      const categoryStore = useCategoryStore();
+      return {categoryStore};
     },
     data(){
       return {
         balance : 0,
         statistics : {},
-        transactions : []
+        transactions : [],
+        expenseCategories : [],
       }
     }
    ,
@@ -63,12 +76,21 @@ export default {
       async getTransactions(){
         const data = await transaction.getAll();
         this.transactions = data.transactions
-      }
+      },
+      async getCategoryWithAmount(){
+        const data = await transaction.getCategoryWithAmount();
+        this.expenseCategories = data.categories
+      },
+      // async getExpenseCategory(){
+      //      await this.categoryStore.fetchCategories();
+      //      this.expenseCategories = this.categoryStore.categories;
+      // }
    },
    created(){
         this.getUser();
         this.getStatistics();
         this.getTransactions();
+        this.getCategoryWithAmount();
    }
 }
 
