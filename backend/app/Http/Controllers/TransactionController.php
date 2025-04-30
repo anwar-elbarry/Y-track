@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Services\TransactionService;
 
 class TransactionController extends Controller
@@ -29,9 +28,7 @@ class TransactionController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
 
     /**
      * Display the specified resource.
