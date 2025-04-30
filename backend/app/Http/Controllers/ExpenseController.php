@@ -36,12 +36,14 @@ class ExpenseController extends Controller
      */
     public function store(ExpenseRequest $request)
     {
-
             $validateData = $request->validated();
             $validateData['user_id'] = Auth::id();
 
             $expense = $this->expenseService->create($validateData);
-            $transaction = $this->transactionService->create($validateData,'expense');
+            
+            // Create transaction with expense_id
+            $transactionData = array_merge($validateData, ['expense_id' => $expense->id]);
+            $transaction = $this->transactionService->create($transactionData, 'expense');
 
             if($expense){
                 return response()->json([
@@ -65,12 +67,13 @@ class ExpenseController extends Controller
             $expense = $this->expenseService->show($expenseId);
             if($expense){
                 return response()->json([
-                    'message' => 'expense fetched seccussfully'
+                    'message' => 'expense fetched successfully',
+                    'expense' => $expense
                 ],200);
             }
 
             return response()->json([
-                'message' => 'faild to fetch expense'
+                'message' => 'failed to fetch expense'
             ],400);
     }
 
@@ -84,13 +87,13 @@ class ExpenseController extends Controller
 
             if($expense){
                 return response()->json([
-                    'message' => 'expense Updated seccussfully',
+                    'message' => 'expense Updated successfully',
                     'Updated expense' => $expense
                 ],200);
             }
 
             return response()->json([
-                'message' => 'faild to Update expense'
+                'message' => 'failed to Update expense'
             ],422);
 
     }
@@ -103,29 +106,27 @@ class ExpenseController extends Controller
             $isDeleted = $this->expenseService->remove($expenseId);
             if($isDeleted){
                 return response()->json([
-                    'message' => 'expense Deleted seccussfully'
+                    'message' => 'expense Deleted successfully'
                 ],200);
             }
 
-
             return response()->json([
-                'message' => 'faild to Delete expense'
+                'message' => 'failed to Delete expense'
             ],400);
-
     }
+
     public function destroyMultiple(array $expensesId)
     {
-
             $expensesCount = count($expensesId);
             $isDeleted = $this->expenseService->removeMultiple($expensesId);
             if($isDeleted){
                 return response()->json([
-                    'message' => "{$expensesCount} expense Deleted seccussfully"
+                    'message' => "{$expensesCount} expense Deleted successfully"
                 ],200);
             }
 
             return response()->json([
-                'message' => 'faild to Delete expense'
+                'message' => 'failed to Delete expense'
             ],400);
     }
 }

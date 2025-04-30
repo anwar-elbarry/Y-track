@@ -26,6 +26,16 @@ class CategoryController extends Controller
                 ],200);
             }
     }
+    public function getCategoryWithAmount()
+    {
+            $categories = $this->categoryService->getCategoryWithAmount();
+            if($categories){
+                return response()->json([
+                    'message' => 'categories fetched successfully',
+                    'categories' => $categories
+                ],200);
+            }
+    }
 
     /**
      * Store a newly created resource in storage.
