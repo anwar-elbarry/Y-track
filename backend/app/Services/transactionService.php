@@ -9,24 +9,31 @@ class TransactionService {
         $Transactions = Transaction::with('user')->where('user_id',Auth::id())->get();
         return $Transactions;
     }
-    public function create(array $transaction,string $type)
+    public function create(array $transaction, string $type)
     {
-        $transaction = Transaction::create([
+        $transactionData = [
             'user_id' => Auth::id(),
             'type' => $type,
             'amount' => $transaction['amount']
-        ]);
+        ];
+
+        // Add expense_id if it exists
+        if (isset($transaction['expense_id'])) {
+            $transactionData['expense_id'] = $transaction['expense_id'];
+        }
+
+        $transaction = Transaction::create($transactionData);
+        
         $user = Auth::user();
-         if($type == 'income'){
+        if($type == 'income'){
             $user->balance += $transaction['amount'];
             $user->save();
-         }else{
+        }else{
             $user->balance -= $transaction['amount'];
             $user->save();
-         }
-         return $transaction;
+        }
+        return $transaction;
     }
-
 
     public function remove(int $TransactionId){
         $Transaction = Transaction::findOrFail($TransactionId);
