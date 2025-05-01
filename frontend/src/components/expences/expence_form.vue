@@ -142,6 +142,7 @@
         // Reset errors
         this.errors = {};
         const expenseDate = new Date(this.form.date);
+        expenseDate.setHours(0,0,0,0);
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         
