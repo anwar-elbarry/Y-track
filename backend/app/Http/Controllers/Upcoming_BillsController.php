@@ -74,10 +74,6 @@ class Upcoming_BillsController extends Controller
             'type' => 'bill',
         ],'bill');
 
-                    $user = Auth::user();
-                    $user->balance -= $upcoming_bill->amount;
-                    $user->save();
-
         return response()->json([
             'message' => 'Upcoming bill paid successfully',
             'upcoming_bill' => $upcoming_bill,
