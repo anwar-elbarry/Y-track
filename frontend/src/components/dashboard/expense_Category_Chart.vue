@@ -1,8 +1,9 @@
 <template>
-    <div id="categoryChart" class="w-full h-[400px] bg-white rounded-xl shadow-lg p-4">
+    <div class="w-full h-[400px] bg-white rounded-xl shadow-lg p-4">
         <div v-if="!expensecategories.length" class="flex items-center justify-center h-full text-gray-500">
             No data available
         </div>
+        <div v-else id="categoryChart" class="w-full h-full"></div>
     </div>
 </template>
 
@@ -23,52 +24,50 @@ export default {
     },
     data() {
         return {
-            chart: null,
-            chartOptions: {
-                series: [],
-                labels: [],
+            chart: null
+        }
+    },
+    methods: {
+        getChartOptions(series, labels) {
+            console.log('Chart data:', { series, labels }); // Debug log
+            return {
+                series,
+                labels,
                 chart: {
                     type: 'donut',
                     height: 350,
-                    toolbar: {
-                        show: true
-                    },
+                    toolbar: { show: true },
                     background: 'transparent'
                 },
                 colors: [
-                    '#ef4444', // Red
-                    '#3b82f6', // Blue
-                    '#22c55e', // Green
-                    '#f59e0b', // Yellow
-                    '#8b5cf6', // Purple
-                    '#ec4899', // Pink
-                    '#64748b', // Slate
+                    '#ef4444', '#3b82f6', '#22c55e', '#f59e0b', '#8b5cf6', '#ec4899'
                 ],
                 legend: {
                     position: 'bottom',
-                    formatter: function(seriesName, opts) {
-                        return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]
+                    formatter: (seriesName, opts) => {
+                        return `${seriesName}: ${opts.w.globals.series[opts.seriesIndex]}`
                     }
                 },
                 plotOptions: {
                     pie: {
-                        donut: {
-                            size: '70%'
+                        donut: { 
+                            size: '70%',
+                            labels: {
+                                show: true
+                            }
                         }
                     }
                 },
                 dataLabels: {
                     enabled: true,
                     formatter: (val, opts) => {
-                        const amount = opts.w.globals.series[opts.seriesIndex]
-                        return `${opts.w.config.labels[opts.seriesIndex]}\n${amount} ${this.currency}`
+                        const amount = opts.w.globals.series[opts.seriesIndex];
+                        return `${opts.w.config.labels[opts.seriesIndex]}\n${amount} ${this.currency}`;
                     }
                 },
                 tooltip: {
                     y: {
-                        formatter: (val) => {
-                            return `${val} ${this.currency}`
-                        }
+                        formatter: (val) => `${val} ${this.currency}`
                     }
                 },
                 title: {
@@ -79,65 +78,82 @@ export default {
                         fontWeight: 'bold'
                     }
                 }
-            }
-        }
-    },
-    methods: {
+            };
+        },
         initChart() {
             if (this.chart) {
                 this.chart.destroy();
+                this.chart = null;
             }
-            console.log('Initializing chart with data:', {
-                labels: this.chartOptions.labels,
-                series: this.chartOptions.series
-            });
-            this.chart = new ApexCharts(document.querySelector("#categoryChart"), this.chartOptions);
-            this.chart.render();
-        },
-        updateChartData() {
-            if (!this.expensecategories.length) {
-                console.log('No expense categories data');
+
+            const chartElement = document.querySelector("#categoryChart");
+            if (!chartElement) {
+                console.error("Chart element not found");
                 return;
             }
 
-            // Map categories to series data
-            const labels = this.expensecategories.map(cat => cat.name);
-            const series = this.expensecategories.map(cat => cat.total_amount || 0);
+            // Filter out categories with zero amounts
+            const validCategories = this.expensecategories.filter(cat => cat.total_amount > 0);
+            const labels = validCategories.map(cat => cat.name);
+            const series = validCategories.map(cat => cat.total_amount);
 
-            console.log('Updating chart with:', {
-                labels,
-                series,
-                categories: this.expensecategories
-            });
-
-            // Update chart data
-            this.chartOptions.labels = labels;
-            this.chartOptions.series = series;
-
-            if (this.chart) {
-                this.chart.updateOptions(this.chartOptions);
-            } else {
-                this.initChart();
+            if (series.length === 0) {
+                console.warn("No valid data to display in chart");
+                return;
             }
+
+            console.log('Initializing chart with:', { labels, series }); // Debug log
+            const options = this.getChartOptions(series, labels);
+            this.chart = new ApexCharts(chartElement, options);
+            this.chart.render();
+        },
+        updateChartData() {
+            if (!this.chart) return;
+
+            // Filter out categories with zero amounts
+            const validCategories = this.expensecategories.filter(cat => cat.total_amount > 0);
+            const labels = validCategories.map(cat => cat.name);
+            const series = validCategories.map(cat => cat.total_amount);
+
+            if (series.length === 0) {
+                if (this.chart) {
+                    this.chart.destroy();
+                    this.chart = null;
+                }
+                return;
+            }
+
+            console.log('Updating chart with:', { labels, series }); // Debug log
+            const newOptions = this.getChartOptions(series, labels);
+            this.chart.updateOptions(newOptions, true);
         }
     },
     watch: {
         expensecategories: {
-            handler(newVal) {
-                console.log('expensecategories changed:', newVal);
-                this.updateChartData();
+            handler() {
+                this.$nextTick(() => {
+                    if (!this.chart) {
+                        this.initChart();
+                    } else {
+                        this.updateChartData();
+                    }
+                });
             },
             immediate: true,
             deep: true
         }
     },
     mounted() {
-        console.log('Component mounted');
-        this.updateChartData();
+        this.$nextTick(() => {
+            if (this.expensecategories.length) {
+                this.initChart();
+            }
+        });
     },
     beforeUnmount() {
         if (this.chart) {
             this.chart.destroy();
+            this.chart = null;
         }
     }
 }
