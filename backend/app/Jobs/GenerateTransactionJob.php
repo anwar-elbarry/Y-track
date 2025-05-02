@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Income;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -47,12 +48,21 @@ class GenerateTransactionJob implements ShouldQueue
             'amount'    => $income->amount,
             'type'    => 'income',
         ]);
+         
+        Notification::create([
+            'user_id' => $income->user_id,
+            'type' => 'income',
+            'message' => "You have a income of {$income->amount}",
+            'icon' => 'io-trending-up-outline',
+        ]);
+
         $user = User::find($transaction->user_id);
     
         if ($user) {
             $user->balance += $transaction->amount;
             $user->save();
         }
+       
 
         $next = match($income->frequency){
             'daily'    => Carbon::parse($income->next_run_at)->addDay(),
