@@ -13,6 +13,7 @@ use App\Http\Controllers\GoalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -144,5 +145,13 @@ Route::prefix('/invoice')->group(function (){
 Route::prefix('/statistics')->group(function (){
     Route::middleware('auth:sanctum')->group(function(){
         Route::get('/index',[StatisticsController::class,'index']);
+    });
+});
+
+Route::prefix('/notifications')->group(function (){
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::get('/index',[NotificationController::class,'index']);
+        Route::delete('/remove/{id}',[NotificationController::class,'destroy']);
+        Route::post('/markAsRead/{id}',[NotificationController::class,'markAsRead']);
     });
 });

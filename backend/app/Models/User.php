@@ -25,6 +25,7 @@ class User extends Authenticatable
         'balance',
         'google_id',
         'facebook_id',
+        'threshold_alert',
     ];
 
     /**

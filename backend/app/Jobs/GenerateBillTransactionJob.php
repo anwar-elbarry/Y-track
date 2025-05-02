@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Bill;
+use App\Models\Notification;
 use Carbon\Carbon;
 use App\Models\upcoming_bill;
 use Illuminate\Bus\Queueable;
@@ -62,6 +63,31 @@ class GenerateBillTransactionJob implements ShouldQueue
                         'status' => 'unpaid',
                         'amount' => $bill->amount,
                     ]);
+
+                    \Log::info('Attempting to create notification', [
+                        'user_id' => $bill->user_id,
+                        'bill_amount' => $bill->amount
+                    ]);
+
+                    try {
+                        $notification = Notification::create([
+                            'user_id' => $bill->user_id,
+                            'type' => 'bill',
+                            'message' => "You have a bill of {$bill->amount} due on {$bill->due_date}",
+                            'icon' => 'bi-calendar-check-fill',
+                        ]);
+
+                        \Log::info('Notification created successfully', [
+                            'notification_id' => $notification->id,
+                            'message' => $notification->message
+                        ]);
+                    } catch (\Exception $e) {
+                        \Log::error('Failed to create notification', [
+                            'error' => $e->getMessage(),
+                            'bill_id' => $bill->id
+                        ]);
+                    }
+                    
                     \Log::info('Successfully created upcoming bill', ['upcoming_bill_id' => $upcomingBill->id]);
                 } catch (\Exception $e) {
                     \Log::error('Failed to create upcoming bill', [

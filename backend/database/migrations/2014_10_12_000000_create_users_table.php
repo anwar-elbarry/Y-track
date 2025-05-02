@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('password');
             $table->enum('role', ['admin', 'user'])->default('user');
             $table->string('currency')->default('MAD');
+            $table->decimal('threshold_alert', 10, 2)->default(1000);
             $table->decimal('balance', 10, 2)->default(0);
             $table->string('google_id')->nullable();
             $table->string('facebook_id')->nullable();
