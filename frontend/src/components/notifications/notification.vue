@@ -30,23 +30,6 @@
           {{ tab }}
         </button>
       </div>
-  
-      <!-- Filter Bar -->
-      <div class="flex justify-between mb-6">
-        <button class="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-md">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-          </svg>
-          <span>Filter</span>
-        </button>
-        <button class="flex items-center space-x-2 text-gray-600">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
-          <span>Mark all as read</span>
-        </button>
-      </div>
-  
       <!-- Notifications -->
       <div class="space-y-3">
         <div v-for="notification in notifications" :key="notification.id" class="border border-gray-200 rounded-lg p-4 flex justify-between">
@@ -55,14 +38,8 @@
               <span v-if="notification.type === 'payment'">
                 <v-icon name="io-trending-up-outline" />
               </span>
-              <span v-else-if="notification.type === 'expense'">
-                <v-icon name="io-trending-down-outline" />
-              </span>
               <span v-else-if="notification.type === 'bill'" class="text-purple-500">
                 <v-icon name="bi-calendar-check-fill" />
-              </span>
-              <span v-else-if="notification.type === 'tax'" class="text-purple-500">
-                <v-icon name="fa-file-invoice-dollar" />
               </span>
               <span v-else-if="notification.type === 'alert'" class="text-yellow-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -84,57 +61,12 @@
       <!-- Settings Modal -->
       <div v-if="showSettings" class="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg max-w-2xl w-full h-11/12  overflow-y-auto">
-          <div class="px-6 pt-6">
-            <h2 class="text-2xl font-bold">Notifications</h2>
-            <p class="text-gray-600">Stay updated on your financial activities and alerts</p>
-          </div>
-  
           <div class="mt-4 p-6">
-            <h3 class="text-lg font-medium mb-2">Notification Settings</h3>
+            <h3 class="text-xl font-medium mb-2">Notification Settings</h3>
             <p class="text-gray-600 mb-4">Customize how and when you receive notifications</p>
-  
-            <!-- Settings Tabs -->
-            <div class="bg-gray-100 rounded-lg p-1 flex mb-6">
-              <button 
-                v-for="tab in settingsTabs" 
-                :key="tab"
-                @click="activeSettingsTab = tab"
-                :class="[
-                  'flex-1 py-2 text-center rounded-md',
-                  activeSettingsTab === tab ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
-                ]"
-              >
-                {{ tab }}
-              </button>
-            </div>
-  
-            <!-- Notification Channels Tab -->
-            <div v-if="activeSettingsTab === 'Notification Channels'">
-              <div class="mb-6 flex justify-between items-center">
-                <div>
-                  <h4 class="font-medium">Email Notifications</h4>
-                  <p class="text-gray-600 text-sm">Receive notifications via email</p>
-                </div>
-                <label class="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" v-model="settings.emailNotifications" class="sr-only peer">
-                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
-                </label>
-              </div>
-              
-              <div class="flex justify-between items-center">
-                <div>
-                  <h4 class="font-medium">In-App Notifications</h4>
-                  <p class="text-gray-600 text-sm">Receive notifications within the application</p>
-                </div>
-                <label class="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" v-model="settings.inAppNotifications" class="sr-only peer">
-                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
-                </label>
-              </div>
-            </div>
-  
+
             <!-- Alert Preferences Tab -->
-            <div v-else-if="activeSettingsTab === 'Alert Preferences'">
+            <div>
               <div class="mb-6">
                 <h4 class="font-medium mb-2">Spending Threshold Alert</h4>
                 <div class="flex items-center">
@@ -143,40 +75,13 @@
                 </div>
                 <p class="text-gray-600 text-sm mt-1">You'll be notified when spending exceeds this amount</p>
               </div>
-  
-              <div class="mb-6">
-                <h4 class="font-medium mb-3">Transaction Notifications</h4>
-                <div class="space-y-2">
-                  <label class="flex items-center">
-                    <input type="radio" v-model="settings.transactionNotifications" value="all" class="mr-2">
-                    <span>All transactions</span>
-                  </label>
-                  <label class="flex items-center">
-                    <input type="radio" v-model="settings.transactionNotifications" value="important" class="mr-2">
-                    <span>Important only</span>
-                  </label>
-                  <label class="flex items-center">
-                    <input type="radio" v-model="settings.transactionNotifications" value="none" class="mr-2">
-                    <span>None</span>
-                  </label>
-                </div>
-              </div>
-  
               <div>
-                <h4 class="font-medium mb-3">Bill & Tax Reminders</h4>
+                <h4 class="font-medium mb-3">Bill Reminders</h4>
                 
                 <div class="mb-3 flex justify-between items-center">
                   <span>Bill payment reminders</span>
                   <label class="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" v-model="settings.billReminders" class="sr-only peer">
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
-                  </label>
-                </div>
-                
-                <div class="flex justify-between items-center">
-                  <span>Tax payment reminders</span>
-                  <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" v-model="settings.taxReminders" class="sr-only peer">
                     <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
                   </label>
                 </div>
@@ -204,10 +109,8 @@
       return {
         unreadCount: 3,
         activeTab: 'All',
-        tabs: ['All', 'Bills', 'Taxes', 'Alerts'],
+        tabs: ['All', 'Bills','Alerts'],
         showSettings: false,
-        activeSettingsTab: 'Notification Channels',
-        settingsTabs: ['Notification Channels', 'Alert Preferences'],
         settings: {
           emailNotifications: true,
           inAppNotifications: true,
@@ -226,8 +129,8 @@
           },
           {
             id: 2,
-            type: 'expense',
-            title: 'Expense Recorded',
+            type: 'payment',
+            title: 'payment received',
             description: 'Monthly subscription to Software Service - $49.99',
             time: '10 minutes ago'
           },
@@ -240,25 +143,11 @@
           },
           {
             id: 4,
-            type: 'tax',
-            title: 'Tax Payment Reminder',
-            description: 'Quarterly tax payment of $3,450.00 is due on June 15',
-            time: '3 hours ago'
-          },
-          {
-            id: 5,
             type: 'alert',
             title: 'Spending Threshold Exceeded',
             description: 'Your dining expenses have exceeded your monthly budget by $75.20',
             time: 'Yesterday'
           },
-          {
-            id: 6,
-            type: 'bill',
-            title: 'Recurring Bill Paid',
-            description: 'Your Netflix subscription ($14.99) was automatically paid',
-            time: '2 days ago'
-          }
         ]
       }
     },
