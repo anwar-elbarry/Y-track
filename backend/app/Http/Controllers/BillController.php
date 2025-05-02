@@ -5,7 +5,7 @@ use App\Http\Requests\BillRequest;
 use App\Jobs\GenerateBillTransactionJob;
 use App\Services\BillService;
 use App\Services\TransactionService;
-use Date;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
@@ -14,10 +14,11 @@ class BillController extends Controller
 {
     protected $billService;
     protected $transactionService;
-
-    public function __construct(BillService $billService,TransactionService $transactionService){
+    protected $notificationService;
+    public function __construct(BillService $billService,TransactionService $transactionService,NotificationService $notificationService){
         $this->billService = $billService;
         $this->transactionService = $transactionService;
+        $this->notificationService = $notificationService;
     }
     /**
      * Display a listing of the resource.
@@ -80,50 +81,6 @@ class BillController extends Controller
             'user_id' => Auth::id()
         ], 422);
     }
-
-    public function pay(int $billId)
-    {
-        $bill = $this->billService->show($billId);
-        
-        if (!$bill) {
-            return response()->json([
-                'message' => 'Bill not found'
-            ], 404);
-        }
-
-        if ($bill->status === 'paid') {
-            return response()->json([
-                'message' => 'Bill is already paid'
-            ], 422);
-        }
-
-        $transaction = $this->transactionService->create([
-            'user_id' => Auth::id(),
-            'bill_id' => $bill->id,
-            'amount' => $bill->amount,
-            'type' => 'bill',
-            'category' => $bill->category,
-            'date' => now()
-        ],'bill');
-
-        if ($transaction) {
-            $bill->status = 'paid';
-            $bill->save();
-
-            
-            GenerateBillTransactionJob::dispatch($bill->id);
-
-            return response()->json([
-                'message' => 'Bill paid successfully',
-                'transaction' => $transaction,
-            ], 200);
-        }
-
-        return response()->json([
-            'message' => 'Failed to process payment'
-        ], 422);
-    }
-
     /**
      * Display the specified resource.
      */
