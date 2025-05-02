@@ -35,7 +35,7 @@
         <div v-for="notification in notifications" :key="notification.id" class="border border-gray-200 rounded-lg p-4 flex justify-between">
           <div class="flex space-x-4">
             <div class="mt-1">
-              <span v-if="notification.type === 'payment'">
+              <span v-if="notification.type === 'income'" class="text-green-500">
                 <v-icon name="io-trending-up-outline" />
               </span>
               <span v-else-if="notification.type === 'bill'" class="text-purple-500">
@@ -48,12 +48,11 @@
               </span>
             </div>
             <div>
-              <h3 class="font-medium">{{ notification.title }}</h3>
-              <p class="text-gray-600">{{ notification.description }}</p>
+              <h3 class="font-medium">{{ notification.message }}</h3>
             </div>
           </div>
           <div class="text-sm text-gray-500 whitespace-nowrap">
-            {{ notification.time }}
+            {{ notification.created_at }}
           </div>
         </div>
       </div>
@@ -103,54 +102,27 @@
   </template>
   
   <script>
+  import { useNotificationStore } from '../../stores/notificationStore';
+
   export default {
-    name : 'notification_component',
-    data() {
+    name: 'notification_component',
+    setup() {
+      const notificationStore = useNotificationStore();
       return {
-        unreadCount: 3,
-        activeTab: 'All',
-        tabs: ['All', 'Bills','Alerts'],
-        showSettings: false,
-        settings: {
-          emailNotifications: true,
-          inAppNotifications: true,
-          spendingThreshold: '1000',
-          transactionNotifications: 'all',
-          billReminders: true,
-          taxReminders: true
-        },
-        notifications: [
-          {
-            id: 1,
-            type: 'payment',
-            title: 'Payment Received',
-            description: 'You received $1,250.00 from Acme Inc.',
-            time: 'Just now'
-          },
-          {
-            id: 2,
-            type: 'payment',
-            title: 'payment received',
-            description: 'Monthly subscription to Software Service - $49.99',
-            time: '10 minutes ago'
-          },
-          {
-            id: 3,
-            type: 'bill',
-            title: 'Upcoming Bill',
-            description: 'Your electricity bill of $120.45 is due in 3 days',
-            time: '1 hour ago'
-          },
-          {
-            id: 4,
-            type: 'alert',
-            title: 'Spending Threshold Exceeded',
-            description: 'Your dining expenses have exceeded your monthly budget by $75.20',
-            time: 'Yesterday'
-          },
-        ]
+        notificationStore
       }
     },
+    props: {
+      notifications: {
+        type: Array,
+        required: true
+      },
+      unreadCount: {
+        type: Number,
+        required: true
+      }
+    },
+
     methods: {
       openSettings() {
         this.showSettings = true
@@ -158,9 +130,6 @@
       closeSettings() {
         this.showSettings = false
       },
-      saveSettings() {
-        this.closeSettings()
-      }
     }
   }
   </script>
