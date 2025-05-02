@@ -27,6 +27,7 @@ class UserRequest extends FormRequest
             'email' => 'email',
             'name' => 'string|max:255',
             'currency' => 'string',
+            'threshold_alert' => 'numeric',
         ];
     }
 }
