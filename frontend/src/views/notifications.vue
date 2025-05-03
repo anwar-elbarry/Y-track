@@ -7,6 +7,7 @@
         :threshold_alert="threshold_alert"
         :currency="currency"
         @threshold_alert="updateThresholdAlert"
+        @mark-as-read="handleMarkAsRead"
         />
          
     </div>
@@ -46,6 +47,10 @@ export default {
         async updateThresholdAlert(newThreshold) {
             this.threshold_alert = newThreshold;
             await authStore.updateUser({'threshold_alert': newThreshold});
+        },
+        async handleMarkAsRead(notificationId){
+              await this.notificationStore.markAsRead(notificationId);
+              await this.fetchNotifications();
         }
     },
     created(){
