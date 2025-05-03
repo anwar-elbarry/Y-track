@@ -89,7 +89,7 @@
   
       <!-- Settings Modal -->
       <div v-if="showSettings" class="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg max-w-2xl w-full h-11/12  overflow-y-auto">
+        <div class="bg-white rounded-lg max-w-2xl w-full h-fit  overflow-y-auto">
           <div class="mt-4 p-6">
             <h3 class="text-xl font-medium mb-2">Notification Settings</h3>
             <p class="text-gray-600 mb-4">Customize how and when you receive notifications</p>
