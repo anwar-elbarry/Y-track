@@ -152,6 +152,6 @@ Route::prefix('/notifications')->group(function (){
     Route::middleware('auth:sanctum')->group(function(){
         Route::get('/index',[NotificationController::class,'index']);
         Route::delete('/remove/{id}',[NotificationController::class,'destroy']);
-        Route::post('/markAsRead/{id}',[NotificationController::class,'markAsRead']);
+        Route::put('/markAsRead/{id}',[NotificationController::class,'markAsRead']);
     });
 });
