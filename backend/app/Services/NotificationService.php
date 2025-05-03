@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use App\Models\Expense;
 use App\Models\Notification;
 use Auth;
 USE Illuminate\Support\Facades\DB;
@@ -30,4 +31,18 @@ class NotificationService {
         return $notification;
     }
 
+    public function createAlert(){
+        $expenses = Expense::where('user_id',Auth::id())->get();
+        $threshold_alert = Auth::user()->threshold_alert;
+        $amount = $expenses->sum('amount');
+        if($amount >= $threshold_alert){
+           $notification = $this->create([
+            'user_id' => Auth::id(),
+            'type' => 'alert',
+            'message' => "Your total expenses ($amount) have exceeded your threshold alert limit ($threshold_alert)"
+            ]);
+            return $notification;
+        }
+        return false;
+    }
 }
