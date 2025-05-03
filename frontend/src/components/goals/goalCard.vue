@@ -1,5 +1,8 @@
 <template>
-    <div class="border border-gray-100 shadow-md bg-white p-6 rounded-xl min-w-2xs max-h-60 hover:shadow-2xl">
+    <div class="border border-gray-100 shadow-md bg-white p-6 rounded-xl min-w-2xs max-h-60 hover:shadow-2xl relative">
+        <div v-if="isAchieved" class="absolute -top-3 right-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-sm">
+            Achieved 🎉
+        </div>
         <div class="flex justify-between items-start">
             <div>
                 <h3 class="text-gray-900 text-xl font-semibold">
@@ -20,7 +23,7 @@
                 </div>
             </div>
             <v-icon @click="removeGoal(id)" name="oi-trash" class="cursor-pointer hover:text-red-500"/>
-            <v-icon @click="sendUpdateGoal(id)" name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
+            <v-icon v-if="!isAchieved" @click="sendUpdateGoal(id)" name="la-edit-solid" class="cursor-pointer hover:text-green-500"/>
         </div>
         <div class="mt-6">
             <div class="bg-gray-200 rounded-full h-2">
@@ -42,6 +45,11 @@ const authStore = auth();
 export default {
     name: 'GoalCard',
     emits : ['goal-to-update','goal-to-remove'],
+    computed: {
+        isAchieved() {
+            return this.percentage >= 100;
+        }
+    },
     props: {
         id: {
             type: Number,

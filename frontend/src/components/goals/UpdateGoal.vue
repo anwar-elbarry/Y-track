@@ -82,6 +82,7 @@ export default {
     async submitGoal() {
  
       this.errorMessage = '';
+      const totalAmount =  this.form.saved_amount + this.goalToUpdate.saved_amount;
 
       if (!this.form.saved_amount) {
         this.errorMessage = 'Save amount is required';
@@ -91,6 +92,9 @@ export default {
         return this.errorMessage = 'The goal is already achieved';
       }else if(this.form.saved_amount > this.goalToUpdate.target_amount){
         return this.errors.saved_amount = 'Total saved amount cannot exceed target amount';
+      }else if(totalAmount > this.goalToUpdate.target_amount){
+        const remainingAmount = this.goalToUpdate.target_amount - this.goalToUpdate.saved_amount;
+        return this.errorMessage = `You can only save up to ${remainingAmount} MAD more to reach your target`;
       }
       
 
