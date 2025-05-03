@@ -153,5 +153,6 @@ Route::prefix('/notifications')->group(function (){
         Route::get('/index',[NotificationController::class,'index']);
         Route::delete('/remove/{id}',[NotificationController::class,'destroy']);
         Route::put('/markAsRead/{id}',[NotificationController::class,'markAsRead']);
+        Route::delete('/clear-all', [NotificationController::class, 'clearAll']);
     });
 });
