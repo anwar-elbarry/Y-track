@@ -1,153 +1,111 @@
 <template>
-    <div id="expenseVsIncome" class="w-full h-[400px] bg-white rounded-xl shadow-lg p-4">
-    </div>
+    <div id="expenseVsIncome" class="w-full h-[400px] bg-white rounded-xl shadow-lg p-4"></div>
 </template>
 
 <script>
-import ApexCharts from 'apexcharts'
+import ApexCharts from 'apexcharts';
 
 export default {
-    name: 'transactionsChart',
+    name: 'TransactionsChart',
     props: {
         transactions: {
             type: Array,
             default: () => []
         },
-        currency : {
-            type : String,
-            default : 'USD'
+        currency: {
+            type: String,
+            default: 'USD'
         }
     },
     data() {
         return {
-            chart: null,
-            chartOptions: {
-                series: [{
-                    name: 'Expenses',
-                    data: []
-                }, {
-                    name: 'Incomes',
-                    data: []
-                },
-                {
-                    name: 'Bills',
-                    data: []
-                }
-            ],
-                chart: {
-                    height: 350,
-                    type: 'bar',
-                    toolbar: {
-                        show: true
-                    },
-                    background: 'transparent'
-                },
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        columnWidth: '65%',
-                        endingShape: 'rounded',
-                        borderRadius: 4
-                    },
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    show: true,
-                    width: 2,
-                    colors: ['transparent']
-                },
-                colors: ['#ef4444', '#22c55e', '#3b82f6'],
-                xaxis: {
-                    type: 'datetime',
-                    categories: [],
-                    labels: {
-                        rotate: -45,
-                        rotateAlways: true,
-                        formatter: (value) => {
-                            return new Date(value).toLocaleDateString()
-                        }
-                    }
-                },
-                yaxis: {
-                    title: {
-                        text: `Amount (${this.currency})`
-                    }
-                },
-                tooltip: {
-                    y: {
-                        formatter: (val) => {
-                            return `${val} ${this.currency}`
-                        }
-                    }
-                },
-                legend: {
-                    position: 'top'
-                }
-            }
+            chart: null
         }
     },
     methods: {
         initChart() {
-            this.chart = new ApexCharts(document.querySelector("#expenseVsIncome"), this.chartOptions);
-            this.chart.render();
-        },
-        updateChartData() {
-            if (!this.transactions.length) return;
+            // Group transactions by date and type
+            const transactionsByDate = {};
             
-            // Sort transactions by date
-            const sortedTransactions = [...this.transactions].sort((a, b) => 
-                new Date(a.created_at) - new Date(b.created_at)
-            );
-
-            // unique dates
-            const dates = [...new Set(sortedTransactions.map(t => 
-                new Date(t.created_at).toISOString()
-            ))];
-
-            
-            const expensesData = [];
-            const incomesData = [];
-            const billsData = [];
-
-            dates.forEach(date => {
-                const dayTransactions = sortedTransactions.filter(t => 
-                    new Date(t.created_at).toISOString().split('T')[0] === date.split('T')[0]
-                );
-                
-                const expenses = dayTransactions
-                    .filter(t => t.type === 'expense')
-                    .reduce((sum, t) => sum + t.amount, 0);
-                    
-                const incomes = dayTransactions
-                    .filter(t => t.type === 'income')
-                    .reduce((sum, t) => sum + t.amount, 0);
-                const bills = dayTransactions
-                    .filter(t => t.type === 'bill')
-                    .reduce((sum, t) => sum + t.amount, 0);
-
-                expensesData.push(expenses);
-                incomesData.push(incomes);
-                billsData.push(bills);
+            this.transactions.forEach(t => {
+                const date = new Date(t.created_at).toISOString().split('T')[0];
+                if (!transactionsByDate[date]) {
+                    transactionsByDate[date] = { expenses: 0, incomes: 0, bills: 0 };
+                }
+                transactionsByDate[date][t.type + 's'] += Number(t.amount);
             });
 
-         
-            this.chartOptions.xaxis.categories = dates;
-            this.chartOptions.series[0].data = expensesData;
-            this.chartOptions.series[1].data = incomesData;
-            this.chartOptions.series[2].data = billsData;
+            const dates = Object.keys(transactionsByDate).sort();
+            const expenses = dates.map(d => transactionsByDate[d].expenses);
+            const incomes = dates.map(d => transactionsByDate[d].incomes);
+            const bills = dates.map(d => transactionsByDate[d].bills);
 
-            if (this.chart) {
-                this.chart.updateOptions(this.chartOptions);
-            }
+            const options = {
+                series: [
+                    { name: 'Expenses', data: expenses },
+                    { name: 'Incomes', data: incomes },
+                    { name: 'Bills', data: bills }
+                ],
+                chart: { 
+                    type: 'bar', 
+                    height: 350,
+                    stacked: false,
+                    toolbar: {
+                        show: true
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '35%',
+                        borderRadius: 5,
+                        minHeight: 5 
+                    },
+                },
+                colors: ['#ef4444', '#22c55e', '#3b82f6'],
+                xaxis: {
+                    categories: dates,
+                    labels: { 
+                        rotate: -45,
+                        formatter: (value) => {
+                            return new Date(value).toLocaleDateString();
+                        }
+                    }
+                },
+                yaxis: { 
+                    title: { text: `Amount (${this.currency})` },
+                    min: 0,
+                    forceNiceScale: true,
+                    labels: {
+                        formatter: (value) => {
+                            return value.toFixed(2);
+                        }
+                    }
+                },
+                tooltip: { 
+                    y: { 
+                        formatter: val => `${val.toFixed(2)} ${this.currency}`
+                    }
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                legend: {
+                    position: 'top'
+                }
+            };
+
+            if (this.chart) this.chart.destroy();
+            this.chart = new ApexCharts(document.querySelector("#expenseVsIncome"), options);
+            this.chart.render();
         }
     },
     watch: {
         transactions: {
-            handler: 'updateChartData',
-            immediate: true
-        }
+            handler: 'initChart',
+            deep: true
+        },
+        currency: 'initChart'
     },
     mounted() {
         this.initChart();
