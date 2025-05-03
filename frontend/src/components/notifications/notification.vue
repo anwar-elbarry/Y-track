@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow">
+    <div class="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow">
       <!-- Header -->
       <div class="flex justify-between items-center mb-2">
         <div>
@@ -33,26 +33,35 @@
       <!-- Notifications -->
       <div class="space-y-3">
         <div v-for="notification in notifications" :key="notification.id" class="border border-gray-200 rounded-lg p-4 flex justify-between">
-          <div class="flex space-x-4">
-            <div class="mt-1">
-              <span v-if="notification.type === 'income'" class="text-green-500">
-                <v-icon name="io-trending-up-outline" />
-              </span>
-              <span v-else-if="notification.type === 'bill'" class="text-purple-500">
-                <v-icon name="bi-calendar-check-fill" />
-              </span>
-              <span v-else-if="notification.type === 'alert'" class="text-yellow-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-              </span>
+          <div class="flex space-x-4 justify-between items-center w-full">
+            <div class="flex space-x-4">
+              <div class="mt-1">
+                <span v-if="notification.type === 'income'" class="text-green-500">
+                  <v-icon name="io-trending-up-outline" />
+                </span>
+                <span v-else-if="notification.type === 'bill'" class="text-purple-500">
+                  <v-icon name="bi-calendar-check-fill" />
+                </span>
+                <span v-else-if="notification.type === 'alert'" class="text-yellow-500">
+                  <v-icon name="oi-alert" />
+                </span>
+              </div>
+              <div>
+                <h3 class="font-medium">{{ notification.message }}</h3>
+              </div>
             </div>
-            <div>
-              <h3 class="font-medium">{{ notification.message }}</h3>
+            <div class="flex items-center space-x-4">
+              <div class="text-sm text-gray-500 whitespace-nowrap">
+                {{ formatDate(notification.created_at) }}
+              </div>
+              <button 
+                v-if="!notification.is_read"
+                @click="markAsRead(notification.id)" 
+                class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full transition-colors"
+              >
+                Mark as read
+              </button>
             </div>
-          </div>
-          <div class="text-sm text-gray-500 whitespace-nowrap">
-            {{ notification.created_at }}
           </div>
         </div>
       </div>
@@ -91,13 +100,14 @@
   </template>
   
   <script>
+import {format} from 'timeago.js'
   export default {
     name: 'notification_component',
     data() {
       return {
         showSettings: false,
         activeTab: 'All',
-        tabs: ['All', 'Bills', 'Alerts'],
+        tabs: ['All', 'Bills','incomes', 'Alerts'],
         settings: {
           spendingThreshold: this.threshold_alert ? this.threshold_alert : 0,
         }
@@ -121,17 +131,26 @@
         required: true
       }
     },
-    emits: ['threshold_alert'],
+    emits: ['threshold_alert', 'mark-as-read'],
+    computed: {
+      formatDate() {
+        return (date) => format(date)
+      }
+    },
     methods: {
       openSettings() {
         this.showSettings = true;
       },
       closeSettings() {
-        this.showSettings = false
+        this.showSettings = false;
       },
       saveSettings() {
         this.showSettings = false;
         this.$emit('threshold_alert', this.settings.spendingThreshold);
+        this.closeSettings();
+      },
+      markAsRead(notificationId) {
+        this.$emit('mark-as-read', notificationId);
       }
     }
   }
