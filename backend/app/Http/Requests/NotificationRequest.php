@@ -23,8 +23,7 @@ class NotificationRequest extends FormRequest
     {
         return [
             'type' => 'required|string|max:255',
-            'message' => 'required|string|max:255',
-            'icon' => 'required|string|max:255',
+            'message' => 'required|string|max:255'
         ];
     }
 }
