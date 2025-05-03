@@ -6,8 +6,16 @@
           <h1 class="text-2xl font-bold">Notifications</h1>
           <p class="text-gray-600">Stay updated on your financial activities and alerts</p>
         </div>
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-4">
           <span class="py-1 px-2 bg-gray-100 rounded-md text-sm">{{ unreadCount }} unread</span>
+          <button 
+            v-if="notifications.length > 0"
+            @click="clearAllNotifications" 
+            class="px-3 py-1 text-sm bg-red-50 hover:bg-red-100 text-red-600 rounded-md transition-colors flex items-center space-x-2"
+          >
+            <v-icon name="oi-trash" />
+            <span>Clear All</span>
+          </button>
           <button @click="openSettings()" class="p-2 text-gray-600 hover:text-gray-800">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.532 1.532 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
@@ -73,6 +81,7 @@
               >
                 Mark as read
               </button>
+              <v-icon @click="removeNotificatoin(notification.id)" name="oi-trash" class="cursor-pointer hover:text-red-500 mr-2"/>
             </div>
           </div>
         </div>
@@ -143,7 +152,7 @@ import {format} from 'timeago.js'
         required: true
       }
     },
-    emits: ['threshold_alert', 'mark-as-read'],
+    emits: ['threshold_alert', 'mark-as-read', 'remove-notif', 'clear-all'],
     computed: {
       filteredNotifications() {
         if (this.activeTab === 'All') {
@@ -179,6 +188,14 @@ import {format} from 'timeago.js'
       },
       markAsRead(notificationId) {
         this.$emit('mark-as-read', notificationId);
+      },
+      removeNotificatoin(notificationId){
+        this.$emit('remove-notif',notificationId);
+      },
+      clearAllNotifications() {
+        if (confirm('Are you sure you want to clear all notifications?')) {
+          this.$emit('clear-all');
+        }
       }
     }
   }
