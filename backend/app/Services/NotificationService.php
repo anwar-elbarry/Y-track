@@ -26,6 +26,13 @@ class NotificationService {
         }
         return false;
     }
+    public function clearAll(){
+      $deleted = Notification::where('user_id',Auth::id())->delete();
+     if( $deleted ){
+        return true ;
+    }
+    return false;
+}
 
     public function markAsRead(int $notificationId){
         $notification = Notification::findOrFail($notificationId);

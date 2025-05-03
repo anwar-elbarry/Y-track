@@ -54,5 +54,15 @@ class NotificationController extends Controller
         return response()->json(['message' => 'Failed to mark notification as read'], 400);
     }
 
-   
+   public function clearAll(){
+      $isDeleted = $this->notificationService->clearAll();
+      if($isDeleted){
+        return response()->json([
+            'message' => 'All notifications cleared successfully'
+        ], 200);
+      }
+      return response()->json([
+        'message' => 'Failed to clear notifications'
+      ], 400);
+   }
 }
