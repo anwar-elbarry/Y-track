@@ -22,7 +22,7 @@
               <input type="checkbox" class="rounded border-gray-300" v-model="item.selected">
             </td>
             <td class="p-3 text-sm text-gray-700">{{ item.id }}</td>
-            <td class="p-3 text-sm text-gray-700">  {{ item.created_at}}</td>
+            <td class="p-3 text-sm text-gray-700">  {{ formatDate(item.created_at)}}</td>
             <td class="p-3 text-sm text-gray-700">{{ item.type }}</td>
             <td class="p-3 text-sm "
                 :class="{'text-green-500' : item.type == 'income' , 'text-red-500' : item.type != 'income'}"        
@@ -69,6 +69,7 @@
   </template>
   
   <script>
+  import {format} from 'timeago.js'
   import auth from '../../stores/auth';
   const authStore = auth();
   export default {
@@ -83,6 +84,10 @@
       transacrionItems : {
         type: Array,
         required : true
+      }
+    },computed : {
+      formatDate() {
+        return (date) => format(date)
       }
     }
     }
