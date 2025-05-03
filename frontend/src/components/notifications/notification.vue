@@ -23,7 +23,7 @@
           :key="tab"
           @click="activeTab = tab"
           :class="[
-            'flex-1 py-2 text-center rounded-md',
+            'flex-1 py-2 text-center rounded-md transition-colors duration-200',
             activeTab === tab ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
           ]"
         >
@@ -32,7 +32,7 @@
       </div>
       <!-- Notifications -->
       <div class="space-y-3">
-        <div v-for="notification in notifications" :key="notification.id" class="border rounded-lg p-4 flex justify-between" :class="[
+        <div v-for="notification in filteredNotifications" :key="notification.id" class="border rounded-lg p-4 flex justify-between" :class="[
             'border rounded-lg p-4 flex justify-between transition-colors duration-200',
             {
               'bg-green-50 border-green-200 hover:bg-green-100': notification.type === 'income',
@@ -119,7 +119,7 @@ import {format} from 'timeago.js'
       return {
         showSettings: false,
         activeTab: 'All',
-        tabs: ['All', 'Bills','dangers','incomes', 'Alerts'],
+        tabs: ['All', 'Income', 'Bills', 'Alerts', 'Danger'],
         settings: {
           spendingThreshold: this.threshold_alert ? this.threshold_alert : 0,
         }
@@ -145,6 +145,22 @@ import {format} from 'timeago.js'
     },
     emits: ['threshold_alert', 'mark-as-read'],
     computed: {
+      filteredNotifications() {
+        if (this.activeTab === 'All') {
+          return this.notifications;
+        }
+        
+        const typeMap = {
+          'Income': 'income',
+          'Bills': 'bill',
+          'Alerts': 'alert',
+          'Danger': 'danger'
+        };
+        
+        return this.notifications.filter(notification => 
+          notification.type === typeMap[this.activeTab]
+        );
+      },
       formatDate() {
         return (date) => format(date)
       }

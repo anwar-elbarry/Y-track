@@ -5,9 +5,13 @@
         <v-icon :name="icon" class="text-xl" />
         <span class="text-sm font-medium">{{ title }}</span>
     </div>
-    <p class="text-xl font-bold text-gray-800">
+    <div class="flex items-center justify-center gap-2" >
+        <p class="text-l font-bold text-gray-800">
         {{ value }}
     </p>
+    <p v-if="title != 'Clients'" class="text-xs font-bold text-gray-400">
+        {{ currency }}
+    </p></div>  
 </div>
 </template>
 
@@ -22,11 +26,15 @@ props: {
     },
     title : {
         type: String,
-        default: 'md-accountbalancewallet'
+        default: 'income'
     },
     icon : {
         type: String,
-        default: 'Net Income'
+        default: 'md-accountbalancewallet'
+    },
+    currency : {
+        type : String,
+        default : "MAD"
     }
 }
 }
