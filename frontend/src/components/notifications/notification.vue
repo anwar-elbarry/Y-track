@@ -32,7 +32,16 @@
       </div>
       <!-- Notifications -->
       <div class="space-y-3">
-        <div v-for="notification in notifications" :key="notification.id" class="border border-gray-200 rounded-lg p-4 flex justify-between">
+        <div v-for="notification in notifications" :key="notification.id" class="border rounded-lg p-4 flex justify-between" :class="[
+            'border rounded-lg p-4 flex justify-between transition-colors duration-200',
+            {
+              'bg-green-50 border-green-200 hover:bg-green-100': notification.type === 'income',
+              'bg-purple-50 border-purple-200 hover:bg-purple-100': notification.type === 'bill',
+              'bg-yellow-50 border-yellow-200 hover:bg-yellow-100': notification.type === 'alert',
+              'bg-red-50 border-red-200 hover:bg-red-100': notification.type === 'danger',
+              'bg-gray-50 border-gray-200 hover:bg-gray-100': !['income', 'bill', 'alert', 'danger'].includes(notification.type)
+            }
+          ]">
           <div class="flex space-x-4 justify-between items-center w-full">
             <div class="flex space-x-4">
               <div class="mt-1">
@@ -44,6 +53,9 @@
                 </span>
                 <span v-else-if="notification.type === 'alert'" class="text-yellow-500">
                   <v-icon name="oi-alert" />
+                </span>
+                <span v-else-if="notification.type === 'danger'" class="text-red-500">
+                  <v-icon name="md-dangerous-sharp" />
                 </span>
               </div>
               <div>
@@ -107,7 +119,7 @@ import {format} from 'timeago.js'
       return {
         showSettings: false,
         activeTab: 'All',
-        tabs: ['All', 'Bills','incomes', 'Alerts'],
+        tabs: ['All', 'Bills','dangers','incomes', 'Alerts'],
         settings: {
           spendingThreshold: this.threshold_alert ? this.threshold_alert : 0,
         }
