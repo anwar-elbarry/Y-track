@@ -8,6 +8,8 @@
         :currency="currency"
         @threshold_alert="updateThresholdAlert"
         @mark-as-read="handleMarkAsRead"
+        @remove-notif="handleRemoveNotif"
+        @clear-all="handleClearAll"
         />
          
     </div>
@@ -51,7 +53,15 @@ export default {
         async handleMarkAsRead(notificationId){
               await this.notificationStore.markAsRead(notificationId);
               await this.fetchNotifications();
-        }
+        },
+        async handleRemoveNotif(notificationId){
+              await this.notificationStore.removeNotif(notificationId);
+              await this.fetchNotifications();
+        },
+        async handleClearAll(){
+              await this.notificationStore.clearAll();
+              await this.fetchNotifications();
+        },
     },
     created(){
         this.fetchNotifications();
