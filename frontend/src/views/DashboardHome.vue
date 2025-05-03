@@ -30,7 +30,11 @@
           /> 
         </div>
         <transactionsChart :transactions="transactions" />
-        <categoryChart :expensecategories="expenseCategories" />
+        <div class="flex">
+          <categoryChart :expensecategories="expenseCategories" />
+          <bills_category_chart :expensecategories="expenseCategories" />
+        </div>
+        
     </div>
 </template>
 
@@ -40,6 +44,7 @@ import Dash_card from '../components/dashboard/Dash_card.vue';
 import transactionsChart from '../components/dashboard/transactionsChart.vue';
 import categoryChart from '../components/dashboard/expense_Category_Chart.vue';
 import { useCategoryStore } from '../stores/categoryStore';
+import bills_category_chart from '../components/dashboard/bills_categories_chart.vue'
 import auth from '../stores/auth';
 const authStore = auth();
 export default {
@@ -47,7 +52,8 @@ export default {
     components : {
         Dash_card,
         transactionsChart,
-        categoryChart
+        categoryChart,
+        bills_category_chart
     },
     setup(){
       const categoryStore = useCategoryStore();
