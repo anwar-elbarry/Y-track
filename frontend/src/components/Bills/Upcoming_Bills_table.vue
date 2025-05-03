@@ -24,7 +24,7 @@
               <input type="checkbox" class="rounded border-gray-300" v-model="item.selected">
             </td>
             <td class="p-3 text-sm text-gray-700">{{ item.id }}</td>
-            <td class="p-3 text-sm text-gray-700">{{ item.original_bill.amount }} {{ currency }}</td>
+            <td class="p-3 text-sm text-gray-700">{{ item.original_bill.amount }} <span class="text-sm font-bold text-gray-600">{{ currency }}</span></td>
             <td class="p-3 text-sm text-gray-700">{{ item.due_date }}</td>
             <td class="p-3 text-sm">
               <div class="flex items-center">
