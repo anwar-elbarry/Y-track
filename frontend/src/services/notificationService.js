@@ -1,7 +1,6 @@
 import api from '../api';
 
 const notificationService = {
-    // Récupérer les notifications
     async getNotifications() {
         try {
             const response = await api.get('/api/notifications/index');
@@ -12,23 +11,13 @@ const notificationService = {
         }
     },
 
-    // Marquer une notification comme lue
     async markAsRead(notificationId) {
         try {
-            await api.put(`/api/notifications/${notificationId}/read`);
+            await api.put(`/api/notifications/markAsRead/${notificationId}`);
         } catch (error) {
             console.error('Error marking notification as read:', error);
         }
     },
-
-    // Mettre à jour les paramètres de notification
-    async updateSettings(settings) {
-        try {
-            await api.put('/api/notification-settings', settings);
-        } catch (error) {
-            console.error('Error updating notification settings:', error);
-        }
-    }
 };
 
 export default notificationService;
