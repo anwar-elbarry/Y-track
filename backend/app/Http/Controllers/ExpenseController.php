@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ExpenseRequest;
 use App\Services\ExpenseService;
+use App\Services\NotificationService;
 use App\Services\TransactionService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -13,9 +14,11 @@ class ExpenseController extends Controller
 
     protected $expenseService;
     protected $transactionService;
-    public function __construct(ExpenseService $expenseService,TransactionService $transactionService){
+    protected $notificationService;
+    public function __construct(ExpenseService $expenseService,TransactionService $transactionService, NotificationService $notificationService){
         $this->expenseService = $expenseService;
         $this->transactionService = $transactionService;
+        $this->notificationService = $notificationService;
     }
     /**
      * Display a listing of the resource.
@@ -44,12 +47,13 @@ class ExpenseController extends Controller
             // Create transaction with expense_id
             $transactionData = array_merge($validateData, ['expense_id' => $expense->id]);
             $transaction = $this->transactionService->create($transactionData, 'expense');
-
+            $notification = $this->notificationService->createAlert();
             if($expense){
                 return response()->json([
                     'message' => 'expense created successfully',
                     'expense' => $expense,
                     'transaction' => $transaction,
+                    'notification' => $notification ? $notification : NULL,
                 ], 201);
             }
 
