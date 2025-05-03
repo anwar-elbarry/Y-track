@@ -17,7 +17,6 @@ return new class extends Migration
             $table->enum('type', ['info', 'income', 'bill', 'goal','alert'])->default('info');
             $table->string('message');
             $table->boolean('is_read')->default(false);
-            $table->string('icon')->nullable();
             $table->timestamps();
         });
     }
