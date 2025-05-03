@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Services\Upcoming_BillsService;
 use App\Services\TransactionService;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,10 +13,13 @@ class Upcoming_BillsController extends Controller
     protected $upcoming_billsService;
     protected $transactionService;
 
-    public function __construct(Upcoming_BillsService $upcoming_billsService,TransactionService $transactionService)
+    protected $notificationService;
+
+    public function __construct(Upcoming_BillsService $upcoming_billsService,TransactionService $transactionService,NotificationService $notificationService)
     {
         $this->upcoming_billsService = $upcoming_billsService;
         $this->transactionService = $transactionService;
+        $this->notificationService = $notificationService;
     }
     /**
      * Display a listing of the resource.
@@ -73,11 +77,12 @@ class Upcoming_BillsController extends Controller
             'date' => now(),
             'type' => 'bill',
         ],'bill');
-
+        $danger = $this->notificationService->createDanger();
         return response()->json([
             'message' => 'Upcoming bill paid successfully',
             'upcoming_bill' => $upcoming_bill,
-            'transaction' => $transaction
+            'transaction' => $transaction,
+            'danger' => $danger ??NULL,
         ], 200);
     }
 

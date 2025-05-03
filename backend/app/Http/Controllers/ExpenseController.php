@@ -47,13 +47,15 @@ class ExpenseController extends Controller
             // Create transaction with expense_id
             $transactionData = array_merge($validateData, ['expense_id' => $expense->id]);
             $transaction = $this->transactionService->create($transactionData, 'expense');
-            $notification = $this->notificationService->createAlert();
+            $alert = $this->notificationService->createAlert();
+            $danger = $this->notificationService->createDanger();
             if($expense){
                 return response()->json([
                     'message' => 'expense created successfully',
                     'expense' => $expense,
                     'transaction' => $transaction,
-                    'notification' => $notification ? $notification : NULL,
+                    'alert' => $alert ?? NULL,
+                    'danger' => $danger ?? NULL,
                 ], 201);
             }
 

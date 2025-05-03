@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GoalRequest;;
 use App\Services\GoalService;
+use App\Services\NotificationService;
 use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Transaction;
 use App\Services\TransactionService;
 
 class GoalController extends Controller
@@ -14,10 +14,12 @@ class GoalController extends Controller
 
     protected $goalService;
     protected $transactionService;
+    protected $notificationService;
 
-    public function __construct(GoalService $goalService,TransactionService $transactionService){
+    public function __construct(GoalService $goalService,TransactionService $transactionService,NotificationService $notificationService){
         $this->goalService = $goalService;
         $this->transactionService = $transactionService;
+        $this->notificationService = $notificationService;
     }
     /**
      * Display a listing of the resource.
@@ -42,11 +44,13 @@ class GoalController extends Controller
         $validateData['user_id'] = Auth::id();
         $validateData['target_amount'] = (float)$validateData['target_amount'];
         $goal = $this->goalService->create($validateData);
+        $danger = $this->notificationService->createDanger();
 
         if($goal){
             return response()->json([
                 'message' => 'goal created successfully',
                 'goal' => $goal,
+                'danger' => $danger ?? NULL,
             ], 201);
         }
 
