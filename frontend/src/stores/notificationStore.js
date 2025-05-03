@@ -16,7 +16,12 @@ export const useNotificationStore = defineStore('notifications', {
 
         async markAsRead(notificationId) {
             await notificationService.markAsRead(notificationId);
-            await this.fetchNotifications();
+        },
+        async removeNotif(notificationId){
+            await notificationService.removeNotif(notificationId);
+        },
+        async clearAll(){
+            await notificationService.clearAll();
         },
 
     }
