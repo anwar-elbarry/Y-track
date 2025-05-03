@@ -13,7 +13,7 @@
        :days-remaining="goal.formatted_deadline"
         icon-src="/icons/vacation.svg"
         :saved="goal.saved_amount"
-        :percentage="Math.round((goal.saved_amount / goal.target_amount) * 100)"
+        :percentage="goal.target_amount ? Math.min(Math.floor((goal.saved_amount / goal.target_amount) * 100), 100) : 0"
         @goal-to-update="sendSelectedGoal"
         @goal-to-remove="removeGoal"
         />

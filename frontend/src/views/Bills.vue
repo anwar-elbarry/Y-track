@@ -60,7 +60,7 @@ export default {
     setup(){
         const billStore = useBillStore();
         const billCategoryStore = useBillCategoryStore();
-        return { billStore, billCategoryStore };
+        return { billStore, billCategoryStore};
     },
     components: {
         AddBtn,
