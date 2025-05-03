@@ -52,8 +52,7 @@ class GenerateTransactionJob implements ShouldQueue
         Notification::create([
             'user_id' => $income->user_id,
             'type' => 'income',
-            'message' => "You have a income of {$income->amount}",
-            'icon' => 'io-trending-up-outline',
+            'message' => "You have a income of {$income->amount}"
         ]);
 
         $user = User::find($transaction->user_id);

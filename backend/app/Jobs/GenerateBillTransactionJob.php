@@ -73,8 +73,7 @@ class GenerateBillTransactionJob implements ShouldQueue
                         $notification = Notification::create([
                             'user_id' => $bill->user_id,
                             'type' => 'bill',
-                            'message' => "You have a bill of {$bill->amount} due on {$bill->due_date}",
-                            'icon' => 'bi-calendar-check-fill',
+                            'message' => "You have a bill of {$bill->amount} due on {$bill->due_date}"
                         ]);
 
                         \Log::info('Notification created successfully', [
