@@ -20,7 +20,7 @@
         <!-- Table Body -->
          
         <tbody>
-          <tr v-for="(item, index) in incomeItems" :key="item.id"  class="border-b border-gray-200 hover:bg-gray-50">
+          <tr v-for="(item, index) in paginatedIncomes" :key="item.id"  class="border-b border-gray-200 hover:bg-gray-50">
             <td class="p-3">
               <input type="checkbox" class="rounded border-gray-300" v-model="item.selected">
             </td>
@@ -73,24 +73,43 @@
       
       <!-- Pagination -->
       <div class="flex items-center justify-between p-4">
-        <button class="flex items-center px-4 py-2 text-sm border rounded text-gray-600 hover:bg-gray-50">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-          </svg>
-          Previous
-        </button>
-        
-        <div class="flex items-center space-x-2">
-          <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer bg-orange-100 text-orange-800">1</span>
-          <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer">2</span>
-          <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer">3</span>
-          <span class="px-3 py-1 text-sm cursor-default">...</span>
-          <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer">8</span>
-          <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer">9</span>
-          <span class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer">10</span>
+        <div class="flex justify-between items-center w-full">
+          <div class="text-sm text-gray-700">
+            Showing
+            <span class="font-medium">{{ startIndex + 1 }}</span>
+            to
+            <span class="font-medium">{{ endIndex }}</span>
+            of
+            <span class="font-medium">{{ totalIncomes }}</span>
+            results
+          </div>
+          <div class="flex gap-2">
+            <button 
+              @click="previousPage" 
+              :disabled="currentPage === 1"
+              :class="[
+                'relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md',
+                currentPage === 1 
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              ]"
+            >
+              Previous
+            </button>
+            <button 
+              @click="nextPage"
+              :disabled="currentPage >= totalPages"
+              :class="[
+                'relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md',
+                currentPage >= totalPages 
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              ]"
+            >
+              Next
+            </button>
+          </div>
         </div>
-        
-        <button class="inline-block">Next</button>
       </div>
     </div>
   </template>
@@ -114,6 +133,8 @@ export default {
         currency: useAuthStore.user.currency,
         incomeItems: this.incomes,
         counter: 1,
+        currentPage: 1,
+        itemsPerPage: 5
       }
     },
     setup() {
@@ -123,6 +144,24 @@ export default {
     watch: {
       incomes(newIncomes) {
         this.incomeItems = newIncomes;
+        this.currentPage = 1;
+      }
+    },
+    computed: {
+      totalIncomes() {
+        return this.incomeItems.length;
+      },
+      totalPages() {
+        return Math.ceil(this.totalIncomes / this.itemsPerPage);
+      },
+      startIndex() {
+        return (this.currentPage - 1) * this.itemsPerPage;
+      },
+      endIndex() {
+        return Math.min(this.startIndex + this.itemsPerPage, this.totalIncomes);
+      },
+      paginatedIncomes() {
+        return this.incomeItems.slice(this.startIndex, this.endIndex);
       }
     },
     methods: {
@@ -159,7 +198,7 @@ export default {
         }
       },
       incrementCounter(index) {
-        return this.counter + index;
+        return this.startIndex + index + 1;
       },
       formatDate($date){
         if (!$date) return '';
@@ -169,6 +208,16 @@ export default {
           month: '2-digit',
           year: 'numeric'
         });
+      },
+      nextPage() {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+        }
+      },
+      previousPage() {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+        }
       }
     }
 }
