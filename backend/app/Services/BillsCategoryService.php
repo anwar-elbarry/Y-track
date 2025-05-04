@@ -6,7 +6,7 @@ use App\Models\BillsCategory;
 class BillsCategoryService {
 
    public function showAll(){
-        $Categories = BillsCategory::where('user_id',Auth::id())->get();
+        $Categories = BillsCategory::where('user_id',Auth::id())->with('bills')->get();
         return $Categories;
     }
    public function show(int $CategoryId){
