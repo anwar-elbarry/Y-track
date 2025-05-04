@@ -1,5 +1,42 @@
 <template>
     <div class="w-full overflow-x-auto">
+      <!-- Filters -->
+      <div class="bg-white p-4 mb-4 flex gap-4 items-center">
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-600">Source:</label>
+          <select 
+            v-model="selectedSource" 
+            class="border rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+          >
+            <option value="">All Sources</option>
+            <option v-for="source in uniqueSources" :key="source" :value="source">
+              {{ source }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-600">Frequency:</label>
+          <select 
+            v-model="selectedFrequency" 
+            class="border rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+          >
+            <option value="">All Frequencies</option>
+            <option value="one-time">One Time</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+
+        <button 
+          @click="clearFilters"
+          class="text-sm text-gray-600 hover:text-orange-500 flex items-center gap-1"
+        >
+          Clear Filters
+        </button>
+      </div>
+
       <table class="min-w-full bg-white">
         <!-- Table Header -->
         <thead>
@@ -134,7 +171,9 @@ export default {
         incomeItems: this.incomes,
         counter: 1,
         currentPage: 1,
-        itemsPerPage: 5
+        itemsPerPage: 5,
+        selectedSource: '',
+        selectedFrequency: ''
       }
     },
     setup() {
@@ -145,11 +184,30 @@ export default {
       incomes(newIncomes) {
         this.incomeItems = newIncomes;
         this.currentPage = 1;
+      },
+      selectedSource() {
+        this.currentPage = 1;
+      },
+      selectedFrequency() {
+        this.currentPage = 1;
       }
     },
     computed: {
+      uniqueSources() {
+        return [...new Set(this.incomeItems.map(item => 
+          item.source || (item.client ? item.client.name : 'Unknown')
+        ))];
+      },
+      filteredIncomes() {
+        return this.incomeItems.filter(item => {
+          const itemSource = item.source || (item.client ? item.client.name : 'Unknown');
+          const sourceMatch = !this.selectedSource || itemSource === this.selectedSource;
+          const frequencyMatch = !this.selectedFrequency || item.frequency === this.selectedFrequency;
+          return sourceMatch && frequencyMatch;
+        });
+      },
       totalIncomes() {
-        return this.incomeItems.length;
+        return this.filteredIncomes.length;
       },
       totalPages() {
         return Math.ceil(this.totalIncomes / this.itemsPerPage);
@@ -161,7 +219,7 @@ export default {
         return Math.min(this.startIndex + this.itemsPerPage, this.totalIncomes);
       },
       paginatedIncomes() {
-        return this.incomeItems.slice(this.startIndex, this.endIndex);
+        return this.filteredIncomes.slice(this.startIndex, this.endIndex);
       }
     },
     methods: {
@@ -218,6 +276,11 @@ export default {
         if (this.currentPage > 1) {
           this.currentPage--;
         }
+      },
+      clearFilters() {
+        this.selectedSource = '';
+        this.selectedFrequency = '';
+        this.currentPage = 1;
       }
     }
 }
