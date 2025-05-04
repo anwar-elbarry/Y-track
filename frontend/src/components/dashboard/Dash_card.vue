@@ -16,7 +16,8 @@
 </template>
 
 <script>
-
+import auth from '../../stores/auth';
+const authStore = auth();
 export default {
 name: 'Dash_card',
 props: {
@@ -31,10 +32,11 @@ props: {
     icon : {
         type: String,
         default: 'md-accountbalancewallet'
-    },
-    currency : {
-        type : String,
-        default : "MAD"
+    }
+},
+data(){
+    return {
+        currency : authStore.user.currency
     }
 }
 }
