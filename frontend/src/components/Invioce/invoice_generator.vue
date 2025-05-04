@@ -70,18 +70,6 @@
                 class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500 focus:outline-none">
             </div>
           </div>
-          
-          <div class="flex justify-center my-6">
-            <div class="h-24 w-40 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors duration-200 rounded-md">
-              <div class="text-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                </svg>
-                <span class="text-sm text-gray-500">Upload Logo</span>
-              </div>
-            </div>
-          </div>
-          
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block text-sm font-medium mb-2 text-gray-700">Company Name Or Your Name</label>
