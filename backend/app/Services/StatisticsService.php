@@ -6,8 +6,9 @@ use App\Models\Transaction;
 use App\Models\Client;
 use App\Models\Expense;
 use Illuminate\Support\Facades\Auth;
-class StatisticsService{
-    public function getStatistics(){
+
+class StatisticsService {
+    public function getStatistics() {
         $user = Auth::user();
         $incomes = Transaction::where('user_id', $user->id)
                                 ->where('type','income')
@@ -18,9 +19,9 @@ class StatisticsService{
         $expenses = Expense::where('user_id', $user->id)->get();
         $clients = Client::where('user_id', $user->id)->get();
         
-        $totalIncomes = $incomes->sum('amount');
-        $totalBills = $bills->sum('amount');
-        $totalExpenses = $expenses->sum('amount');
+        $totalIncomes = round($incomes->sum('amount'), 2);
+        $totalBills = round($bills->sum('amount'), 2);
+        $totalExpenses = round($expenses->sum('amount'), 2);
         $totalClients = $clients->count();
         
         return [
@@ -29,8 +30,5 @@ class StatisticsService{
             'totalExpenses' => $totalExpenses,
             'totalClients' => $totalClients,
         ];
-        
-
-
     }
 }
