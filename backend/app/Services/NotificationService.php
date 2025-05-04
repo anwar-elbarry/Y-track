@@ -66,7 +66,7 @@ class NotificationService {
         $balance = Auth::user()->balance;
       
         $totalExpenses = $expenses->sum('amount');
-        $upcomingBills = $bills->where('status', 'pending')->sum('amount');
+        $upcomingBills = $bills->where('status', 'unpaid')->sum('amount');
         $totalGoals = $goals->sum('saved_amount');
         $totalCommitments = $totalExpenses + $upcomingBills + $totalGoals;
         
@@ -74,7 +74,7 @@ class NotificationService {
             $notification = $this->create([
                 'user_id' => Auth::id(),
                 'type' => 'danger',
-                'message' => "Warning: Your total commitments ($totalCommitments) including upcoming bills exceed your current balance ($balance)"
+                'message' => "Warning: Your total commitments ($totalCommitments) exceed your current balance ($balance)"
             ]);
             return $notification;
         }
