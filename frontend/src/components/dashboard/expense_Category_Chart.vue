@@ -1,9 +1,9 @@
 <template>
-    <div class="w-1/2 h-[400px] bg-white rounded-xl shadow-lg p-4">
+    <div class="flex-1 min-w-[300px] h-[400px] bg-white rounded-xl shadow-lg p-4">
         <div v-if="!hasData" class="flex items-center justify-center h-full text-gray-500">
-            No data available
+            No expenses available
         </div>
-        <div v-else id="categoryChart" class="w-full h-full"></div>
+        <div v-else ref="chartContainer" class="w-full h-full"></div>
     </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
         },
         currency: {
             type: String,
-            default: 'DH'
+            default: 'MAD'
         }
     },
     data() {
@@ -49,7 +49,7 @@ export default {
             if (!this.hasData) return;
 
             this.$nextTick(() => {
-                const chartElement = document.querySelector("#categoryChart");
+                const chartElement = this.$refs.chartContainer;
                 if (!chartElement) {
                     console.error("Chart element not found");
                     return;
@@ -60,11 +60,14 @@ export default {
                     labels: this.chartData.labels,
                     chart: {
                         type: 'donut',
-                        height: 350,
+                        height: '100%',
+                        width: '100%',
                         animations: {
                             enabled: true,
                             speed: 500
-                        }
+                        },
+                        redrawOnWindowResize: true,
+                        redrawOnParentResize: true
                     },
                     colors: ['#ef4444', '#3b82f6', '#22c55e', '#f59e0b', '#8b5cf6', '#ec4899'],
                     plotOptions: {
