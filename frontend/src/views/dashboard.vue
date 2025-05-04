@@ -6,7 +6,7 @@
     @toggle-aside="handleAsideToggle"
     />
     <main :class="[
-        'flex-grow p-5 transition-all duration-300',
+        'flex-grow p-5 transition-all duration-300 overflow-x-hidden',
         isAsideOpen ? 'ml-54' : 'ml-0'
       ]">
         <router-view v-slot="{ Component }">

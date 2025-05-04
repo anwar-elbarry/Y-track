@@ -29,10 +29,20 @@
            icon="la-user-friends-solid"
           /> 
         </div>
-        <transactionsChart :transactions="transactions" />
-        <div class="flex">
-          <categoryChart :expensecategories="expenseCategories" />
-          <bills_category_chart :expensecategories="expenseCategories" />
+        <transactionsChart 
+          :transactions="transactions"
+          :currency="currency"
+          class="mb-4"
+        />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <categoryChart 
+            :expensecategories="expenseCategories" 
+            :currency="currency"
+          />
+          <bills_category_chart 
+            :billscategories="billsCategories"
+            :currency="currency" 
+          />
         </div>
         
     </div>
@@ -44,7 +54,8 @@ import Dash_card from '../components/dashboard/Dash_card.vue';
 import transactionsChart from '../components/dashboard/transactionsChart.vue';
 import categoryChart from '../components/dashboard/expense_Category_Chart.vue';
 import { useCategoryStore } from '../stores/categoryStore';
-import bills_category_chart from '../components/dashboard/bills_categories_chart.vue'
+import bills_category_chart from '../components/dashboard/bills_categories_chart.vue';
+import { useBillCategoryStore } from '../stores/billsCategoryStore';
 import auth from '../stores/auth';
 const authStore = auth();
 export default {
@@ -57,7 +68,8 @@ export default {
     },
     setup(){
       const categoryStore = useCategoryStore();
-      return {categoryStore};
+      const billscategoryStore = useBillCategoryStore();
+      return {categoryStore,billscategoryStore};
     },
     data(){
       return {
@@ -65,6 +77,8 @@ export default {
         statistics : {},
         transactions : [],
         expenseCategories : [],
+        billsCategories : [],
+        currency: authStore.user.currency,
       }
     }
    ,
@@ -87,16 +101,17 @@ export default {
         const data = await transaction.getCategoryWithAmount();
         this.expenseCategories = data.categories
       },
-      // async getExpenseCategory(){
-      //      await this.categoryStore.fetchCategories();
-      //      this.expenseCategories = this.categoryStore.categories;
-      // }
+      async getBillsCategory(){
+               await this.billscategoryStore.fetchCategories();
+               this.billsCategories = this.billscategoryStore.categories;
+      }
    },
    created(){
         this.getUser();
         this.getStatistics();
         this.getTransactions();
         this.getCategoryWithAmount();
+        this.getBillsCategory();
    }
 }
 
