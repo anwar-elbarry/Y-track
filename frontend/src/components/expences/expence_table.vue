@@ -82,7 +82,7 @@
             <span class="font-medium">{{ totalExpenses }}</span>
             results
           </div>
-          <div class="flex gap-2">
+          <div class="flex items-center space-x-2">
             <button 
               @click="previousPage" 
               :disabled="currentPage === 1"
@@ -93,8 +93,26 @@
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               ]"
             >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
               Previous
             </button>
+            
+            <div class="flex items-center space-x-2">
+              <template v-for="page in displayedPages" :key="page">
+                <span 
+                  v-if="page !== '...'" 
+                  class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer"
+                  :class="{ 'bg-orange-100 text-orange-800': page === currentPage }"
+                  @click="goToPage(page)"
+                >
+                  {{ page }}
+                </span>
+                <span v-else class="px-3 py-1 text-sm cursor-default">...</span>
+              </template>
+            </div>
+            
             <button 
               @click="nextPage"
               :disabled="currentPage >= totalPages"
@@ -106,6 +124,9 @@
               ]"
             >
               Next
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         </div>
@@ -188,6 +209,43 @@
       },
       paginatedExpenses() {
         return this.filteredAndSortedExpenses.slice(this.startIndex, this.endIndex);
+      },
+      displayedPages() {
+        const pages = [];
+        const totalPages = this.totalPages;
+        
+        if (totalPages <= 7) {
+          // Less than 7 pages, show all
+          for (let i = 1; i <= totalPages; i++) {
+            pages.push(i);
+          }
+        } else {
+          // Always show first page
+          pages.push(1);
+          
+          // Show dots if current page is more than 3
+          if (this.currentPage > 3) {
+            pages.push('...');
+          }
+          
+          // Show pages around current page
+          const rangeStart = Math.max(2, this.currentPage - 1);
+          const rangeEnd = Math.min(totalPages - 1, this.currentPage + 1);
+          
+          for (let i = rangeStart; i <= rangeEnd; i++) {
+            pages.push(i);
+          }
+          
+          // Show dots if current page is less than total pages - 2
+          if (this.currentPage < totalPages - 2) {
+            pages.push('...');
+          }
+          
+          // Always show last page
+          pages.push(totalPages);
+        }
+        
+        return pages;
       }
     },
     methods: {
@@ -208,6 +266,9 @@
         if (this.currentPage > 1) {
           this.currentPage--;
         }
+      },
+      goToPage(page) {
+        this.currentPage = page;
       },
       sendUpdateExpense(id){
         this.$emit('selected-expense',id);
