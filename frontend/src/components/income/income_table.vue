@@ -120,7 +120,7 @@
             <span class="font-medium">{{ totalIncomes }}</span>
             results
           </div>
-          <div class="flex gap-2">
+          <div class="flex items-center space-x-2">
             <button 
               @click="previousPage" 
               :disabled="currentPage === 1"
@@ -131,8 +131,26 @@
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               ]"
             >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
               Previous
             </button>
+            
+            <div class="flex items-center space-x-2">
+              <template v-for="page in displayedPages" :key="page">
+                <span 
+                  v-if="page !== '...'" 
+                  class="px-3 py-1 text-sm rounded hover:bg-gray-100 cursor-pointer"
+                  :class="{ 'bg-orange-100 text-orange-800': page === currentPage }"
+                  @click="goToPage(page)"
+                >
+                  {{ page }}
+                </span>
+                <span v-else class="px-3 py-1 text-sm cursor-default">...</span>
+              </template>
+            </div>
+            
             <button 
               @click="nextPage"
               :disabled="currentPage >= totalPages"
@@ -144,6 +162,9 @@
               ]"
             >
               Next
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         </div>
@@ -220,6 +241,40 @@ export default {
       },
       paginatedIncomes() {
         return this.filteredIncomes.slice(this.startIndex, this.endIndex);
+      },
+      displayedPages() {
+        const pages = [];
+        const totalPages = this.totalPages;
+        
+        if (totalPages <= 7) {
+    
+          for (let i = 1; i <= totalPages; i++) {
+            pages.push(i);
+          }
+        } else {
+
+          pages.push(1);
+          
+          if (this.currentPage > 3) {
+            pages.push('...');
+          }
+          
+          const rangeStart = Math.max(2, this.currentPage - 1);
+          const rangeEnd = Math.min(totalPages - 1, this.currentPage + 1);
+          
+          for (let i = rangeStart; i <= rangeEnd; i++) {
+            pages.push(i);
+          }
+          
+
+          if (this.currentPage < totalPages - 2) {
+            pages.push('...');
+          }
+          
+          pages.push(totalPages);
+        }
+        
+        return pages;
       }
     },
     methods: {
@@ -281,6 +336,9 @@ export default {
         this.selectedSource = '';
         this.selectedFrequency = '';
         this.currentPage = 1;
+      },
+      goToPage(page) {
+        this.currentPage = page;
       }
     }
 }
