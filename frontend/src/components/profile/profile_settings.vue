@@ -66,17 +66,6 @@
               />
               <p v-if="errors.fullName" class="mt-1 text-sm text-red-600">{{ errors.fullName }}</p>
             </div>
-        
-            <div class="mb-6">
-              <label for="currency" class="block text-sm font-medium text-gray-700 mb-1">Preferred Currency</label>
-              <select  id="currency" 
-              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              v-model="personalInfo.currency" >
-              <option v-for="country in currencies" :value="country.currency">{{ country.currency }} :  {{ country.name }}</option>
-            </select>
-              <p v-if="errors.currency" class="mt-1 text-sm text-red-600">{{ errors.currency }}</p>
-            </div>
-            
             <div class="flex justify-end">
               <button 
                 type="submit" 
@@ -161,7 +150,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import auth from '../../stores/auth';
 const  authStore = auth();
 export default {
@@ -170,8 +158,7 @@ export default {
     return {
       activeTab: 'personal',
       personalInfo: {
-        fullName:authStore.user.name,
-        currency: authStore.user.currency
+        fullName:authStore.user.name
       },
       securityInfo: {
         currentPassword: '',
@@ -179,7 +166,6 @@ export default {
         confirmPassword: ''
       },
       errors : {},
-      currencies : [],
       isSubmittingPassword : false,
       isSubmittingUser : false,
     }
@@ -192,20 +178,13 @@ export default {
     
   }
 
-
-  if(!this.personalInfo.currency){
-    this.errors.currency = "Currency is required"
-    
-  }
-
   if (Object.keys(this.errors).length > 0) {
     return;
   }
 
   const userData = {
-    'name': this.personalInfo.fullName,
-    'currency': this.personalInfo.currency
-  };
+    'name': this.personalInfo.fullName
+    };
 
 
 try{
@@ -253,23 +232,7 @@ if(Object.keys(this.errors).length > 0){
       this.securityInfo.newPassword = ''
       this.securityInfo.confirmPassword = ''
       this.isSubmittingPassword = false;
-    },
-    async getCurrencies() {
-      axios.get('https://countriesnow.space/api/v0.1/countries/currency')
-    .then(response => {
-      this.currencies = response.data.data.map(item => ({
-        name: item.name,
-        currency: item.currency
-      }));
-      console.log(this.currencies);
-    })
-    .catch(error => {
-      console.log('error', error);
-    });
-}
-  },
-  created(){
-    this.getCurrencies();
+    }
   }
 }
 </script>
