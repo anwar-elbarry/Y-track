@@ -1,5 +1,42 @@
 <template>
     <div class="w-full overflow-x-auto">
+      <!-- Filters -->
+      <div class="bg-white p-4 mb-4 flex gap-4 items-center">
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-600">Category:</label>
+          <select 
+            v-model="selectedCategory" 
+            class="border rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+          >
+            <option value="">All Categories</option>
+            <option v-for="category in uniqueCategories" :key="category" :value="category">
+              {{ category }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-600">Frequency:</label>
+          <select 
+            v-model="selectedFrequency" 
+            class="border rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+          >
+            <option value="">All Frequencies</option>
+            <option value="one-time">One Time</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+
+        <button 
+          @click="clearFilters"
+          class="text-sm text-gray-600 hover:text-orange-500 flex items-center gap-1"
+        >
+          Clear Filters
+        </button>
+      </div>
+
       <table class="min-w-full bg-white">
         <!-- Table Header -->
         <thead>
@@ -110,12 +147,20 @@
         currency: useAuthStore.user.currency,
         BillItems: this.bills,
         currentPage: 1,
-        itemsPerPage: 5
+        itemsPerPage: 5,
+        selectedCategory: '',
+        selectedFrequency: ''
       }
     },
     watch: {
       bills(newBills) {
         this.BillItems = newBills;
+        this.currentPage = 1;
+      },
+      selectedCategory() {
+        this.currentPage = 1;
+      },
+      selectedFrequency() {
         this.currentPage = 1;
       }
     },
@@ -131,8 +176,21 @@
       return {billStore}
     },
     computed: {
+      uniqueCategories() {
+        return [...new Set(this.BillItems.map(item => 
+          item.category ? item.category.name : 'Uncategorized'
+        ))];
+      },
+      filteredBills() {
+        return this.BillItems.filter(item => {
+          const categoryName = item.category ? item.category.name : 'Uncategorized';
+          const categoryMatch = !this.selectedCategory || categoryName === this.selectedCategory;
+          const frequencyMatch = !this.selectedFrequency || item.frequency === this.selectedFrequency;
+          return categoryMatch && frequencyMatch;
+        });
+      },
       totalBills() {
-        return this.BillItems.length;
+        return this.filteredBills.length;
       },
       totalPages() {
         return Math.ceil(this.totalBills / this.itemsPerPage);
@@ -144,7 +202,7 @@
         return Math.min(this.startIndex + this.itemsPerPage, this.totalBills);
       },
       paginatedBills() {
-        return this.BillItems.slice(this.startIndex, this.endIndex);
+        return this.filteredBills.slice(this.startIndex, this.endIndex);
       }
     },
     methods: {
@@ -178,6 +236,11 @@
       removeBill(id) {
         this.$emit('removed-bill',id);
       },
+      clearFilters() {
+        this.selectedCategory = '';
+        this.selectedFrequency = '';
+        this.currentPage = 1;
+      }
     }
   }
   </script>
