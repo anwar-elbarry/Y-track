@@ -12,7 +12,7 @@
         
         <Bills_table 
             v-if="!showUpcomingBills"
-            :BillItems="bills"
+            :bills="bills"
             @removed-bill="removeBill" 
         />
         <BillForm 
