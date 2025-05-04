@@ -1,5 +1,40 @@
 <template>
     <div class="w-full overflow-x-auto">
+      <!-- Filters -->
+      <div class="bg-white p-4 mb-4 flex gap-4 items-center">
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-600">Category:</label>
+          <select 
+            v-model="selectedCategory" 
+            class="border rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+          >
+            <option value="">All Categories</option>
+            <option v-for="category in uniqueCategories" :key="category" :value="category">
+              {{ category }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-600">Amount:</label>
+          <select 
+            v-model="amountSort" 
+            class="border rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+          >
+            <option value="">No Sort</option>
+            <option value="asc">Low to High</option>
+            <option value="desc">High to Low</option>
+          </select>
+        </div>
+
+        <button 
+          @click="clearFilters"
+          class="text-sm text-gray-600 hover:text-orange-500 flex items-center gap-1"
+        >
+          Clear Filters
+        </button>
+      </div>
+
       <table class="min-w-full bg-white">
         <!-- Table Header -->
         <thead>
@@ -100,18 +135,47 @@
         currency: useAuthStore.user.currency,
         expenseItems: this.expenses,
         currentPage: 1,
-        itemsPerPage: 5
+        itemsPerPage: 5,
+        selectedCategory: '',
+        amountSort: ''
       }
     },
     watch: {
       expenses(newExpenses) {
         this.expenseItems = newExpenses;
         this.currentPage = 1;
+      },
+      selectedCategory() {
+        this.currentPage = 1;
+      },
+      amountSort() {
+        this.currentPage = 1;
       }
     },
     computed: {
+      uniqueCategories() {
+        return [...new Set(this.expenseItems.map(item => 
+            item.category ? item.category.name : 'Uncategorized'
+        ))];
+      },
+      filteredAndSortedExpenses() {
+        let filtered = this.expenseItems.filter(item => {
+          const categoryName = item.category ? item.category.name : 'Uncategorized';
+          return !this.selectedCategory || categoryName === this.selectedCategory;
+        });
+
+        if (this.amountSort) {
+          filtered.sort((a, b) => {
+            const amountA = parseFloat(a.amount);
+            const amountB = parseFloat(b.amount);
+            return this.amountSort === 'asc' ? amountA - amountB : amountB - amountA;
+          });
+        }
+
+        return filtered;
+      },
       totalExpenses() {
-        return this.expenseItems.length;
+        return this.filteredAndSortedExpenses.length;
       },
       totalPages() {
         return Math.ceil(this.totalExpenses / this.itemsPerPage);
@@ -123,7 +187,7 @@
         return Math.min(this.startIndex + this.itemsPerPage, this.totalExpenses);
       },
       paginatedExpenses() {
-        return this.expenseItems.slice(this.startIndex, this.endIndex);
+        return this.filteredAndSortedExpenses.slice(this.startIndex, this.endIndex);
       }
     },
     methods: {
@@ -156,6 +220,11 @@
           console.log('Error to remove Expense :',error);
         }
         
+      },
+      clearFilters() {
+        this.selectedCategory = '';
+        this.amountSort = '';
+        this.currentPage = 1;
       }
     }
   }
