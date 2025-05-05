@@ -1,20 +1,20 @@
 <template>
     <div class="dashboard_container flex flex-col">
       <div class="cards gap-10 flex flex-wrap justify-center w-full">
-          <Dash_card 
-           :value="455"
+          <Admin_card 
+           :value="statistics.totalUsers"
            icon="md-accountbalancewallet"
            title="Total Users"
           />
-          <Dash_card 
-           :value="3534"
-           title="Active Users"
+          <Admin_card 
+           :value="statistics.newUsers"
+           title="New Users"
            icon="io-trending-down-outline"
            
           />
-          <Dash_card 
-           :value="4365"
-           title="Suspended Users"
+          <Admin_card 
+           :value="statistics.activeUsers"
+           title="Active Users"
            icon="bi-calendar-check-fill"
            
           />
@@ -24,13 +24,29 @@
     </template>
     
     <script>
-    import Dash_card from '../../components/dashboard/Dash_card.vue';
-    import UsersTable from '../../components/admin/usersTable.vue';
+import UsersTable from '../../components/admin/usersTable.vue';
+import Admin_card from '../../components/admin/admin_card.vue';
+import adminService from '../../services/adminService';
     export default {
         name : 'adminDashboard',
         components : {
-          Dash_card,
+          Admin_card,
           UsersTable
+        },
+        data(){
+          return {
+            statistics : []
+          }
+        },
+        methods : {
+          async getStatistics(){
+           const data =  await adminService.getDashboardStats();
+           this.statistics = data;
+           console.log(data);
+          }
+        },
+        created(){
+          this.getStatistics();
         }
     }
     </script>
