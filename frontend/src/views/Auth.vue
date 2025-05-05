@@ -260,11 +260,15 @@ export default {
     async submitLogin(){
         try {
           const authStore = auth()
-          await authStore.login(this.loginCredentials)
-          console.log(authStore.message)
+          const user = await authStore.login(this.loginCredentials);
           this.loginCredentials.email = '';
           this.loginCredentials.password = '';
-          this.$router.push('/dashboard')
+          if(user && user.role == 'admin'){
+            console.log("Redirecting to admin panel")
+            return this.$router.push('/admin');
+          }
+          console.log("Redirecting to dashboard")
+          return this.$router.push('/dashboard');
         }catch(error){
           console.log(error)
           this.loginError = error.response?.data?.message || 'Login failed'
@@ -288,9 +292,7 @@ export default {
       try {
         const user = JSON.parse(decodeURIComponent(userParam));
         localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        
-        this.$router.push('/dashboard/dashboardHome');
+        this.$router.push('/dashboard');
       } catch (e) {
         console.error('Error parsing user', e);
       }
