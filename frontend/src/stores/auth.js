@@ -7,7 +7,6 @@ export default defineStore('auth', {
   state() {
     return {
       token: localStorage.getItem("token" || null),
-      user : {},
       statistics : {},
       message: null,
     };
@@ -16,7 +15,7 @@ export default defineStore('auth', {
     async login(credentials) {
       const response = await api.post('/api/auth/signin', credentials);
       this.message = response.data.message;
-      this.setAuth(response.data.token);
+      this.setAuth(response.data.token,response.data.user);
       return response.data.user;
     },
     async fetchUser() {
@@ -25,10 +24,12 @@ export default defineStore('auth', {
     },
     async logout() {
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       router.push('/auth');
     },
-    setAuth(token) {
+    setAuth(token,user) {
       localStorage.setItem('token', token);
+      localStorage.setItem('user',JSON.stringify( user));
       this.token = token;
     },
    async changePassword(data){
