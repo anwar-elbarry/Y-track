@@ -268,7 +268,7 @@
               <div class="text-gray-600">{{ invoice.terms || 'Payment due within 30 days' }}</div>
             </div>
             
-            <div class="text-center pt-8 text-gray-600 border-t border-gray-100 mt-8 pt-4">
+            <div class="text-center pt-8 text-gray-600 border-t border-gray-100 mt-8">
               <p class="text-sm">Thank you for your business!</p>
             </div>
           </div>
