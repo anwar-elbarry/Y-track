@@ -14,6 +14,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +41,7 @@ Route::prefix('/auth')->group(function(){
     Route::get('/facebook',[FacebookAuthController::class,'redirect'])->name('facebook.login');
     Route::get('/facebook/callback',[FacebookAuthController::class,'callback']);
     // logoutAuth
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/user', [AuthController::class,'getUser']);
         Route::put('/changePassword',[AuthController::class,'changePassword']);
         Route::put('/updateUser',[AuthController::class,'updateUser']);
@@ -49,7 +50,7 @@ Route::prefix('/auth')->group(function(){
 });
 
 Route::prefix('/income')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[IncomeController::class,'index']);
         Route::post('/create',[IncomeController::class,'store']);
         Route::put('/update/{id}',[IncomeController::class,'update']);
@@ -58,7 +59,7 @@ Route::prefix('/income')->group(function (){
     });
 });
 Route::prefix('/expense')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[ExpenseController::class,'index']);
         Route::post('/create',[ExpenseController::class,'store']);
         Route::put('/update/{id}',[ExpenseController::class,'update']);
@@ -68,7 +69,7 @@ Route::prefix('/expense')->group(function (){
 });
 
 Route::prefix('/category')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[CategoryController::class,'index']);
         Route::get('/statistics',[CategoryController::class,'getCategoryWithAmount']);
         Route::post('/create',[CategoryController::class,'store']);
@@ -77,7 +78,7 @@ Route::prefix('/category')->group(function (){
 });
 
 Route::prefix('/bills-category')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[BillsCategoryController::class,'index']);
         Route::post('/create',[BillsCategoryController::class,'store']);
         Route::delete('/remove/{id}',[BillsCategoryController::class,'destroy']);
@@ -85,7 +86,7 @@ Route::prefix('/bills-category')->group(function (){
 });
 
 Route::prefix('/client')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[ClientController::class,'index']);
         Route::post('/create',[ClientController::class,'store']);
         Route::put('/update/{id}',[ClientController::class,'update']);
@@ -94,7 +95,7 @@ Route::prefix('/client')->group(function (){
 });
 
 Route::prefix('/bill')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[BillController::class,'index']);
         Route::post('/create',[BillController::class,'store']);
         Route::put('/update/{id}',[BillController::class,'update']);
@@ -105,7 +106,7 @@ Route::prefix('/bill')->group(function (){
 });
 
 Route::prefix('/transaction')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[TransactionController::class,'index']);
         Route::delete('/remove/{id}',[TransactionController::class,'destroy']);
         Route::post('/removeMultiple',[TransactionController::class,'destroyMultiple']);
@@ -114,7 +115,7 @@ Route::prefix('/transaction')->group(function (){
 
 
 Route::prefix('/goal')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[GoalController::class,'index']);
         Route::post('/create',[GoalController::class,'store']);
         Route::delete('/remove/{id}',[GoalController::class,'destroy']);
@@ -123,7 +124,7 @@ Route::prefix('/goal')->group(function (){
 });
 
 Route::prefix('/upcoming-bill')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[Upcoming_BillsController::class,'index']);
         Route::post('/create',[Upcoming_BillsController::class,'store']);
         Route::delete('/remove/{id}',[Upcoming_BillsController::class,'destroy']);
@@ -133,7 +134,7 @@ Route::prefix('/upcoming-bill')->group(function (){
 });
 
 Route::prefix('/invoice')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[InvoiceController::class,'index']);
         Route::post('/create',[InvoiceController::class,'store']);
         Route::put('/update/{id}',[InvoiceController::class,'update']);
@@ -143,16 +144,25 @@ Route::prefix('/invoice')->group(function (){
 });
 
 Route::prefix('/statistics')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[StatisticsController::class,'index']);
     });
 });
 
 Route::prefix('/notifications')->group(function (){
-    Route::middleware('auth:sanctum')->group(function(){
+    Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/index',[NotificationController::class,'index']);
         Route::delete('/remove/{id}',[NotificationController::class,'destroy']);
         Route::put('/markAsRead/{id}',[NotificationController::class,'markAsRead']);
         Route::delete('/clear-all', [NotificationController::class, 'clearAll']);
+    });
+});
+
+Route::prefix('/admin')->group(function (){
+    Route::middleware(['auth:sanctum', 'role:admin'])->group(function(){
+        Route::get('/users', [AdminController::class, 'getAllUsers']);
+        Route::get('/dashboard/stats', [AdminController::class, 'getDashboardStats']);
+        Route::put('/users/{id}/status', [AdminController::class, 'updateStatus']);
+        Route::delete('/users/{id}', [AdminController::class, 'destroy']);
     });
 });
