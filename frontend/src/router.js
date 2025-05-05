@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import auth from './stores/auth'
 const routes = [
   {
     path: '/',
@@ -70,6 +69,12 @@ const routes = [
         component : () => import('./views/notifications.vue')
       },
     ]
+  },
+  {
+    path : '/admin',
+    name : 'admin',
+    meta : {requiresAdmin: true},
+    component : () => import('./views/admin/dashboard.vue')
   }
 ]
 
@@ -90,35 +95,51 @@ const router = createRouter({
   }
 })
 
-router.beforeEach(async (to,from,next) => {
-  const user = localStorage.getItem("user");
-      const token = localStorage.getItem("token");
-  if(to.meta.requiresAuth){
-    try{
-      
-
-      if (!user && !token){
-        throw new Error("no user");
-      }
-
-      next()
-    }catch(error){
-      const {logout} = auth();
-      logout();
-      next('/auth')
-
+router.beforeEach(async (to, from, next) => {
+  let user = null;
+  const token = localStorage.getItem("token");
+  const userStr = localStorage.getItem("user");
+  
+  if (userStr) {
+    try {
+      user = JSON.parse(userStr);
+    } catch (e) {
+      console.error("Error parsing user data", e);
     }
   }
-  else if(to.meta.requiresLogout){
-    if(user &&  token){
+  
+  if (to.meta.requiresAdmin) {
+    if (!user || !token) {
+      next('/auth');
+      return;
+    }
+    
+    if (user.role !== 'admin') {
+      console.log('Access denied: Admin role required');
       next('/dashboard');
-    }else{
+      return;
+    }
+    
+    next();
+  }
+  else if (to.meta.requiresAuth) {
+    if (!user && !token) {
+      next('/auth');
+      return;
+    }
+    
+    next();
+  }
+  else if (to.meta.requiresLogout) {
+    if (user && token) {
+      next('/dashboard');
+    } else {
       next();
     }
   }
-  else{
-    next()
+  else {
+    next();
   }
-})
+});
 
 export default router
