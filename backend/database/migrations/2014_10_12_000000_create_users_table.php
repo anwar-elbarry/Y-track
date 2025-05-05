@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'user'])->default('user');
+            $table->enum('status', ['active', 'suspended'])->default('active');
             $table->string('currency')->default('MAD');
             $table->decimal('threshold_alert', 10, 2)->default(1000);
             $table->decimal('balance', 10, 2)->default(0);
