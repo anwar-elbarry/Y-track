@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia  } from 'pinia'
+import Notifications from '@kyvg/vue3-notification'
 
 import './style.css'
 import App from './App.vue'
@@ -22,6 +23,8 @@ app.component('Footer_componant',Footer);
 
 import Aside from './components/Aside.vue';
 app.component('Aside',Aside)
+
+app.use(Notifications)
 
 app.use(router);
 app.use(createPinia());
