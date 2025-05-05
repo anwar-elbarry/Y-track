@@ -17,7 +17,7 @@ export default defineStore('auth', {
       const response = await api.post('/api/auth/signin', credentials);
       this.message = response.data.message;
       this.setAuth(response.data.token);
-
+      return response.data.user;
     },
     async fetchUser() {
       const response = await api.get('api/auth/user');
