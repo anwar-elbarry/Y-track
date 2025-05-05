@@ -1,6 +1,6 @@
 <template>
-    <div class="dashboard_container flex flex-col">
-      <div class="cards gap-10 flex flex-wrap justify-center w-full">
+    <div class="dashboard_container flex flex-col px-7">
+      <div class="cards gap-10 flex flex-wrap justify-evenly w-full">
           <Admin_card 
            :value="statistics.totalUsers"
            icon="md-accountbalancewallet"
