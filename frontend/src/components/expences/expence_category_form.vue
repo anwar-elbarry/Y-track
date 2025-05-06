@@ -116,11 +116,16 @@
           name: this.form.name,
         };
           console.log(newCategory);
-          
+          this.$notify({
+            title: 'Creat!',
+            text: 'Category was successfully Created.',
+            type: 'success',
+          })
           await this.CategoryStore.addCategory(newCategory);
           this.categories = this.CategoryStore.categories;
           this.resetForm();
           this.$emit('reload-categories');
+    
           this.$emit('close');
         }catch(error){
           console.log(error);

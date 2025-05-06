@@ -181,6 +181,13 @@
           
           await this.expenseStore.addExpense(newExpense);
           this.$emit('expense-added', newExpense);
+
+          this.$notify({
+            title: 'Create!',
+            text: 'Expense was successfully Created.',
+            type: 'success',
+          })
+
           this.$emit('close');
           this.resetForm();
         }catch(error){

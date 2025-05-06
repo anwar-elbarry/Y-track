@@ -172,7 +172,12 @@
                 category_id: this.form.category_id,
                 description: this.form.description || ''
             });
-            
+
+            this.$notify({
+            title: 'Update!',
+            text: 'Expense was successfully Updated.',
+            type: 'success',
+          })
             await this.$emit('expense-updated'); 
             this.$emit('close');
         } catch(error) {

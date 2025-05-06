@@ -275,6 +275,12 @@
       },
       async removeExpense(id){
         try{
+          this.$notify({
+            title: 'Delete!',
+            text: 'Expense was successfully Deleted.',
+            type: 'success',
+          })
+
           await this.expenseStore.removeExpense(id);
           this.$emit('reload-expenses');
         }catch(error){
