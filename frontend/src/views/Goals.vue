@@ -83,8 +83,8 @@ export default {
         this.showUpdateGoalForm = false;
     },
    async removeGoal(id){
+        this.goals = this.goals.filter(goal => goal.id !== id);
         await this.goalStore.removegoal(id);
-        this.goals = this.goalStore.goals.filter(goal => goal.id !== id);
     }
   },
   created(){

@@ -55,8 +55,9 @@ export default {
               await this.fetchNotifications();
         },
         async handleRemoveNotif(notificationId){
+              this.notifications = this.notifications.filter(notif => notif.id !== notificationId);
+              this.unreadCount--;
               await this.notificationStore.removeNotif(notificationId);
-              await this.fetchNotifications();
         },
         async handleClearAll(){
               await this.notificationStore.clearAll();

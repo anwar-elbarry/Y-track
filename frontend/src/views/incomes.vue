@@ -7,7 +7,7 @@
         
         <Income_table 
             :incomes="incomeStore.incomes"
-            @reload-incomes="fetchIncomes"
+            @delete-income="handleincomeRemove"
             @selected-income="showSelectedIncomeToUpdate"
         />
         
@@ -60,6 +60,9 @@ export default {
         },
         async fetchIncomes() {
             await this.incomeStore.fetchIncomes()
+        },
+        async handleincomeRemove(id) {
+            await this.incomeStore.removeIncome(id);
         },
         closeUpdateForm() {
             this.showUpdate = false
