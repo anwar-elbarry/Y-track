@@ -93,10 +93,10 @@ export default {
   emits : ['create-goal','close'],
   methods: {
     async submitGoal() {
+          this.errors = {};
           const today =  new Date();
           today.setHours(0,0,0,0);
           const due_date = new Date(this.goal.due_date);
-
 
       if (!this.goal.title && !this.goal.target && !this.goal.due_date) {
         alert('Please fill in all fields');
@@ -108,7 +108,7 @@ export default {
         this.errors.title = 'this title is alredy taken';
       }
       if (!this.goal.due_date) {
-          this.errors.title = 'Please enter a valid title';
+          this.errors.due_date = 'Please enter a valid title';
       }else if(due_date < today){
         this.errors.due_date = "you can't select passed date";
       }
@@ -127,6 +127,11 @@ export default {
       };
       try{
         await this.goalStore.addgoal(newGoal);
+        this.$notify({
+            title: 'Created!',
+            text: 'Goal was successfully Created.',
+            type: 'success',
+          })
         this.$emit('create-goal');
         this.$emit('close');
         this.isSubmitting = false;

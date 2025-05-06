@@ -97,7 +97,6 @@ export default {
         return this.errorMessage = `You can only save up to ${remainingAmount} MAD more to reach your target`;
       }
       
-
       this.isSubmitting = true;
 
       const updatedGoal = {
@@ -107,6 +106,11 @@ export default {
       try {
         await this.goalStore.updategoal(this.goalToUpdate.id, updatedGoal);
         this.$emit('update-goal');
+        this.$notify({
+            title: 'Update!',
+            text: 'amout was saved seccussfully.',
+            type: 'success',
+          })
         this.$emit('close');
       } catch(error) {
         this.errorMessage = error.response?.data?.message || 

@@ -92,6 +92,12 @@ export default {
         },
         removeGoal(id){
             this.$emit('goal-to-remove',id);
+            
+            this.$notify({
+            title: 'Deleted!',
+            text: 'Goal was successfully deleted.',
+            type: 'success',
+          })
         }
     }
 }
