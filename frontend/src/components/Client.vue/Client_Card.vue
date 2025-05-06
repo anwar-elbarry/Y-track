@@ -63,6 +63,7 @@
   </template>
   
   <script>
+  import Swal from 'sweetalert2';
   import { useClientStore } from '../../stores/clientStore';
   export default {
     name: 'Client_Card',
@@ -125,7 +126,23 @@
     methods : {
         async removeClient(id){
         try{
+          
+        Swal.fire({
+        title: 'Delet Client?',
+        icon: 'warning',
+        text :'you will lose linked incomes',
+        showCancelButton: true,
+        confirmButtonText: 'Delet',
+      }).then((result) => {
+        if (result.isConfirmed) {
           this.$emit('remove-client', id);
+           this.$notify({
+            title: 'Deleted!',
+            text: 'Client was successfully deleted.',
+            type: 'success',
+          })
+        }
+      });
         }catch(error){
           console.error('Error removing client:', error);
         }
