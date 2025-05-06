@@ -132,7 +132,6 @@
   
   <script>
   import auth from '../../stores/auth';
-  import { useBillStore } from '../../stores/billsStore';
   const useAuthStore = auth();
   export default {
     
@@ -153,10 +152,6 @@
       }
     },
     emits : ['removed-upcoming-bill','paid-upcoming-bill'],
-    setup(){
-      const billStore = useBillStore();
-      return {billStore}
-    },
     watch: {
         upcomingBillItems(newBills) {
             this.billItems = newBills;
@@ -236,11 +231,36 @@
                 item.selected = this.selectAll;
             });
         },
+        // remove Upcomming bill
         removeBill(id) {
-            this.$emit('removed-upcoming-bill',id);
+
+        Swal.fire({
+        title: 'Delet Upcoming bill?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Delet',
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          this.$emit('removed-upcoming-bill',id);
+
+           this.$notify({
+            title: 'Deleted!',
+            text: 'Upcomming bill was successfully deleted.',
+            type: 'success',
+          })
+        }
+      });
+           
+     
         },
         payBill(id) {
-           this.$emit('paid-upcoming-bill',id);
+          this.$emit('paid-upcoming-bill',id);
+          this.$notify({
+          'title' : 'Pay!',
+          'type' : 'success',
+          'text' : 'bill payed seccussfully'
+      });
         },
         goToPage(page) {
             this.currentPage = page;

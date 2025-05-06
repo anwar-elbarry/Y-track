@@ -156,6 +156,7 @@
   </template>
   
   <script>
+  import Swal from 'sweetalert2'
   import auth from '../../stores/auth';
   import { useBillStore } from '../../stores/billsStore';
   const useAuthStore = auth();
@@ -286,8 +287,26 @@
           .toUpperCase()
           .substring(0, 2);
       },
+      
+      // remove bill
       removeBill(id) {
-        this.$emit('removed-bill',id);
+        Swal.fire({
+        title: 'Delete Bill?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$emit('removed-bill',id);
+
+           this.$notify({
+            title: 'Deleted!',
+            text: 'Item was successfully deleted.',
+            type: 'success',
+          })
+        }
+      });
+
       },
       clearFilters() {
         this.selectedCategory = '';

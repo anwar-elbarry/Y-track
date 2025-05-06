@@ -91,6 +91,13 @@
           
           await this.BillCategoryStore.addCategory(newCategory);
           this.$emit('category-added');
+
+          this.$notify({
+        'title' : 'Created!',
+        'type' : 'success',
+        'text' : 'new category Added successfully'
+      });
+
           this.$emit('close');
           this.resetForm();
         }catch(error){

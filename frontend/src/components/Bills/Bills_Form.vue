@@ -231,7 +231,9 @@ png,image/jpg,image/gif,image/svg+xml"
       async validateAndSubmit() {
      
         this.errors = {};
-        
+        const today = new Date();
+        const due_date = new Date(this.form.due_date);
+        today.setHours(0,0,0,0);
         // Validate name
         if (!this.form.name || this.form.name.trim() === '') {
           this.errors.name = 'Please enter a bill name';
@@ -255,6 +257,8 @@ png,image/jpg,image/gif,image/svg+xml"
         // Validate due_date
         if (!this.form.due_date) {
           this.errors.due_date = 'Please select a due date';
+        }else if(today > due_date){
+          this.errors.due_date = "you can't choose passed due_date";
         }
   
         if (Object.keys(this.errors).length > 0) {
@@ -281,10 +285,24 @@ png,image/jpg,image/gif,image/svg+xml"
         try {
           await this.billStore.addbill(formData);
           this.$emit('bill-added');
+
+          this.$notify({
+        'title' : 'Created!',
+        'type' : 'success',
+        'text' : 'new bill created successfully'
+      });
+
           this.$emit('close');
           this.resetForm();
         } catch (error) {
           console.error('Error adding bill:', error);
+
+          this.$notify({
+        'title' : 'Created!',
+        'type' : 'error',
+        'text' : 'faild to creat new bill'
+      });
+
         } finally {
           this.isSubmitting = false;
         }
