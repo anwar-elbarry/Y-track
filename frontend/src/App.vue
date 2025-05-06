@@ -1,5 +1,6 @@
 <template>
     <div class="app-container">
+      <Notifications />
       <main>
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
@@ -11,8 +12,14 @@
   </template>
   
   <script>
+
+import { Notifications } from '@kyvg/vue3-notification';
+
   export default {
-    name: 'App'
+    name: 'App',
+    components : {
+      Notifications
+    }
   }
   </script>
   

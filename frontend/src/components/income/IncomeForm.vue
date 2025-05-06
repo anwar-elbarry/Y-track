@@ -240,7 +240,6 @@ export default {
         frequency: this.form.frequency,
         client_id: this.sourceType === 'other' ? null : this.form.client,
       };
-    
       console.log('New income entry:', newIncome);
       try{
         this.isSubmitting = true;

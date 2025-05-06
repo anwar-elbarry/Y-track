@@ -1,5 +1,6 @@
 <template>
-    <div class="dashboard_container flex flex-col px-7">
+  <Navbar />
+    <div class="dashboard_container flex flex-col pt-22 px-7">
       <div class="cards gap-10 flex flex-wrap justify-evenly w-full">
           <Admin_card 
            :value="statistics.totalUsers"
@@ -20,6 +21,7 @@
           />
       </div>
       <UsersTable />
+      
     </div>
     </template>
     
@@ -27,11 +29,13 @@
 import UsersTable from '../../components/admin/usersTable.vue';
 import Admin_card from '../../components/admin/admin_card.vue';
 import adminService from '../../services/adminService';
+import Navbar from '../../components/Navbar.vue';
     export default {
         name : 'adminDashboard',
         components : {
           Admin_card,
-          UsersTable
+          UsersTable,
+          Navbar
         },
         data(){
           return {

@@ -58,8 +58,11 @@ Make informed decisions and stay on top of your financial goals.</p>
             </div>
             <a href="#" class="text-sm text-orange-600 hover:text-orange-500 transition-colors duration-200">Forgot password?</a>
           </div>
-          <button type="submit" class="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 focus:ring-4 focus:ring-orange-200 transition-colors duration-200">
-            Sign in
+          <div v-if="errorMessage" class="text-red-500 text-sm font-medium py-2 px-3 bg-red-50 rounded-md">
+            {{ errorMessage }}
+          </div>
+          <button type="submit" class="cursor-pointer w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 focus:ring-4 focus:ring-orange-200 transition-colors duration-200">
+            <v-icon v-if="issubmitting" name="fa-spinner" animation="spin-pulse" /> Sign in
           </button>
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
@@ -74,14 +77,14 @@ Make informed decisions and stay on top of your financial goals.</p>
               <i class="fa-brands fa-google text-xl text-gray-600 mr-2"></i>
               Google
             </a>
-            <a href="#" class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+            <a href="#" class="cursor-pointer flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
               <i class="fa-brands fa-facebook text-xl text-blue-600 mr-2"></i>
               Facebook
             </a>
           </div>
           <div class="text-center text-sm text-gray-600">
             Don't have an account? 
-            <span  @click="toggleForm('signin')" class="text-orange-600 hover:text-orange-500 cursor-pointer transition-colors duration-200">Sign up</span>
+            <span  @click="toggleForm('signup')" class="text-orange-600 hover:text-orange-500 cursor-pointer transition-colors duration-200">Sign up</span>
           </div>
         </form>
   
@@ -126,8 +129,12 @@ Make informed decisions and stay on top of your financial goals.</p>
             <input type="checkbox" id="agree-terms" name="agree_terms" class="h-4 w-4 mt-1 text-orange-600 border-gray-300 rounded" required>
             <label for="agree-terms" class="ml-2 text-sm text-gray-600">I agree to the <a href="/terms" class="text-orange-600 hover:text-orange-500">Terms of Service</a> and <a href="/privacy" class="text-orange-600 hover:text-orange-500">Privacy Policy</a></label>
           </div>
-          <button type="submit" class="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 focus:ring-4 focus:ring-orange-200 transition-colors duration-200">
-            Create Account
+        
+          <div v-if="errorMessage" class="text-red-500 text-sm font-medium py-2 px-3 bg-red-50 rounded-md">
+            {{ errorMessage }}
+          </div>
+          <button type="submit" class="cursor-pointer w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 focus:ring-4 focus:ring-orange-200 transition-colors duration-200">
+            <v-icon v-if="issubmitting" name="fa-spinner" animation="spin-pulse" />  Create Account
           </button>
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
@@ -176,6 +183,8 @@ export default {
     return {
       activeForm: 'signin',
       currencies: [] ,
+      issubmitting: false ,
+      errorMessage : '',
       loginCredentials : {
         email : '',
         password : '',
@@ -229,6 +238,8 @@ export default {
       }
     },
    async submitRegisteration(){
+       this.errorMessage = ''; 
+       this.issubmitting = true;
       api.post('api/auth/signup',this.singupCredentials)
       .then(Response => {
         console.log(Response.data.user);
@@ -239,9 +250,12 @@ export default {
           this.singupCredentials.currency = '';
           this.singupCredentials.password = '';
             this.toggleForm('signin');
+            this.issubmitting = false;
       })
       .catch(error => {
         console.log('error' , error);
+        this.errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
+        this.issubmitting = false;
       });
       },
    async getCurrencies() {
@@ -259,19 +273,22 @@ export default {
 },
     async submitLogin(){
         try {
+          this.errorMessage = '';
+          this.issubmitting = true;
           const authStore = auth()
           const user = await authStore.login(this.loginCredentials);
           this.loginCredentials.email = '';
           this.loginCredentials.password = '';
           if(user && user.role == 'admin'){
-            console.log("Redirecting to admin panel")
+            this.issubmitting = false;
             return this.$router.push('/admin');
           }
-          console.log("Redirecting to dashboard")
+          this.issubmitting = false;
           return this.$router.push('/dashboard');
         }catch(error){
           console.log(error)
-          this.loginError = error.response?.data?.message || 'Login failed'
+          this.errorMessage = error.response?.data?.message || 'Login failed. Please check your credentials.';
+          this.issubmitting = false;
         }
     },
     async googleLogin(){
