@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('client_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('client_id')->nullable()->constrained()->onDelete('cascade');
             $table->decimal('amount', 10, 2);
             $table->string('source')->nullable();
             $table->enum('frequency', ['one-time', 'daily', 'weekly', 'monthly', 'yearly'])->default('one-time');
