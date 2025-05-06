@@ -190,7 +190,13 @@ import {format} from 'timeago.js'
         this.$emit('mark-as-read', notificationId);
       },
       removeNotificatoin(notificationId){
-        this.$emit('remove-notif',notificationId);
+
+        this.$emit('remove-notif', notificationId);
+        this.$notify({
+          title: 'Success',
+          text: 'Notification removed',
+          type: 'success'
+        });
       },
       clearAllNotifications() {
         if (confirm('Are you sure you want to clear all notifications?')) {
