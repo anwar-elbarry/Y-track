@@ -75,6 +75,11 @@ const routes = [
     name : 'admin',
     meta : {requiresAdmin: true},
     component : () => import('./views/admin/dashboard.vue')
+  },
+  {
+    path : '/:pathMatch(.*)*',
+    name : 'NotFound',
+    component : () => import('./components/404/404.vue')
   }
 ]
 
