@@ -248,6 +248,13 @@ export default {
         // Reset the form 
         this.resetForm();
         this.$emit('income-added');
+        
+        this.$notify({
+        'title' : 'Created!',
+        'type' : 'success',
+        'text' : 'new Income created successfully'
+      });
+
         this.$emit('close');
         this.isSubmitting = false;
       }catch(error){

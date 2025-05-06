@@ -173,6 +173,7 @@
   </template>
   
   <script>
+import Swal from 'sweetalert2';
 import { useIncomeStore } from '../../stores/incomeStore';
 import auth from '../../stores/auth';
 const useAuthStore = auth();
@@ -184,7 +185,7 @@ export default {
         default: () => []
       }
     },
-    emits : ['reload-incomes','selected-income'],
+    emits : ['delete-income','selected-income'],
     data() {
       return {
         selectAll: false,
@@ -285,8 +286,24 @@ export default {
       },
       async removeIncome(id){
         try{
-          await this.incomeStore.removeIncome(id);
-          this.$emit('reload-incomes');
+          Swal.fire({
+        title: 'Delet  Income?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Delet',
+      }).then((result) => {
+        if (result.isConfirmed) {
+           this.$emit('delete-income',id);
+           this.incomeItems.filter(item => item.id === id);
+           this.$notify({
+            title: 'Deleted!',
+            text: 'Income was successfully deleted.',
+            type: 'success',
+          })
+        }
+
+      });
+         
         }catch(error){
           console.error('Error removing income:', error);
         }

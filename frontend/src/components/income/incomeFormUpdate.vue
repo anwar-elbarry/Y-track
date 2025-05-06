@@ -165,9 +165,16 @@
       
         try {
           this.isSubmitting = true;
-          const response = await this.incomeStore.updateIncome(this.incomeToUpdate.id, updatedIncome);
+          await this.incomeStore.updateIncome(this.incomeToUpdate.id, updatedIncome);
           
           this.$emit('income-updated');
+
+          this.$notify({
+          'title' : 'Update!',
+          'type' : 'success',
+          'text' : 'Income Updated successfully'
+          });
+          
           this.$emit('close');
         } catch(error) {
           console.error('Error updating income', error);
