@@ -77,7 +77,7 @@
   import { useCategoryStore } from '../../stores/categoryStore';
   export default {
     name: 'categoryForm',
-    emits: ['category-added', 'close'],
+    emits: ['added-category', 'close'],
     setup(){
       const CategoryStore = useCategoryStore()
       return { CategoryStore }
@@ -100,11 +100,14 @@
         this.errors = {};
         
         // Validate name
-        if (!this.form.name.trim)  {
+        if (!this.form.name)  {
           this.errors.name = 'Please enter a valid name';
           return;
         }else if(this.categories.find(ca => ca.name === this.form.name)){
           this.errors.name = '"The name has already been taken."';
+        }
+        if(Object.keys(this.errors) > 0){
+          return;
         }
        
         try{
@@ -121,12 +124,10 @@
             text: 'Category was successfully Created.',
             type: 'success',
           })
-          await this.CategoryStore.addCategory(newCategory);
-          this.categories = this.CategoryStore.categories;
+          this.categories.push(newCategory);
           this.resetForm();
-          this.$emit('reload-categories');
-    
-          this.$emit('close');
+          this.$emit('added-category',newCategory);
+          this.isSubmitting = false
         }catch(error){
           console.log(error);
           this.isSubmitting = false;
