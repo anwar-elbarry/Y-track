@@ -1,7 +1,6 @@
 <template>
     <div class="Billss_container flex flex-col w-full h-full gap-4">
         <div class="up_content w-full justify-end items-center flex gap-5">
-            <SearchBare title="Bills" />
             <AddBtn name="Add Bills" @click="showForm = true"/>
             <AddBtn name="Add Category" @click="showCategoryForm = true"/>
             <AddBtn 
@@ -23,8 +22,9 @@
         />
         <Bills_category_form 
             v-if="showCategoryForm"
+            :categories="billCategories"
             @close="closeCategoryForm"
-            @category-added="fetchBillCategories"
+            @category-added="handleCategoryAdded"
         />        
         <Upcoming_Bills_table
             v-if="showUpcomingBills"
@@ -86,6 +86,9 @@ export default {
             await this.billStore.fetchUpcomingBills();
             this.upcomingBills = this.billStore.upcomingBills;
             console.log('upcomingBills',this.upcomingBills);
+        },
+        async handleCategoryAdded(newCategory){
+            await this.billCategoryStore.addCategory(newCategory);
         },
         closeForm(){
             this.showForm = false;
