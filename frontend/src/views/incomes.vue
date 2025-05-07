@@ -5,9 +5,10 @@
         </div>
         
         <Income_table 
-            :incomes="incomeStore.incomes"
+            :incomes="incomes"
             @delete-income="handleincomeRemove"
             @selected-income="showSelectedIncomeToUpdate"
+            @update-income-status="handleincomeStatus"
         />
         
         <IncomeForm
@@ -45,6 +46,7 @@ export default {
     data() {
         return {
             showForm: false,
+            incomes : [],
             showUpdate: false,
             selectedIncome: null
         }
@@ -58,7 +60,8 @@ export default {
             this.showForm = false
         },
         async fetchIncomes() {
-            await this.incomeStore.fetchIncomes()
+            await this.incomeStore.fetchIncomes();
+            this.incomes = this.incomeStore.incomes;
         },
         async handleincomeRemove(id) {
             await this.incomeStore.removeIncome(id);
@@ -74,6 +77,10 @@ export default {
         async handleIncomeUpdate() {
             await this.fetchIncomes()
             this.closeUpdateForm()
+        },
+        async handleincomeStatus(incomeId,data) {
+            await this.incomeStore.updateIncome(incomeId, data);
+            await this.fetchIncomes();
         }
     },
     created() {
