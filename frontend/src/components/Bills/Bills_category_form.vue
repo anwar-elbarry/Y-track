@@ -1,6 +1,28 @@
 <template>
     <div class="fixed inset-0 bg-gray-800/50 backdrop-blur-xl z-50 flex items-center justify-center p-4">
       <div class="bg-white rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="categories bg-gray-50 rounded-lg p-4 mb-4">
+  <h3 class="text-sm font-semibold text-gray-600 mb-2">Existing Categories</h3>
+  <div class="flex flex-wrap gap-2 max-h-20 overflow-y-auto">
+    <span 
+      v-for="category in categories" 
+      :key="category.id"
+      class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs inline-flex items-center"
+    >
+      {{ category.name }}
+      <button 
+        @click="deleteCategory(category.id)"
+        class="ml-2 text-red-500 hover:text-red-700"
+        title="Delete category"
+      >
+        <v-icon name="oi-x" class="w-3 h-3 cursor-pointer"/>
+      </button>
+    </span>
+    <p v-if="!categories || categories.length === 0" class="text-gray-500 text-sm">
+      No categories yet
+    </p>
+  </div>
+</div>
         <div class="p-6">
           <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
             Add New Category
@@ -68,13 +90,18 @@
         },
       }
     },
+    props : {
+      categories: {
+        type : Array
+      }
+    },
     methods: {
     async  validateAndSubmit() {
         // Reset errors
         this.errors = {};
         
         // Validate name
-        if (!this.form.name.trim)  {
+        if (!this.form.name)  {
           this.errors.name = 'Please enter a valid name';
           return;
         }
@@ -88,17 +115,15 @@
           name: this.form.name,
         };
           console.log(newCategory);
-          
-          await this.BillCategoryStore.addCategory(newCategory);
-          this.$emit('category-added');
+          this.categories.push(newCategory);
 
+          this.$emit('category-added',newCategory);
           this.$notify({
         'title' : 'Created!',
         'type' : 'success',
         'text' : 'new category Added successfully'
       });
-
-          this.$emit('close');
+      this.isSubmitting = false;
           this.resetForm();
         }catch(error){
           console.log(error);
