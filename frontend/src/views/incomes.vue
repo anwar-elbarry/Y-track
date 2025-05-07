@@ -1,7 +1,6 @@
 <template>
     <div class="incomes_container flex flex-col w-full h-full gap-4">
         <div class="up_content w-full justify-end items-center flex gap-5">
-            <SearchBare title="Income" />
             <AddBtn name="Add Income" @click="showForm = true"/>
         </div>
         

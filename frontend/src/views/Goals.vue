@@ -1,8 +1,6 @@
 <template>
   <div class="flex flex-col w-full gap-7">
     <div class="up_content w-full justify-end items-center flex gap-5">
-      <SearchBare
-       title="Goal" />
       <AddBtn name="Add Goal" @click="showCreateGoalForm = true"/>
     </div>
     <div class="goals_cards flex flex-wrap justify-evenly gap-4">

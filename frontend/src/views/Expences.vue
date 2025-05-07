@@ -1,7 +1,6 @@
 <template>
     <div class="Expences_container flex flex-col w-full h-full gap-4">
         <div class="up_content w-full justify-end items-center flex gap-5">
-            <SearchBare title="Expence" />
             <button
             @click="openCategoryForm = true" 
             class="bg-[rgba(8,16,33,1)] cursor-pointer border text-3 text-white px-4 py-3 rounded-md border-solid max-md:px-5"
@@ -19,12 +18,13 @@
         v-if="openForm"
         :categories="categories"
         @close="closeForm"
-        @reload-expenses="fetchExpenses"
+        @expense-added="handleAddedExpense"
         />
         <Expence_category_form 
         v-if="openCategoryForm"
         :categories="categoryStore.categories"
         @close="closeCategoryForm"
+        @added-category="handlAddedCategory"
         
         />
         <Expense_update_form 
@@ -91,6 +91,13 @@ export default {
             this.expenses = this.expenseStore.expenses
             console.log('expenses in table :',this.expenses);
             
+        },
+        async handlAddedCategory(newCategory){
+            await this.categoryStore.addCategory(newCategory);          
+        },
+        async handleAddedExpense(newExpense){
+            const expense = await this.expenseStore.addExpense(newExpense);    
+            this.expenses.push(expense)
         },
         async fetchCategories(){
               await this.categoryStore.fetchCategories()

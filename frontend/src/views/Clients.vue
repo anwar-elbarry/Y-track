@@ -1,7 +1,6 @@
 <template>
     <div class="Clients_container flex flex-col w-full h-full gap-4">
         <div class="up_content w-full justify-end items-center flex gap-5">
-            <SearchBare title="Client" />
             <AddBtn @click="openForm()" name="Add Client"/>
         </div>
         <div class="clients_cards flex flex-wrap justify-evenly gap-4">
