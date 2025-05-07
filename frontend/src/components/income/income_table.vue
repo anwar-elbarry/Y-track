@@ -185,7 +185,7 @@ export default {
         default: () => []
       }
     },
-    emits : ['delete-income','selected-income'],
+    emits : ['delete-income','selected-income','update-income-status'],
     data() {
       return {
         selectAll: false,
@@ -320,8 +320,7 @@ export default {
             };
             
             if (incomeId) {
-                await this.incomeStore.updateIncome(incomeId, data);
-                this.$emit('reload-incomes');
+              this.$emit('update-income-status',incomeId,data);
             }
         } catch (error) {
             console.error('Error updating income status:', error);
