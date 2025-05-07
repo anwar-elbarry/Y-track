@@ -24,6 +24,7 @@ export const useExpenseStore = defineStore('expense',{
                 this.expenses.push(response.data.expense)
                 console.log(response.data.expense);
                 console.log(response.data.message);
+                return response.data.expense;
             }catch(error){
                 console.error('Error adding expense:', error);
             }
