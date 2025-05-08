@@ -2,7 +2,8 @@
 ![Y-Track Logo](./frontend/public/images/Y-TRACK_dark.svg)
 
 ## Project Overview
-The main interface of Y-Track provides a clear overview through dynamic statistics and visualizations. It provides customized dashboards and improved financial management, ensuring tax compliance and efficiency of recurring tasks.
+
+The main interface of Y-Track provides a clear overview through statistics and dynamic visualizations. It offers customized dashboards and optimized management of revenues, expenses and invoices, while automating repetitive tasks to simplify the daily life of the user.
 
 ## Key Features
 
